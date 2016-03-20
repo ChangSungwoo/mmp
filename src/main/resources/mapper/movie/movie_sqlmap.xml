@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="movie">
+	<cache />
+	
+	<select id="selectMovieMaster" parameterType="hashmap" resultType="hashmap">
+		select 
+		MOVIE_ID as movieId,
+		MOVIE_KOR_TITLE as movieKorTitle,
+		MOVIE_ENG_TITLE as movieEngTitle,
+		RELEASE_DT as releaseDt,
+		DISPLAY_YN as displayYn,
+		END_YN as endYn,
+		CRE_DT as creDt,
+		CRE_ID as creId,
+		UPD_DT as updDt,
+		UPD_ID as updId
+		from MOVIE_MASTER
+	</select>
+	
+	<insert id="insertMovieMaster" parameterType="com.mymovieprice.mmp.movie.model.MovieCondition">
+		insert into MOVIE_MASTER(
+			MOVIE_KOR_TITLE, 
+			MOVIE_ENG_TITLE,
+			RELEASE_DT,
+			END_YN,
+			DISPLAY_YN,
+			CRE_ID, 
+			UPD_ID
+			) VALUES (
+			#{movieKorTitle},
+			#{movieEngTitle},
+			#{releaseDate},
+			#{endYn},
+			#{displayYn},
+			#{creId},
+			#{updId}
+			);
+	</insert>
+</mapper>
