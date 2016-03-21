@@ -19,7 +19,7 @@
 		from MOVIE_MASTER
 	</select>
 	
-	<insert id="insertMovieMaster" parameterType="com.mymovieprice.mmp.movie.model.MovieCondition">
+	<insert id="insertMovieMaster" parameterType="com.mymovieprice.mmp.movie.model.MovieMaster">
 		insert into MOVIE_MASTER(
 			MOVIE_KOR_TITLE, 
 			MOVIE_ENG_TITLE,

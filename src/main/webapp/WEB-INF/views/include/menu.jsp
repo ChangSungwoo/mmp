@@ -26,7 +26,7 @@
 							<li><a href="/">Home</a></li>
 							<!-- End Home -->
 							<!-- 적정관람료 -->
-							<li><a href="/">적정관람료</a></li>
+							<li><a href="/movie/movieList">적정관람료</a></li>
 							<!-- End Home -->
 							<!-- 읽을거리 -->
 							<li><a href="/">읽을거리</a></li>

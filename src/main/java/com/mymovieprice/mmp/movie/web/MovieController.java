@@ -101,6 +101,24 @@ public class MovieController {
 		return map;
 	}
 	
+	@RequestMapping(value = "/movie/movieList", method = RequestMethod.GET)
+	public ModelAndView movieList(Map<String,Object> condition) {
+		
+		ModelAndView mav = new ModelAndView("movie/movie_list");
+		List<Map<String, Object>> list;
+		
+		try {
+			//list = movieService.getMovieList(condition);
+			list = null;
+			mav.addObject("list", list);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return mav;
+	}
+	
 	@RequestMapping(value = "/movie/movieDetail", method = RequestMethod.GET)
 	public ModelAndView movieDetail(Map<String,Object> condition) {
 		
