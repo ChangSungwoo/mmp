@@ -32,7 +32,7 @@
 							<li><a href="/">읽을거리</a></li>
 							<!-- End Home -->
 							<!-- 네트워킹 -->
-							<li><a href="/">네트워킹</a></li>
+							<li><a href="/">마이페이지</a></li>
 							<!-- End Home -->
 						</ul>
 					</div><!--/responsive container-->

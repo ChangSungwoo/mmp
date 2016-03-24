@@ -83,12 +83,12 @@
 											<li>By 에단 코엔, 조엘 코엔</li>
 											<li>개봉일 : 2016-03-24</li>
 										</ul>
-										<h2><a href="/movie/movieDetail">헤일 시저(Hail, Caesar!)</a></h2>
+										<h2><a href="/movie/movieDetail">헤일 시저 (Hail, Caesar!)</a></h2>
 										<p>시나리오도 있다! 돈도 있다! 그런데 주연배우가 없다? 1950년, 할리우드 최대 무비 스캔들을 해결하라! 올해 최고 대작 ‘헤일, 시저!’ 촬영 도중 무비 스타 ‘베어드 휘트록’이 납치되고 정체불명의 ‘미래’로부터 협박 메시지가 도착한다...</p>
 										<ul class="post-shares">
 											<li class="movie-prices text-highlights text-highlights-purple rounded tooltips">9,150원</li>
-											<span aria-hidden="true" class="icon-arrow-up"></span>&nbsp;<li class="movie-small-prices price-green">450원</li>
-											<span aria-hidden="true" class="icon-arrow-down"></span>&nbsp;<li class="movie-small-prices price-red">-300원</li>
+											<span aria-hidden="true" class="icon-arrow-up"></span>&nbsp;<li class="movie-small-prices price-red">+450원</li>
+											<span aria-hidden="true" class="icon-arrow-down"></span>&nbsp;<li class="movie-small-prices price-blue">-300원</li>
 										</ul>
 									</div>
 								</div>
@@ -106,12 +106,12 @@
 											<li>By 라즐로 네메스</li>
 											<li>개봉일 : 2016-02-25</li>
 										</ul>
-										<h2><a href="/movie/movieDetail">사울의 아들(Saul fia, Son of Saul)</a></h2>
+										<h2><a href="/movie/movieDetail">사울의 아들 (Saul fia, Son of Saul)</a></h2>
 										<p>압도적인 집요함과 유구한 끈질김으로 해볼 건 웬만하면 다 해본 듯하여 이제는 더 이상 나올 게 없어보였던 나치만행 고발무비에서, 보란 듯 등장한 혁신과 진일보를 앞에 두고 그만 무어라 드릴 말씀을 잊는 와중에도 계속해서 떠오르는 것은...</p>
 										<ul class="post-shares">
-											<li class="movie-prices text-highlights text-highlights-purple rounded tooltips">11,650원 OR 7,150원</li>
-											<span aria-hidden="true" class="icon-arrow-up"></span>&nbsp;<li class="movie-small-prices price-green">3,100원</li>
-											<span aria-hidden="true" class="icon-arrow-down"></span>&nbsp;<li class="movie-small-prices price-red">-450원 or -4,950원</li>
+											<li class="movie-prices text-highlights text-highlights-purple rounded tooltips" style="text-align:center">11,650원 <br/>OR<br/> 7,150원</li>
+											<span aria-hidden="true" class="icon-arrow-up"></span>&nbsp;<li class="movie-small-prices price-red">+3,100원</li>
+											<span aria-hidden="true" class="icon-arrow-down"></span>&nbsp;<li class="movie-small-prices price-blue">-450원 or -4,950원</li>
 										</ul>
 									</div>
 								</div>
@@ -129,12 +129,12 @@
 											<li>By 바이론 하워드, 리치 무어</li>
 											<li>개봉일 : 2016-02-17</li>
 										</ul>
-										<h2><a href="/movie/movieDetail"> 주토피아(Zootopia)</a></h2>
+										<h2><a href="/movie/movieDetail"> 주토피아 (Zootopia)</a></h2>
 										<p>교양 있고 세련된 라이프 스타일을 주도하는 도시 주토피아. 이 곳을 단숨에 혼란에 빠트린 연쇄 실종사건이 발생한다! 주토피아 최초의 토끼 경찰관 주디 홉스는 48시간 안에 사건 해결을 지시 받자 뻔뻔한 사기꾼 여우 닉 와일드에게 협동 수사를 제안하는데...</p>
 										<ul class="post-shares">
 											<li class="movie-prices text-highlights text-highlights-purple rounded tooltips">9,300원</li>
-											<span aria-hidden="true" class="icon-arrow-up"></span>&nbsp;<li class="movie-small-prices price-green">900원</li>
-											<span aria-hidden="true" class="icon-arrow-down"></span>&nbsp;<li class="movie-small-prices price-red">-600원</li>
+											<span aria-hidden="true" class="icon-arrow-up"></span>&nbsp;<li class="movie-small-prices price-red">+900원</li>
+											<span aria-hidden="true" class="icon-arrow-down"></span>&nbsp;<li class="movie-small-prices price-blue">-600원</li>
 										</ul>
 									</div>
 								</div>
@@ -152,12 +152,12 @@
 											<li>By 토마스 맥카시</li>
 											<li>개봉일 : 2016-02-24</li>
 										</ul>
-										<h2><a href="/movie/movieDetail">스포트라이트(Spotlight)</a></h2>
+										<h2><a href="/movie/movieDetail">스포트라이트 (Spotlight)</a></h2>
 										<p>미국의 3대 일간지 중 하나인 보스턴 글로브 내 ‘스포트라이트’팀은 가톨릭 보스턴 교구 사제들의 아동 성추행 사건을 취재한다.하지만 사건을 파헤치려 할수록 더욱 굳건히 닫히는 진실의 장벽....</p>
 										<ul class="post-shares">
 											<li class="movie-prices text-highlights text-highlights-purple rounded tooltips">9,150원</li>
-											<span aria-hidden="true" class="icon-arrow-up"></span>&nbsp;<li class="movie-small-prices price-green">450원</li>
-											<span aria-hidden="true" class="icon-arrow-down"></span>&nbsp;<li class="movie-small-prices price-red">-300원</li>
+											<span aria-hidden="true" class="icon-arrow-up"></span>&nbsp;<li class="movie-small-prices price-red">+450원</li>
+											<span aria-hidden="true" class="icon-arrow-down"></span>&nbsp;<li class="movie-small-prices price-blue">-300원</li>
 										</ul>
 									</div>
 								</div>
@@ -190,8 +190,8 @@
 										<p>눈 덮인 핀란드에서 만나 뜨거운 끌림에 빠져드는 남자와 여자의 이야기. 헬싱키. 아이들의 국제학교에서 만난 상민(전도연)과 기홍(공유)은, 먼 북쪽의 캠프장을 향해 우연히 동행하게 된다. 폭설로 도로가 끊기고, 아무도 없는 하얀 숲 속의 오두막에서...</p>
 										<ul class="post-shares">
 											<li class="movie-prices text-highlights text-highlights-purple rounded tooltips">9,150원</li>
-											<span aria-hidden="true" class="icon-arrow-up"></span>&nbsp;<li class="movie-small-prices price-green">450원</li>
-											<span aria-hidden="true" class="icon-arrow-down"></span>&nbsp;<li class="movie-small-prices price-red">-300원</li>
+											<span aria-hidden="true" class="icon-arrow-up"></span>&nbsp;<li class="movie-small-prices price-red">+450원</li>
+											<span aria-hidden="true" class="icon-arrow-down"></span>&nbsp;<li class="movie-small-prices price-blue">-300원</li>
 										</ul>
 									</div>
 								</div>
@@ -213,8 +213,8 @@
 										<p>시 따위는 오래 전부터 죽어도 쌌다는 시대에, 시를 접할 일이라곤 드라마 주인공이 화장 고치듯 꺼내드는 시집 제목을 검색해 볼 일밖엔 없는 요즘에, 그래도 시를 읊어주는 영화라도 드물게 만나는 것을 위안으로 삼아야 할까. 아니면 윤동주마저도 영화의 도움 없이는 떠올리기 어려워진 지금을 외려 서글퍼해야 할까...</p>
 										<ul class="post-shares">
 											<li class="movie-prices text-highlights text-highlights-purple rounded tooltips">10,890원</li>
-											<span aria-hidden="true" class="icon-arrow-up"></span>&nbsp;<li class="movie-small-prices price-green">2,220원</li>
-											<span aria-hidden="true" class="icon-arrow-down"></span>&nbsp;<li class="movie-small-prices price-red">-330원</li>
+											<span aria-hidden="true" class="icon-arrow-up"></span>&nbsp;<li class="movie-small-prices price-red">+2,220원</li>
+											<span aria-hidden="true" class="icon-arrow-down"></span>&nbsp;<li class="movie-small-prices price-blue">-330원</li>
 										</ul>
 									</div>
 								</div>
@@ -232,12 +232,12 @@
 											<li>By 바이론 하워드, 리치 무어</li>
 											<li>개봉일 : 2016-02-17</li>
 										</ul>
-										<h2><a href="#"> 주토피아(Zootopia)</a></h2>
+										<h2><a href="#"> 주토피아 (Zootopia)</a></h2>
 										<p>교양 있고 세련된 라이프 스타일을 주도하는 도시 주토피아. 이 곳을 단숨에 혼란에 빠트린 연쇄 실종사건이 발생한다! 주토피아 최초의 토끼 경찰관 주디 홉스는 48시간 안에 사건 해결을 지시 받자 뻔뻔한 사기꾼 여우 닉 와일드에게 협동 수사를 제안하는데...</p>
 										<ul class="post-shares">
 											<li class="movie-prices text-highlights text-highlights-purple rounded tooltips">9,300원</li>
-											<span aria-hidden="true" class="icon-arrow-up"></span>&nbsp;<li class="movie-small-prices price-green">900원</li>
-											<span aria-hidden="true" class="icon-arrow-down"></span>&nbsp;<li class="movie-small-prices price-red">-600원</li>
+											<span aria-hidden="true" class="icon-arrow-up"></span>&nbsp;<li class="movie-small-prices price-red">+900원</li>
+											<span aria-hidden="true" class="icon-arrow-down"></span>&nbsp;<li class="movie-small-prices price-blue">-600원</li>
 										</ul>
 									</div>
 								</div>
@@ -255,12 +255,12 @@
 											<li>By 토마스 맥카시</li>
 											<li>개봉일 : 2016-02-24</li>
 										</ul>
-										<h2><a href="#">스포트라이트(Spotlight)</a></h2>
+										<h2><a href="#">스포트라이트 (Spotlight)</a></h2>
 										<p>미국의 3대 일간지 중 하나인 보스턴 글로브 내 ‘스포트라이트’팀은 가톨릭 보스턴 교구 사제들의 아동 성추행 사건을 취재한다.하지만 사건을 파헤치려 할수록 더욱 굳건히 닫히는 진실의 장벽....</p>
 										<ul class="post-shares">
 											<li class="movie-prices text-highlights text-highlights-purple rounded tooltips">9,150원</li>
-											<span aria-hidden="true" class="icon-arrow-up"></span>&nbsp;<li class="movie-small-prices price-green">450원</li>
-											<span aria-hidden="true" class="icon-arrow-down"></span>&nbsp;<li class="movie-small-prices price-red">-300원</li>
+											<span aria-hidden="true" class="icon-arrow-up"></span>&nbsp;<li class="movie-small-prices price-red">+450원</li>
+											<span aria-hidden="true" class="icon-arrow-down"></span>&nbsp;<li class="movie-small-prices price-blue">-300원</li>
 										</ul>
 									</div>
 								</div>

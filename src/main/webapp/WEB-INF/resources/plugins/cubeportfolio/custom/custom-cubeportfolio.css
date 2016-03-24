@@ -93,7 +93,7 @@
 /*Titles*/
 .cube-portfolio .cbp-l-grid-agency-title {
 	color: #fff !important;
-	font-size: 15px;
+	font-size: 18px;
 	font-weight: 400;
 	letter-spacing: 1px;
 	text-transform: uppercase;
@@ -102,7 +102,7 @@
 
 .cube-portfolio .cbp-l-grid-agency-desc {
 	color: #fff;
-	font-size: 11px;
+	font-size: 15px;
 	text-transform: uppercase;
 }
 

@@ -64,14 +64,14 @@
 			<div class="cbp-item graphic">
 				<div class="cbp-caption" >
 					<div class="cbp-caption-defaultWrap">
-						<img src="img/movie/movie001.jpg" alt="">
+						<img src="/img/movie/movie001.jpg" alt="">
 					</div>
 					<div class="cbp-caption-activeWrap">
 						<div class="cbp-l-caption-alignCenter">
 							<div class="cbp-l-caption-body">
 								<ul class="link-captions">
-									<li><a href="portfolio_single_item.html"><i class="rounded-x fa fa-link"></i></a></li>
-									<li><a href="img/movie/movie001.jpg" class="cbp-lightbox" data-title="Design Object"><i class="rounded-x fa fa-search"></i></a></li>
+									<li><a href="/movie/movieDetail"><i class="rounded-x fa fa-link"></i></a></li>
+									<li><a href="/img/movie/movie001.jpg" class="cbp-lightbox" data-title="Design Object"><i class="rounded-x fa fa-search"></i></a></li>
 								</ul>
 								<div class="cbp-l-grid-agency-title">헤일 시져</div>
 								<div class="cbp-l-grid-agency-desc">Hail, caesar! (2016.03.24)</div>
@@ -83,14 +83,14 @@
 			<div class="cbp-item web-design logos">
 				<div class="cbp-caption">
 					<div class="cbp-caption-defaultWrap">
-						<img src="img/movie/movie002.jpg" alt="">
+						<img src="/img/movie/movie002.jpg" alt="">
 					</div>
 					<div class="cbp-caption-activeWrap">
 						<div class="cbp-l-caption-alignCenter">
 							<div class="cbp-l-caption-body">
 								<ul class="link-captions">
-									<li><a href="portfolio_single_item.html"><i class="rounded-x fa fa-link"></i></a></li>
-									<li><a href="img/movie/movie002.jpg" class="cbp-lightbox" data-title="Design Object"><i class="rounded-x fa fa-search"></i></a></li>
+									<li><a href="/movie/movieDetail"><i class="rounded-x fa fa-link"></i></a></li>
+									<li><a href="/img/movie/movie002.jpg" class="cbp-lightbox" data-title="Design Object"><i class="rounded-x fa fa-search"></i></a></li>
 								</ul>
 								<div class="cbp-l-grid-agency-title">사울의 아들</div>
 								<div class="cbp-l-grid-agency-desc">Saul fia, Son of Saul(2016.02.25)</div>
@@ -102,14 +102,14 @@
 			<div class="cbp-item graphic logos">
 				<div class="cbp-caption">
 					<div class="cbp-caption-defaultWrap">
-						<img src="img/movie/movie003.jpg" alt="">
+						<img src="/img/movie/movie003.jpg" alt="">
 					</div>
 					<div class="cbp-caption-activeWrap">
 						<div class="cbp-l-caption-alignCenter">
 							<div class="cbp-l-caption-body">
 								<ul class="link-captions">
-									<li><a href="portfolio_single_item.html"><i class="rounded-x fa fa-link"></i></a></li>
-									<li><a href="img/movie/movie003.jpg" class="cbp-lightbox" data-title="Design Object"><i class="rounded-x fa fa-search"></i></a></li>
+									<li><a href="/movie/movieDetail"><i class="rounded-x fa fa-link"></i></a></li>
+									<li><a href="/img/movie/movie003.jpg" class="cbp-lightbox" data-title="Design Object"><i class="rounded-x fa fa-search"></i></a></li>
 								</ul>
 								<div class="cbp-l-grid-agency-title">주토피아</div>
 								<div class="cbp-l-grid-agency-desc">Zootopia (2016.02.17)</div>
@@ -121,14 +121,14 @@
 			<div class="cbp-item web-design graphic">
 				<div class="cbp-caption">
 					<div class="cbp-caption-defaultWrap">
-						<img src="img/movie/movie004.jpg" alt="">
+						<img src="/img/movie/movie004.jpg" alt="">
 					</div>
 					<div class="cbp-caption-activeWrap">
 						<div class="cbp-l-caption-alignCenter">
 							<div class="cbp-l-caption-body">
 								<ul class="link-captions">
-									<li><a href="portfolio_single_item.html"><i class="rounded-x fa fa-link"></i></a></li>
-									<li><a href="img/movie/movie004.jpg" class="cbp-lightbox" data-title="Design Object"><i class="rounded-x fa fa-search"></i></a></li>
+									<li><a href="/movie/movieDetail"><i class="rounded-x fa fa-link"></i></a></li>
+									<li><a href="/img/movie/movie004.jpg" class="cbp-lightbox" data-title="Design Object"><i class="rounded-x fa fa-search"></i></a></li>
 								</ul>
 								<div class="cbp-l-grid-agency-title">스포트라이트</div>
 								<div class="cbp-l-grid-agency-desc">Spotlight (2016.02.24)</div>
@@ -140,14 +140,14 @@
 			<div class="cbp-item identity web-design">
 				<div class="cbp-caption">
 					<div class="cbp-caption-defaultWrap">
-						<img src="img/movie/movie005.jpg" alt="">
+						<img src="/img/movie/movie005.jpg" alt="">
 					</div>
 					<div class="cbp-caption-activeWrap">
 						<div class="cbp-l-caption-alignCenter">
 							<div class="cbp-l-caption-body">
 								<ul class="link-captions">
-									<li><a href="portfolio_single_item.html"><i class="rounded-x fa fa-link"></i></a></li>
-									<li><a href="img/movie/movie005.jpg" class="cbp-lightbox" data-title="Design Object"><i class="rounded-x fa fa-search"></i></a></li>
+									<li><a href="/movie/movieDetail"><i class="rounded-x fa fa-link"></i></a></li>
+									<li><a href="/img/movie/movie005.jpg" class="cbp-lightbox" data-title="Design Object"><i class="rounded-x fa fa-search"></i></a></li>
 								</ul>
 								<div class="cbp-l-grid-agency-title">남과 여</div>
 								<div class="cbp-l-grid-agency-desc">A Man and A Woman (2016.02.25)</div>
@@ -159,14 +159,14 @@
 			<div class="cbp-item identity web-design">
 				<div class="cbp-caption">
 					<div class="cbp-caption-defaultWrap">
-						<img src="img/movie/movie006.jpg" alt="">
+						<img src="/img/movie/movie006.jpg" alt="">
 					</div>
 					<div class="cbp-caption-activeWrap">
 						<div class="cbp-l-caption-alignCenter">
 							<div class="cbp-l-caption-body">
 								<ul class="link-captions">
-									<li><a href="portfolio_single_item.html"><i class="rounded-x fa fa-link"></i></a></li>
-									<li><a href="img/movie/movie006.jpg" class="cbp-lightbox" data-title="Design Object"><i class="rounded-x fa fa-search"></i></a></li>
+									<li><a href="/movie/movieDetail"><i class="rounded-x fa fa-link"></i></a></li>
+									<li><a href="/img/movie/movie006.jpg" class="cbp-lightbox" data-title="Design Object"><i class="rounded-x fa fa-search"></i></a></li>
 								</ul>
 								<div class="cbp-l-grid-agency-title">동주</div>
 								<div class="cbp-l-grid-agency-desc">DongJu; The Portrait of A Poet (2016.02.17)</div>
