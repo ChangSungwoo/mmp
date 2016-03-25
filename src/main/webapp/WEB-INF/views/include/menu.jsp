@@ -29,10 +29,10 @@
 							<li><a href="/movie/movieList">적정관람료</a></li>
 							<!-- End Home -->
 							<!-- 읽을거리 -->
-							<li><a href="/">읽을거리</a></li>
+							<li><a href="/column/columnList">읽을거리</a></li>
 							<!-- End Home -->
 							<!-- 네트워킹 -->
-							<li><a href="/">마이페이지</a></li>
+							<li><a href="/member/myPage">마이페이지</a></li>
 							<!-- End Home -->
 						</ul>
 					</div><!--/responsive container-->

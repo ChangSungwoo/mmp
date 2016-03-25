@@ -1,0 +1,17 @@
+@CHARSET "UTF-8";
+
+.font-red {
+  color: #c9253c;
+}
+
+.font-blue {
+  color: #0000FF;
+}
+
+.font-black {
+  color: #000000;
+}
+
+.more-font {
+	font-size:12px;
+}

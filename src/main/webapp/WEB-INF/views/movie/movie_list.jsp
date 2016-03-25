@@ -37,6 +37,7 @@
 	<!-- CSS Theme -->
 	<link rel="stylesheet" href="/css/theme-colors/default.css" id="style_color">
 	<link rel="stylesheet" href="/css/theme-skins/dark.css">
+	<link rel="stylesheet" href="/css/pages/blog_masonry_3col.css">
 
 	<!-- CSS Customization -->
 	<link rel="stylesheet" href="/css/movie/movie_list.css">
@@ -298,6 +299,7 @@
 <!-- JS Implementing Plugins -->
 <script src="/plugins/back-to-top.js"></script>
 <script src="/plugins/smoothScroll.js"></script>
+<script type="text/javascript" src="/plugins/masonry/jquery.masonry.min.js"></script>
 
 <!-- JS Page Level -->
 <script src="/js/app.js"></script>
