@@ -38,4 +38,14 @@
 			#{updId}
 			);
 	</insert>
+	
+	<select id="selectMovieImage" parameterType="hashmap" resultType="hashmap">
+			SELECT 
+				mm.MOVIE_ID as movieId, 
+				mm.MOVIE_KOR_TITLE as movieKorTitle, 
+				mi.FILE_NM as FileNm
+			FROM MOVIE_MASTER mm LEFT OUTER JOIN MOVIE_IMAGE mi
+			ON mm.MOVIE_ID = mi.MOVIE_ID 
+			and mi.DELEGATE_YN = 'Y';
+	</select>
 </mapper>

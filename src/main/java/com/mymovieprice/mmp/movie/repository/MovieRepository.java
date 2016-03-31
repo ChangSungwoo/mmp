@@ -28,4 +28,10 @@ public class MovieRepository extends AbstractDao {
 		return (Integer)insert("movie.insertMovieMaster", movieCondition);
 	}
 
+	public List<Map<String, Object>> selectMovieImageList(
+			Map<String, Object> condition) {
+		
+		return (List<Map<String, Object>>)selectList("movie.selectMovieImage", condition);
+		//return null;
+	}
 }

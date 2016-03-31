@@ -24,24 +24,16 @@
 							<a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown">영화관리</a>
 							<ul class="dropdown-menu">
 								<!-- 영화 데이터 관리 Start -->
-								<li><a href="/admin/movie/movieList">영화 목록조회</a></li>
-								<li><a href="/admin/movie/moviePersonList">영화인 목록조회</a></li>
+								<li><a href="/admin/movie/movieList">영화 등록관리</a></li>
+								<li><a href="/admin/movie/movieImageList">영화 이미지 등록관리</a></li>
+								<li><a href="/admin/movie/moviePriceList">적정관람료 관리</a></li>
+								<li><a href="/admin/movie/movieDSearch">Daum API Test</a></li>
 									<!-- ul class="dropdown-menu">
 										<li><a href="/mmp/admin/movie/movieList">영화목록 조회</a></li>
 										<li><a target="_blank" href="One-Pages/Classic/one_page_dark.html">외부 데이터 관리</a></li>
 										<li><a target="_blank" href="One-Pages/Classic/one_page_dark.html">영화 신규 등록</a></li>
 									</ul-->
 								<!-- 영화 데이터 관리 End -->
-
-								<!-- 영화인 관리 Start -->
-								<!-- li class="dropdown-submenu">
-									<a href="javascript:void(0);">영화인 관리</a>
-									<ul class="dropdown-menu">
-										<li><a target="_blank" href="One-Pages/Classic/index.html">배우 관리</a></li>
-										<li><a target="_blank" href="One-Pages/Classic/one_page_dark.html">감독 관리</a></li>
-									</ul>
-								</li-->
-								<!-- 영화인 관리 End -->
 							</ul>
 						</li>
 						<!-- 영화관리 End -->
@@ -88,14 +80,6 @@
 										<li><a href="blog_large_right_sidebar1.html">Right Sidebar</a></li>
 										<li><a href="blog_large_left_sidebar1.html">Left Sidebar</a></li>
 										<li><a href="blog_large_full_width1.html">Full Width</a></li>
-									</ul>
-								</li>
-								<li class="dropdown-submenu">
-									<a href="javascript:void(0);">평론가 감상평</a>
-									<ul class="dropdown-menu">
-										<li><a href="blog_medium_right_sidebar1.html">Right Sidebar</a></li>
-										<li><a href="blog_medium_left_sidebar1.html">Left Sidebar</a></li>
-										<li><a href="blog_medium_full_width1.html">Full Width</a></li>
 									</ul>
 								</li>
 								<li class="dropdown-submenu">

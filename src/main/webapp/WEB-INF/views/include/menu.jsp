@@ -22,18 +22,21 @@
 				<div class="collapse navbar-collapse navbar-responsive-collapse">
 					<div class="res-container">
 						<ul class="nav navbar-nav">
-							<!-- Home -->
-							<li><a href="/">Home</a></li>
-							<!-- End Home -->
-							<!-- 적정관람료 -->
-							<li><a href="/movie/movieList">적정관람료</a></li>
-							<!-- End Home -->
-							<!-- 읽을거리 -->
-							<li><a href="/column/columnList">읽을거리</a></li>
-							<!-- End Home -->
-							<!-- 네트워킹 -->
+							<!-- 개봉관 -->
+							<li><a href="/movie/movieList">개봉관</a></li>
+							<!-- End 개봉관 -->
+							<!-- 추억의 명화관 -->
+							<li><a href="/movie/movieList">추억의 명화관</a></li>
+							<!-- End 추억의 명화관 -->
+							<!-- 팝콘 -->
+							<li><a href="/column/columnList">팝콘</a></li>
+							<!-- End 팝콘 -->
+							<!-- FAQ -->
+							<li><a href="/common/comin_soon">F.A.Q</a></li>
+							<!-- End FAQ -->
+							<!-- 마이페이지 -->
 							<li><a href="/member/myPage">마이페이지</a></li>
-							<!-- End Home -->
+							<!-- End 마이페이지 -->
 						</ul>
 					</div><!--/responsive container-->
 				</div><!--/navbar-collapse-->

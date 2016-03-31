@@ -15,3 +15,5 @@
 .more-font {
 	font-size:12px;
 }
+
+.rounded-x { border-radius: 50% !important;}

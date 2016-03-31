@@ -39,5 +39,11 @@ public class MovieServiceImpl implements MovieService {
 		
 		return map;
 	}
+	
+	@Override
+	public List<Map<String,Object>> getMovieImageList(Map<String,Object> condition) throws Exception {
+		
+		return movieRepository.selectMovieImageList(condition);
+	}
 
 }

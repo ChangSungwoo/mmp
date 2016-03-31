@@ -30,4 +30,13 @@ public class ColumnController {
 		
 		return mav;
 	}
+	
+	@RequestMapping(value = "/column/columnDetail", method = RequestMethod.GET)
+	public ModelAndView columnDetail(Map<String,Object> condition) {
+		
+		ModelAndView mav = new ModelAndView("column/column_detail");
+		
+		return mav;
+	}
+	
 }

@@ -35,7 +35,6 @@
 </head>
 
 <body>
-
 	<div class="wrapper">
 		<jsp:include page="/WEB-INF/views/admin/include/includeTop.jsp" flush="false">
 			<jsp:param name="dummy" value=""/>

@@ -48,4 +48,12 @@ public class MemberController {
 		return mav;
 	}
 	
+	@RequestMapping(value = "/member/myPage2", method = RequestMethod.GET)
+	public ModelAndView myPage2(Map<String,Object> condition) {
+		
+		ModelAndView mav = new ModelAndView("member/myPage2");
+		
+		return mav;
+	}
+	
 }

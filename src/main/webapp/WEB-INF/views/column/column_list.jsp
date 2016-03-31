@@ -41,15 +41,14 @@
 </head>
 
 <body class="index-page" data-page="index">
-	<!--=== Start Header v8 ===-->
 	<div class="wrapper">
+	<!--=== Start Header v8 ===-->
 		<jsp:include page="/WEB-INF/views/include/header.jsp" flush="false">
 			<jsp:param name="dummy" value=""/>
 		</jsp:include>
 		<jsp:include page="/WEB-INF/views/include/menu.jsp" flush="false">
 			<jsp:param name="dummy" value=""/>
 		</jsp:include>
-	</div>
 	<!--=== End Header v8 ===-->
 
 		<!--=== Breadcrumbs ===-->
@@ -66,7 +65,7 @@
 				<div class="grid-boxes-in">
 					<img class="img-responsive" src="/img/movie/movie003.jpg" alt="">
 					<div class="grid-boxes-caption">
-						<h3><a href="#">현실을 풍자한 어른을 위한 동화-주토..</a></h3>
+						<h3><a href="/column/columnDetail">현실을 풍자한 어른을 위한 동화-주토..</a></h3>
 						<ul class="list-inline grid-boxes-news">
 							<li><span>By</span> <a href="#">포포야</a></li>
 							<li>|</li>
@@ -88,7 +87,7 @@
 				<div class="grid-boxes-in">
 					<img class="img-responsive" src="/img/movie/taro.jpg" alt="">
 					<div class="grid-boxes-caption">
-						<h3><a href="#">일러스트-단행본 <[나의 점집문화 답...</a></h3>
+						<h3><a href="/column/columnDetail">일러스트-단행본 <[나의 점집문화 답...</a></h3>
 						<ul class="list-inline grid-boxes-news">
 							<li><span>By</span> <a href="#">한동원</a></li>
 							<li>|</li>
@@ -103,7 +102,7 @@
 				<div class="grid-boxes-in">
 					<img class="img-responsive" src="/img/movie/movie004.jpg" alt="">
 					<div class="grid-boxes-caption">
-						<h3><a href="#">‘스타일 없음’으로 성공적인 영화</a></h3>
+						<h3><a href="/column/columnDetail">‘스타일 없음’으로 성공적인 영화</a></h3>
 						<ul class="list-inline grid-boxes-news">
 							<li><span>By</span> <a href="#">한동원</a></li>
 							<li>|</li>
@@ -117,7 +116,7 @@
 
 				<div class="grid-boxes-in">
 					<div class="grid-boxes-caption">
-						<h3><a href="#">12년 만에 돌아온 '조제, 호랑이 그리고 물고기들' & 상영관 안내</a></h3>
+						<h3><a href="/column/columnDetail">12년 만에 돌아온 '조제, 호랑이 그리고 물고기들' & 상영관 안내</a></h3>
 						<ul class="list-inline grid-boxes-news">
 							<li><span>By</span> <a href="#">Kathy Reyes</a></li>
 							<li>|</li>
@@ -132,7 +131,7 @@
 				<div class="grid-boxes-in">
 					<img class="img-responsive" src="/img/movie/movie003_002.jpg" alt="">
 					<div class="grid-boxes-caption">
-						<h3><a href="#">틀림이 아닌 다름을 말하는 버디무비</a></h3>
+						<h3><a href="/column/columnDetail">틀림이 아닌 다름을 말하는 버디무비</a></h3>
 						<ul class="list-inline grid-boxes-news">
 							<li><span>By</span> <a href="#">Jessi</a></li>
 							<li>|</li>
@@ -147,7 +146,7 @@
 				<div class="grid-boxes-in">
 					<img class="img-responsive" src="/img/movie/movie_008.jpg" alt="">
 					<div class="grid-boxes-caption">
-						<h3><a href="#">돈이 아깝던 영화 vs 묻히기엔 아까운 영화</a></h3>
+						<h3><a href="/column/columnDetail">돈이 아깝던 영화 vs 묻히기엔 아까운 영화</a></h3>
 						<ul class="list-inline grid-boxes-news">
 							<li><span>By</span> <a href="#">한동원</a></li>
 							<li>|</li>
@@ -161,61 +160,61 @@
 
 				<div class="grid-boxes-in grid-boxes-qoute">
 					<div class="grid-boxes-caption grid-boxes-quote bg-color-blue">
-						<p>Computer Science is no more about computers than astronomy is about telescopes.</p>
-						<span>- Edsger W. Dijkstra -</span>
+						<p>'언젠가 당신은 그 남자를 사랑하지 않게 되겠지' 베르나르는 조용히 말했다. '그리고 언젠가는 나도 당신을 사랑하지 않게 될꺼야' 그렇게 시간이 흐르면 모두 똑같아 지는거야.</p>
+						<span>-쿠미코(조제 호랑이 그리고 물고기들)-</span>
 					</div>
 				</div>
 
 				<div class="grid-boxes-in">
-					<img class="img-responsive full-width" src="assets/img/main/img12.jpg" alt="">
+					<img class="img-responsive full-width" src="/img/movie/movie_009.jpg" alt="">
 					<div class="grid-boxes-caption">
-						<h3><a href="#">Facilisis odio, dapibus ac justo acilisis gestinas</a></h3>
+						<h3><a href="/column/columnDetail">원조 ‘스파이 영화’의 서글픈 쇠락</a></h3>
 						<ul class="list-inline grid-boxes-news">
-							<li><span>By</span> <a href="#">Kathy Reyes</a></li>
+							<li><span>By</span> <a href="#">한동원</a></li>
 							<li>|</li>
-							<li><i class="fa fa-clock-o"></i> July 22, 2014</li>
+							<li><i class="fa fa-clock-o"></i>2015-11-20</li>
 							<li>|</li>
 							<li><a href="#"><i class="fa fa-comments-o"></i> 15</a></li>
 						</ul>
-						<p>Donec semper tempus nisi, non gravida augue iaculis ate. Maecenas pharetra turpis est, vitae venenatis eleifend itae amet. Mauris sit amet sapien eget lacus posuere.</p>
+						<p>‘겉 먹자는 송편, 속 먹자는 만두’라는 고래의 경구로 비추어보아 007 시리즈는 단연 전자에 속하는 영화다. 다시 말해, 007 시리즈는 치밀한 이야기나 묵직한 주제의식 등이 아닌, 느끼미 및 섹시미로 무장한 남녀배우들과 그들의 딱 떨어지고도 화려한 의상과...</p>
 					</div>
 				</div>
 
 				<div class="grid-boxes-in">
 					<div class="responsive-video">
-						<iframe frameborder="0" src="//player.vimeo.com/video/70528799" webkitallowfullscreen="" mozallowfullscreen="" allowfullscreen=""></iframe>
+						<iframe frameborder="0" src="https://www.youtube.com/embed/R-owoDoBEKw" webkitallowfullscreen="" mozallowfullscreen="" allowfullscreen=""></iframe>
 					</div>
 					<div class="grid-boxes-caption">
-						<h3><a href="#">Unify Fully Responsive Bootstrap Template</a></h3>
+						<h3><a href="/column/columnDetail">조제, 호랑이 그리고 물고기들 : 제목의 의미</a></h3>
 						<ul class="list-inline grid-boxes-news">
-							<li><span>By</span> <a href="#">Kathy Reyes</a></li>
+							<li><span>By</span> <a href="#">백수골방</a></li>
 							<li>|</li>
-							<li><i class="fa fa-clock-o"></i> July 24, 2014</li>
+							<li><i class="fa fa-clock-o"></i> 2016-03-17</li>
 							<li>|</li>
 							<li><a href="#"><i class="fa fa-comments-o"></i> 32</a></li>
 						</ul>
-						<p>Donec semper tempus nisi, non gravida augue iaculis ate. Maecenas pharetra turpis est, vitae venenatis eleifend itae amet. Mauris sit amet sapien eget lacus posuere.</p>
+						<p>사실 영상을 만들 때마다 '뭔가 새로운 이야기를 해야한다' 라는 강박 같은 것에 시달리는 부분이 조금 있습니다.그래서 이번 영상을 만들 때도 자연스레 그런 고민들을 했는데, 그러다가 결국 접었습니다. 물론 사회적으로 유의미한 메시지가 깃들어 있는 장면이</p>
 					</div>
 				</div>
 
 				<div class="grid-boxes-in grid-boxes-qoute">
 					<div class="grid-boxes-caption grid-boxes-quote">
-						<p>Photography is more than a medium for factual communication of ideas. It is a creative art.</p>
-						<span>- Ansel Adams -</span>
+						<p>Carpe Diem!! (현재를 즐겨라)</p>
+						<span>- 존 키팅(죽은 시인의 사회) -</span>
 					</div>
 				</div>
 			</div><!--/container-->
 		</div>
 		<!--=== End Content Part ===-->
 
-	<!--=== Footer v8 ===-->
-	<div class="footer-v8">
-		<jsp:include page="/WEB-INF/views/include/footer.jsp" flush="false">
-			<jsp:param name="dummy" value=""/>
-		</jsp:include>
-	</div>
-	<!--=== End Footer v8 ===-->
-
+		<!--=== Footer v8 ===-->
+		<div class="footer-v8">
+			<jsp:include page="/WEB-INF/views/include/footer.jsp" flush="false">
+				<jsp:param name="dummy" value=""/>
+			</jsp:include>
+		</div>
+		<!--=== End Footer v8 ===-->
+	</div><!--=== wrapper ===-->
 	<!-- JS Global Compulsory -->
 	<script type="text/javascript" src="/plugins/jquery/jquery.min.js"></script>
 	<script type="text/javascript" src="/plugins/jquery/jquery-migrate.min.js"></script>
