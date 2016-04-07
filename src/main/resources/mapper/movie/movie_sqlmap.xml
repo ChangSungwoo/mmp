@@ -26,7 +26,8 @@
 			RELEASE_DT,
 			END_YN,
 			DISPLAY_YN,
-			CRE_ID, 
+			CRE_ID,
+			CRE_DT, 
 			UPD_ID
 			) VALUES (
 			#{movieKorTitle},
@@ -35,6 +36,7 @@
 			#{endYn},
 			#{displayYn},
 			#{creId},
+			NOW(),
 			#{updId}
 			);
 	</insert>
@@ -46,6 +48,7 @@
 				mi.FILE_NM as FileNm
 			FROM MOVIE_MASTER mm LEFT OUTER JOIN MOVIE_IMAGE mi
 			ON mm.MOVIE_ID = mi.MOVIE_ID 
-			and mi.DELEGATE_YN = 'Y';
+			AND mi.DELEGATE_YN = 'Y'
+			ORDER BY mm.CRE_DT DESC;
 	</select>
 </mapper>

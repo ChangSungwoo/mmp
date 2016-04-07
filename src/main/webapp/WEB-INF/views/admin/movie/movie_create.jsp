@@ -98,7 +98,6 @@
 				</div>
 				<!-- End Content -->
 			</div>
-		</div>
 		<!--=== End Content ===-->
 		<jsp:include page="/WEB-INF/views/admin/include/includeBottom.jsp" flush="false">
 			<jsp:param name="dummy" value=""/>

@@ -30,6 +30,7 @@
 	<link rel="stylesheet" href="/plugins/line-icons/line-icons.css">
 	<link rel="stylesheet" href="/plugins/font-awesome/css/font-awesome.min.css">
 	<link rel="stylesheet" href="/plugins/brand-buttons/brand-buttons.css">
+	<link rel="stylesheet" href="/plugins/sky-forms-pro/skyforms/custom/custom-sky-forms.css">	
 
 	<!-- CSS Page Style -->
 	<link rel="stylesheet" href="/css/pages/page_log_reg_v4.css">
@@ -51,6 +52,7 @@
 	<!--=== End Header v8 ===-->
 	<!--=== Content Part ===-->
 	<div class="container-fluid">
+	<form id="userRegistForm" name="userRegistForm" class="sky-form2">
 		<div class="row equal-height-columns">
 			<div class="col-md-12 col-sm-12 form-block equal-height-column">
 				<div class="reg-block">
@@ -58,34 +60,34 @@
 					
 					<div class="input-group margin-bottom-20">
 						<span class="input-group-addon rounded-left"><i class="icon-envelope color-green"></i></span>
-						<input type="email" class="form-control rounded-right" placeholder="로그인 아이디(이메일 주소)">
+						<input type="email" id="loginId" name="loginId" class="form-control rounded-right" placeholder="로그인 아이디(이메일 주소)">
 					</div>
 					
 					<div class="input-group margin-bottom-20">
 						<span class="input-group-addon rounded-left"><i class="icon-lock color-green"></i></span>
-						<input type="password" class="form-control rounded-right" placeholder="비밀번호">
+						<input type="password" id="loginPwd" name="loginPwd" class="form-control rounded-right" placeholder="비밀번호" maxlength="20">
 					</div>
 					
 					<div class="input-group margin-bottom-20">
 						<span class="input-group-addon rounded-left"><i class="icon-lock color-green"></i></span>
-						<input type="password" class="form-control rounded-right" placeholder="비밀번호 확인">
+						<input type="password" id="pwdConfirm" name="pwdConfirm" class="form-control rounded-right" placeholder="비밀번호 확인" maxlength="20">
 					</div>
 					
 					<div class="input-group margin-bottom-20">
 						<span class="input-group-addon rounded-left"><i class="icon-pencil color-green"></i></span>
-						<input type="text" class="form-control rounded-right" placeholder="닉네임">
+						<input type="text" id="userNickNm" name="userNickNm" class="form-control rounded-right" placeholder="닉네임" maxlength="10">
 					</div>
 
-					<div class="checkbox margin-bottom-20">
-						<label>
-							<input type="checkbox"><a href="">이용약관 및 개인정보 취급 방침</a>에 동의합니다.</a>
+					<div class="checkbox margin-bottom-40">
+						<label style="margin-bottom:15px;">
+							<input type="checkbox" id="agreeRule" name="agreeRule" ><a href="">이용약관 및 개인정보 취급 방침</a>에 동의합니다.</a>
 						</label>
 					</div>
-
-					<button type="submit" class="btn-u btn-block rounded">회원 가입</button>
+					<button type="button" id="btnRegist" name="btnRegist" class="btn-u btn-block rounded">회원 가입</button>
 				</div>
 			</div>
 		</div>
+		</form>
 	</div><!--/container-->
 	<!--=== End Content Part ===-->
 	<!--=== Footer v8 ===-->
@@ -100,13 +102,16 @@
 	<script src="/plugins/jquery/jquery.min.js"></script>
 	<script src="/plugins/jquery/jquery-migrate.min.js"></script>
 	<script src="/plugins/bootstrap/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="/plugins/sky-forms-pro/skyforms/js/jquery.maskedinput.min.js"></script>
+	<script type="text/javascript" src="/plugins/sky-forms-pro/skyforms/js/jquery-ui.min.js"></script>
+	<script type="text/javascript" src="/plugins/sky-forms-pro/skyforms/js/jquery.validate.min.js"></script>
 
 	<!-- JS Implementing Plugins -->
 	<script src="/plugins/back-to-top.js"></script>
 	<script src="/plugins/backstretch/jquery.backstretch.min.js"></script>
 
 	<!-- JS Customization -->
-	<script src="/js/member/member_login.js"></script>
+	<script src="/js/member/member_regist.js"></script>
 
 	<!-- JS Page Level -->
 	<script src="/js/app.js"></script>

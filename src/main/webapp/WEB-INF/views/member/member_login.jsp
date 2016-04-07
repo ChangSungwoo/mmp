@@ -42,6 +42,14 @@
 	
 </head>
 <body>
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/ko_KR/sdk.js#xfbml=1&version=v2.5&appId=260835094253344";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
 	<!--=== Start Header v8 ===-->
 	<div class="wrapper">
 		<jsp:include page="/WEB-INF/views/include/header.jsp" flush="false">
@@ -90,12 +98,17 @@
 							<div class="or rounded-x">Or</div>
 							<ul class="list-inline margin-bottom-20">
 								<li>
-									<button class="btn rounded btn-lg btn-facebook">
+									<!-- button class="btn rounded btn-lg btn-facebook">
 										<i class="fa fa-facebook"></i> Facebook Sign in
 									</button>
+									<fb:login-button scope="public_profile,email" onlogin="checkLoginState();">
+									</fb:login-button-->
+									<div class="fb-login-button" data-max-rows="1" data-size="xlarge" data-show-faces="false" data-auto-logout-link="true"></div>
+									<div id="status">
+									</div>
 								</li>
 							</ul>
-							<p>아직 아이디가 없으신가요? <a href="page_registration2.html">회원가입</a></p>
+							<p>아직 아이디가 없으신가요? <a href="/member/regist">회원가입</a></p>
 						</div>
 					</div>
 				</form>

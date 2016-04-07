@@ -383,3 +383,111 @@
   width: 26px;
   /*color: #bfbfbf;*/
 }
+
+/**/
+/* error state */
+/**/
+.sky-form2 .state-error input,
+.sky-form2 .state-error select,
+.sky-form2 .state-error select + i,
+.sky-form2 .state-error textarea,
+.sky-form2 .radio.state-error i,
+.sky-form2 .checkbox.state-error i,
+.sky-form2 .toggle.state-error i,
+.sky-form2 .toggle.state-error input:checked + i {
+	background: #fff0f0;
+}
+.sky-form2 .state-error + em {
+	display: block;
+	margin-top: -15px;
+	margin-bottom: 15px;
+	padding: 0 1px;
+	font-style: normal;
+	font-size: 11px;
+	line-height: 15px;
+	color: #ee9393;
+}
+.sky-form2 .rating.state-error + em {
+	margin-top: -4px;
+	margin-bottom: 4px;
+}
+
+
+/**/
+/* success state */
+/**/
+.sky-form2 .state-success input,
+.sky-form2 .state-success select,
+.sky-form2 .state-success select + i,
+.sky-form2 .state-success textarea,
+.sky-form2 .radio.state-success i,
+.sky-form2 .checkbox.state-success i,
+.sky-form2 .toggle.state-success i,
+.sky-form2 .toggle.state-success input:checked + i {
+	background: #f0fff0;
+}
+.sky-form2 .state-success + em {
+	display: block;
+	margin-top: 6px;
+	padding: 0 1px;
+	font-style: normal;
+	font-size: 11px;
+	line-height: 15px;
+	color: #ee9393;
+}
+.sky-form2 .note-success {
+	color: #6fb679;
+}
+
+
+/**/
+/* disabled state */
+/**/
+.sky-form2 .input.state-disabled input,
+.sky-form2 .select.state-disabled,
+.sky-form2 .textarea.state-disabled,
+.sky-form2 .radio.state-disabled,
+.sky-form2 .checkbox.state-disabled,
+.sky-form2 .toggle.state-disabled,
+.sky-form2 .button.state-disabled {
+	cursor: default;
+	opacity: 0.5;
+}
+.sky-form2 .input.state-disabled:hover input,
+.sky-form2 .select.state-disabled:hover select,
+.sky-form2 .textarea.state-disabled:hover textarea,
+.sky-form2 .radio.state-disabled:hover i,
+.sky-form2 .checkbox.state-disabled:hover i,
+.sky-form2 .toggle.state-disabled:hover i {
+	border-color: #e5e5e5;
+}
+
+
+/**/
+/* submited state */
+/**/
+.sky-form2 .message {
+	display: none;
+	color: #6fb679;
+}
+.sky-form2 .message i {
+	display: block;
+	margin: 0 auto 20px;
+	width: 81px;
+	height: 81px;
+	border: 1px solid #6fb679;
+	border-radius: 50%;
+	font-size: 30px;
+	line-height: 81px;
+}
+.sky-form2.submited fieldset,
+.sky-form2.submited footer {
+	display: none;
+}
+.sky-form2.submited .message {
+	display: block;
+	padding: 25px 30px;
+	background: rgba(255,255,255,.9);
+	font: 300 18px/27px 'Open Sans', Helvetica, Arial, sans-serif;
+	text-align: center;
+}
