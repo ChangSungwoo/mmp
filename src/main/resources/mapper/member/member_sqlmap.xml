@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="member">
+
+		<insert id="insertMember" parameterType="com.mymovieprice.mmp.member.model.Member">
+		insert into USER_MASTER(
+			USER_TYPE, 
+			PROVIDER_CD,
+			LOGIN_ID,
+			LOGIN_PWD,
+			USER_NICK_NM,
+			USER_NM,
+			USER_GRADE, 
+			CRE_DT,
+			CRE_ID,
+			UPD_ID
+			) values (
+			#{userType},
+			#{providerCd},
+			#{loginId},
+			#{loginPwd},
+			#{userNickNm},
+			#{userNm},
+			#{userGrade},
+			NOW(),
+			#{creId},
+			#{updId}
+			);
+	</insert>
+
+	<select id="selectLoginInfo" parameterType="hashmap" resultType="com.mymovieprice.mmp.member.model.Member">
+		select 
+		LOGIN_ID as loginId,
+		LOGIN_PWD as loginPwd,
+		USER_NICK_NM as userNickNm,
+		USER_GRADE as userGrade,
+		USER_TYPE as userType
+		from USER_MASTER
+		where LOGIN_ID = #{loginId};
+	</select>
+</mapper>

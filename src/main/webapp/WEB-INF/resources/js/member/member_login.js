@@ -6,11 +6,112 @@
 $(document).ready(function() {
 	App.init();
 	setEvent();
+	
+	Validation.initValidation();
 });
 
 function setEvent(){
 
+	$("#btnLogin").click(function(){
+		if($("#loginForm").valid()) {
+			console.log("valid Form");
+			loginStart();
+			return false;
+		} else {
+			console.log("unvalid Form");
+			validFormCheck();
+			return false;
+		}
+	});
 }
+
+function loginStart() {
+	
+	$.ajax({
+		url : "/member/loginProc",
+		type : 'POST',
+		data : $("#loginForm").serialize(true),
+		dataType : "json",
+		success : function(data){
+	
+			if(data.error != undefined){
+				alert("에러코드 : " + data.additionalInfo.errCode + "\n" + data.message);
+				//alert(data.message);
+				return false;
+			} else {
+				if(data.resultCode == 'A00') {
+					//Main 화면으로 이동
+					location.href="/";						
+				} else if(data.resultCode == 'A04') {
+					
+					alert("입력하신 로그인ID가 올바르지 않습니다.");
+					return false;
+				} else if(data.resultCode == 'A03') {
+					alert("입력하신 비밀번호가 올바르지 않습니다.");
+					return false;
+				}
+			
+			}
+		},
+		error : function(e){
+			if(e.status==200){
+				alert("error code 정상 저장 되었습니다.");
+				location.href="/member/login";
+			}else{
+				console.log(e);
+				alert("오류가 발생했습니다. 다시 시도해 주시기 바랍니다.");
+			}
+		}
+	});
+}
+
+
+var Validation = function () {
+
+    return {
+        //Validation
+        initValidation: function () {
+	        $("#loginForm").validate({                   
+	            // Rules for form validation
+	            rules:
+	            {
+	            	loginId:
+	                {
+	                    required: true
+	                },
+	                loginPwd:
+	                {
+	                    required: true
+	                }
+	            },
+	                                
+	            // Messages for form validation
+	            messages:
+	            {
+	            	loginId:
+	                {
+	                    required: '로그인 아이디를 입력해주세요.'
+	                },
+	                loginPwd:
+	                {
+	                    required: '로그인 비밀번호를 입력해주세요.'
+	                }
+	            },                  
+	            onsubmit:false,
+	            // Do not change code below
+	            errorPlacement: function(error, element)
+	            {
+	                error.insertAfter(element.parent());
+	            }
+	        });
+        }
+
+    };
+}();
+
+
+
+
 
 // This is called with the results from from FB.getLoginStatus().
 function statusChangeCallback(response) {

@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.mymovieprice.mmp.main.web.MainController;
+import com.mymovieprice.mmp.member.model.Member;
 import com.mymovieprice.mmp.member.model.MemberCondition;
 import com.mymovieprice.mmp.member.service.MemberService;
 import com.mymovieprice.mmp.util.StringUtils;
@@ -41,6 +42,68 @@ public class MemberController {
 		ModelAndView mav = new ModelAndView("member/member_login");
 		
 		return mav;
+	}
+	
+	@RequestMapping(value = "/member/loginProc")
+	@ResponseBody
+	public Map<String, Object> memberSaveloginProc(Map<String,Object> condition, HttpServletRequest request) {
+				
+		String msg = null;
+		String strRsltCode = null;
+		
+		MemberCondition memberCondition = new MemberCondition();
+		
+		String reqLoginId = request.getParameter("loginId");
+		String reqLoginPwd = request.getParameter("loginPwd");
+		
+		String strLoginId = null;
+		String strLoginPwd = null;
+		String strUserNickNm = null;
+			
+		memberCondition.setLoginId(reqLoginId);
+		memberCondition.setLoginPwd(reqLoginPwd);
+				
+		Map<String, Object> map = new HashMap<String, Object>();
+		Member loginMember = new Member();
+		
+		try {
+			loginMember = memberService.getLoginUserInfo(memberCondition);
+			
+			if(loginMember == null) {
+				msg = "ID Not found";
+				strRsltCode = "A04";
+			} else {
+				
+				logger.info("userID : "+loginMember.getLoginId());
+				logger.info("password : "+loginMember.getLoginPwd());
+				logger.info("nickName : "+loginMember.getUserNickNm());
+				
+				strLoginId = loginMember.getLoginId();
+				strLoginPwd = loginMember.getLoginPwd();
+				strUserNickNm = loginMember.getUserNickNm();
+				
+				if(strLoginId.equals(reqLoginId)) {
+					if(strLoginPwd.equals(reqLoginPwd)) {
+						logger.info("password Success");
+						strRsltCode = "A00";
+					} else {
+						msg = "Password not correct";
+						strRsltCode = "A03";
+					}
+				}	
+			}			
+
+		} catch (Exception e) {
+
+			map.put("error",e.getMessage());
+			map.put("message","로그인 처리중 오류가 발생했습니다.");
+			e.printStackTrace();
+		}
+		
+		map.put("resultCode", strRsltCode);
+		map.put("message", msg);
+		
+		return map;
 	}
 	
 	@RequestMapping(value = "/member/regist", method = RequestMethod.GET)
