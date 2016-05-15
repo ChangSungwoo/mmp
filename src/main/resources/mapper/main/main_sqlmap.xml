@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="main">
+
+	<select id="selectMainContent" parameterType="hashmap" resultType="hashmap">
+		select A.CONTENT_DIV as contentDiv
+		, A.MOVIE_KOR_TITLE as mainSubject
+		, A.CONTENT_SEQ as contentSeq
+		, mi.FILE_NM as imgFileNm
+		, mi.FILE_PATH as imgFilePath
+		from (select cm.CONTENT_DIV, mm.MOVIE_KOR_TITLE, cm.IMAGE_SEQ, cm.DISPLAY_ORDER, cm.CONTENT_SEQ
+			from CONTENT_MASTER cm , MOVIE_MASTER mm
+			where cm.PAGE_ID = 1
+			and cm.USE_YN = 'Y'
+			and cm.CONTENT_SEQ = mm.MOVIE_ID) A , MOVIE_IMAGE mi
+		where A.IMAGE_SEQ = mi.IMAGE_SEQ
+		order by A.DISPLAY_ORDER
+	</select>
+
+</mapper>

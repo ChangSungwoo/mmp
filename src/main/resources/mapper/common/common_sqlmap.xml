@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="common">
+
+	<select id="selectDetailList" parameterType="hashmap" resultType="hashmap">
+		select CODE_D_SEQ as dSeq
+		, CODE_D_NM as DName
+		, DEFAULT_YN as defaultYn
+		from CMM_CODE_D
+		where CODE_M_SEQ = #{mSeq}
+	</select>
+	
+	<select id="selectDetailUseList" parameterType="hashmap" resultType="hashmap">
+		select CODE_D_SEQ as dSeq
+		, CODE_D_NM as DName
+		, DEFAULT_YN as defaultYn
+		from CMM_CODE_D
+		where CODE_M_SEQ = #{mSeq}
+		and USE_YN = 'Y'
+	</select>
+
+</mapper>
