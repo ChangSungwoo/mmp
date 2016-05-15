@@ -66,7 +66,7 @@ var Validation = function () {
 	                {
 	                    required: true
 	                },
-	                releaseDate:
+	                releaseDt:
 	                {
 	                    required: true,
 	                    date: true
@@ -80,7 +80,7 @@ var Validation = function () {
 	                {
 	                    required: '영화 제목을 입력해주세요.'
 	                },
-	               releaseDate:
+	               releaseDt:
 	                {
 	                    required: '개봉일을 입력해주세요.'
 	                }
@@ -105,7 +105,7 @@ var Datepicker = function () {
         //Datepickers
         initDatepicker: function () {
 	        // Regular datepicker
-	        $('#releaseDate').datepicker({
+	        $('#releaseDt').datepicker({
 	            dateFormat: 'yy-mm-dd',
 	            prevText: '<i class="fa fa-angle-left"></i>',
 	            nextText: '<i class="fa fa-angle-right"></i>'

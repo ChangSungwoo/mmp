@@ -1,5 +1,7 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <!DOCTYPE html>
@@ -45,7 +47,7 @@
 <body class="header-fixed header-fixed-space-v2">
 	<!--=== Start Header v8 ===-->
 	<div class="wrapper">
-		<jsp:include page="/WEB-INF/views/include/header.jsp" flush="false">
+		<jsp:include page="/common/header" flush="false">
 			<jsp:param name="dummy" value=""/>
 		</jsp:include>
 		<jsp:include page="/WEB-INF/views/include/menu.jsp" flush="false">
@@ -73,31 +75,37 @@
 				<div class="tab-content">
 					<div class="tab-pane fade in active" id="home-1">
 						<p>
-							<!-- News v3 -->
-							<div class="row margin-bottom-5">
-								<div class="col-sm-5 sm-margin-bottom-5">
-									<img class="img-responsive" src="/img/movie/movie001.jpg" alt="">
-								</div>
-								<div class="col-sm-7">
-									<div class="news-v3">
-										<ul class="list-inline posted-info">
-											<li>By 에단 코엔, 조엘 코엔</li>
-											<li>개봉일 : 2016-03-24</li>
-										</ul>
-										<h2><a href="/movie/movieDetail">헤일 시저 (Hail, Caesar!)</a></h2>
-										<p>시나리오도 있다! 돈도 있다! 그런데 주연배우가 없다? 1950년, 할리우드 최대 무비 스캔들을 해결하라! 올해 최고 대작 ‘헤일, 시저!’ 촬영 도중 무비 스타 ‘베어드 휘트록’이 납치되고 정체불명의 ‘미래’로부터 협박 메시지가 도착한다...</p>
-										<ul class="post-shares">
-											<li class="movie-prices text-highlights text-highlights-purple rounded tooltips">9,150원</li>
-											<span aria-hidden="true" class="icon-arrow-up"></span>&nbsp;<li class="movie-small-prices price-red">+450원</li>
-											<span aria-hidden="true" class="icon-arrow-down"></span>&nbsp;<li class="movie-small-prices price-blue">-300원</li>
-										</ul>
-									</div>
-								</div>
-							</div><!--/end row-->
-							<!-- End News v3 -->
-							<div class="clearfix margin-bottom-5"><hr></div>
-
-							<div class="row margin-bottom-5">
+						<c:choose>
+							<c:when test="${fn:length(list) > 0}">
+								<c:forEach items="${list}" var="row">						
+									<!-- News v3 -->
+									<div class="row margin-bottom-5">
+										<div class="col-sm-5 sm-margin-bottom-5">
+											<img class="img-responsive" src="${row.imgFilePath}/${row.imgFileNm}"  alt="">
+										</div>
+										<div class="col-sm-7">
+											<div class="news-v3">
+												<ul class="list-inline posted-info">
+													<li>&nbsp;<!-- TODO : 배우정보 --></li>
+													<li>개봉일 : ${row.releaseDt}</li>
+												</ul>
+												<h2><a href="/movie/movieDetail?movieId=${row.movieId}">${row.movieKorTitle} (${row.movieEngTitle})</a></h2>
+												<p><!-- TODO : 감상평 --></p>
+												<ul class="post-shares">
+													<li class="movie-prices text-highlights text-highlights-purple rounded tooltips"><fmt:formatNumber value="${row.price}" pattern="#,###"/>원</li>
+													<span aria-hidden="true" class="icon-arrow-up"></span>&nbsp;<li class="movie-small-prices price-red">+<fmt:formatNumber value="${row.positivePrice}" pattern="#,###"/>원</li>
+													<span aria-hidden="true" class="icon-arrow-down"></span>&nbsp;<li class="movie-small-prices price-blue">-<fmt:formatNumber value="${row.negativePrice}" pattern="#,###"/>원</li>
+												</ul>
+											</div>
+										</div>
+									</div><!--/end row-->
+									<!-- End News v3 -->
+									<div class="clearfix margin-bottom-5"><hr></div>
+								</c:forEach>
+							</c:when>
+						</c:choose>
+						
+							<!-- div class="row margin-bottom-5">
 								<div class="col-sm-5 sm-margin-bottom-5">
 									<img class="img-responsive" src="/img/movie/movie002_002.jpg" alt="">
 								</div>
@@ -116,8 +124,7 @@
 										</ul>
 									</div>
 								</div>
-							</div><!--/end row-->
-							<!-- End News v3 -->
+							</div>
 							<div class="clearfix margin-bottom-5"><hr></div>
 							
 							<div class="row margin-bottom-5">
@@ -139,8 +146,7 @@
 										</ul>
 									</div>
 								</div>
-							</div><!--/end row-->
-							<!-- End News v3 -->
+							</div>
 							<div class="clearfix margin-bottom-5"><hr></div>
 							
 							<div class="row margin-bottom-5">
@@ -162,9 +168,8 @@
 										</ul>
 									</div>
 								</div>
-							</div><!--/end row-->
-							<!-- End News v3 -->
-							<div class="clearfix margin-bottom-5"><hr></div>
+							</div>
+							<div class="clearfix margin-bottom-5"><hr></div-->
 							<!-- Pager v3 -->
 							<ul class="pager pager-v3 pager-md no-margin-bottom">
 								<li class="previous"><a href="#">&larr; Older</a></li>

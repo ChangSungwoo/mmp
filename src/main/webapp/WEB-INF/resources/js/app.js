@@ -166,5 +166,4 @@ var App = function() {
     },
 
   };
-
 }();

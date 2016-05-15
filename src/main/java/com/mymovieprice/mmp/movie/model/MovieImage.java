@@ -1,11 +1,14 @@
 package com.mymovieprice.mmp.movie.model;
 
+import org.springframework.web.multipart.MultipartFile;
+
 public class MovieImage {
 	
 	private String movieId;
 	private String imageSeq;
 	private String imageDiv;
 	private String fileNm;
+	private String filePath;
 	private String imageDesc;
 	private String useYn;
 	private String delegateYn;
@@ -13,6 +16,9 @@ public class MovieImage {
 	private String creId;
 	private String updDt;
 	private String updId;
+	
+	private MultipartFile file;
+	
 	public String getMovieId() {
 		return movieId;
 	}
@@ -36,6 +42,12 @@ public class MovieImage {
 	}
 	public void setFileNm(String fileNm) {
 		this.fileNm = fileNm;
+	}
+	public String getFilePath() {
+		return filePath;
+	}
+	public void setFilePath(String filePath) {
+		this.filePath = filePath;
 	}
 	public String getImageDesc() {
 		return imageDesc;
@@ -79,5 +91,13 @@ public class MovieImage {
 	public void setUpdId(String updId) {
 		this.updId = updId;
 	}
+	public MultipartFile getFile() {
+		return file;
+	}
+	public void setFile(MultipartFile file) {
+		this.file = file;
+	}
 
+	
+	
 }

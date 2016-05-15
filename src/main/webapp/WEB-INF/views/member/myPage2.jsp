@@ -44,7 +44,7 @@
 <body class="header-fixed header-fixed-space-v2">
 	<!--=== Start Header v8 ===-->
 	<div class="wrapper">
-		<jsp:include page="/WEB-INF/views/include/header.jsp" flush="false">
+		<jsp:include page="/common/header" flush="false">
 			<jsp:param name="dummy" value=""/>
 		</jsp:include>
 		<jsp:include page="/WEB-INF/views/include/menu.jsp" flush="false">

@@ -31,13 +31,14 @@
 	<link rel="stylesheet" href="/plugins/font-awesome/css/font-awesome.min.css">
 	<link rel="stylesheet" href="/plugins/cubeportfolio/css/cubeportfolio.min.css">
 	<link rel="stylesheet" href="/plugins/cubeportfolio/custom/custom-cubeportfolio.css">
+	<link rel="stylesheet" href="/plugins/sky-forms-pro/skyforms/css/sky-forms.css">
+	<link rel="stylesheet" href="/plugins/sky-forms-pro/skyforms/custom/custom-sky-forms.css">	
 
 	<!-- CSS Theme -->
 	<link rel="stylesheet" href="/css/theme-colors/default.css" id="style_color">
 </head>
 
 <body>
-
 	<div class="wrapper">
 		<jsp:include page="/WEB-INF/views/admin/include/includeTop.jsp" flush="false">
 			<jsp:param name="dummy" value=""/>
@@ -47,9 +48,34 @@
 			<jsp:param name="parentName" value='<%=java.net.URLEncoder.encode("영화 관리")%>'/>
 		</jsp:include>
 		<!--=== Content ===-->
+		<!--=== Search Start===-->
+		<div class="container content">
+			<form id="movieSearchForm" name="movieSearchForm" class="sky-form">
+				<div class="col-md-12">
+						<fieldset>
+					<div class="row">
+						<section class="col col-6">
+							<label class="input">
+								영화제목 : <input type="text" name="movieTitle" id="movieTitle">
+							</label>
+						</section>
+						<section class="col col-6">
+							<label class="input">
+								상태 : <input type="text" name="movieTitle" id="movieTitle">
+							</label>						
+						</section>
+					</div>
+					</fieldset>
+				</div>
+				<footer style="text-align:right;padding-right:10px;">
+					<button type="submit" id="btnSearch" name="btnSearch" class="btn-u">검색</button>
+				</footer>
+			</form>
+		</div>
+		<!--=== Search End ===-->
 		<!--=== Cube-Portfdlio ===-->
 		<div class="cube-portfolio container margin-bottom-60">
-			<div class="content-xs">
+			<!-- div class="content-xs">
 				<div id="filters-container" class="cbp-l-filters-text content-xs">
 					<div data-filter="*" class="cbp-filter-item-active cbp-filter-item"> All </div> |
 					<div data-filter=".identity" class="cbp-filter-item"> Identity </div> |
@@ -57,7 +83,7 @@
 					<div data-filter=".graphic" class="cbp-filter-item"> Graphic </div> |
 					<div data-filter=".logos" class="cbp-filter-item"> Logo </div>
 				</div><!--/end Filters Container-->
-			</div>
+			<!-- /div-->
 			<div id="grid-container" class="cbp-l-grid-agency">
 			<c:choose>
 				<c:when test="${fn:length(list) > 0}">
@@ -65,268 +91,26 @@
 						<div class="cbp-item graphic">
 							<div class="cbp-caption margin-bottom-20">
 								<div class="cbp-caption-defaultWrap">
-									<c:choose>
-										<c:when test="${row.FileNm eq null}">
-											<img src="/img/common/no_image.jpeg" alt="">
-										</c:when>
-										<c:otherwise>
-											<img src="/uploadImg/100/${row.FileNm}" alt="">
-										</c:otherwise>
-									</c:choose>
-								</div>
-								<div class="cbp-caption-activeWrap">
-									<div class="cbp-l-caption-alignCenter">
-										<div class="cbp-l-caption-body">
-											<ul class="link-captions no-bottom-space">
-												<li><a href="portfolio_single_item.html"><i class="rounded-x fa fa-link"></i></a></li>
-												<li>
-													<a href="/uploadImg/100/${row.FileNm}" class="cbp-lightbox" data-title="Design Object">
-													<i class="rounded-x fa fa-search"></i></a>
-												</li>
-											</ul>
-										</div>
-									</div>
+									<a href="/admin/movie/manageMovieImage?movieId=${row.movieId}">
+										<c:choose>
+											<c:when test="${row.fileNm eq null}">
+												<img src="/img/common/no_image.jpeg" alt="">
+											</c:when>
+											<c:otherwise>
+												<img src="${row.filePath}/${row.fileNm}" alt="">
+											</c:otherwise>
+										</c:choose>
+									</a>
 								</div>
 							</div>
 							<div class="cbp-title-dark">
-								<div class="cbp-l-grid-agency-title">${row.movieKorTitle}[1]</div>
-								<div class="cbp-l-grid-agency-desc">이미지 추가/수정<br/></div>
+								<div class="cbp-l-grid-agency-title"><a href="/admin/movie/manageMovieImage?movieId=${row.movieId}">${row.movieKorTitle}</a></div>
+								<div class="cbp-l-grid-agency-desc">등록 이미지수 : ${row.imageCnt}<br/></div>
 							</div>
 						</div>
 						</c:forEach>
 					</c:when>
 				</c:choose>
-				<!-- div class="cbp-item web-design logos">
-					<div class="cbp-caption margin-bottom-20">
-						<div class="cbp-caption-defaultWrap">
-							<img src="/img/movie/movie002.jpg" alt="">
-						</div>
-						<div class="cbp-caption-activeWrap">
-							<div class="cbp-l-caption-alignCenter">
-								<div class="cbp-l-caption-body">
-									<ul class="link-captions no-bottom-space">
-										<li><a href="portfolio_single_item.html"><i class="rounded-x fa fa-link"></i></a></li>
-										<li><a href="/img/movie/movie002.jpg" class="cbp-lightbox" data-title="Design Object"><i class="rounded-x fa fa-search"></i></a></li>
-									</ul>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="cbp-title-dark">
-						<div class="cbp-l-grid-agency-title">사울의 아들[3]</div>
-						<div class="cbp-l-grid-agency-desc">이미지 추가/수정</div>
-					</div>
-				</div>
-				<div class="cbp-item graphic logos">
-					<div class="cbp-caption margin-bottom-20">
-						<div class="cbp-caption-defaultWrap">
-							<img src="/img/movie/movie003.jpg" alt="">
-						</div>
-						<div class="cbp-caption-activeWrap">
-							<div class="cbp-l-caption-alignCenter">
-								<div class="cbp-l-caption-body">
-									<ul class="link-captions no-bottom-space">
-										<li><a href="portfolio_single_item.html"><i class="rounded-x fa fa-link"></i></a></li>
-										<li><a href="/img/movie/movie003.jpg" class="cbp-lightbox" data-title="Design Object"><i class="rounded-x fa fa-search"></i></a></li>
-									</ul>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="cbp-title-dark">
-						<div class="cbp-l-grid-agency-title">주토피아[1]</div>
-						<div class="cbp-l-grid-agency-desc">이미지 추가/수정</div>
-					</div>
-				</div>
-				<div class="cbp-item web-design graphic">
-					<div class="cbp-caption margin-bottom-20">
-						<div class="cbp-caption-defaultWrap">
-							<img src="/img/movie/movie004.jpg" alt="">
-						</div>
-						<div class="cbp-caption-activeWrap">
-							<div class="cbp-l-caption-alignCenter">
-								<div class="cbp-l-caption-body">
-									<ul class="link-captions no-bottom-space">
-										<li><a href="portfolio_single_item.html"><i class="rounded-x fa fa-link"></i></a></li>
-										<li><a href="/img/movie/movie004.jpg" class="cbp-lightbox" data-title="Design Object"><i class="rounded-x fa fa-search"></i></a></li>
-									</ul>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="cbp-title-dark">
-						<div class="cbp-l-grid-agency-title">스포트라이트[1]</div>
-						<div class="cbp-l-grid-agency-desc">이미지 추가/수정</div>
-					</div>
-				</div>
-				<div class="cbp-item identity web-design">
-					<div class="cbp-caption margin-bottom-20">
-						<div class="cbp-caption-defaultWrap">
-							<img src="/img/movie/movie005.jpg" alt="">
-						</div>
-						<div class="cbp-caption-activeWrap">
-							<div class="cbp-l-caption-alignCenter">
-								<div class="cbp-l-caption-body">
-									<ul class="link-captions no-bottom-space">
-										<li><a href="portfolio_single_item.html"><i class="rounded-x fa fa-link"></i></a></li>
-										<li><a href="/img/movie/movie005.jpg" class="cbp-lightbox" data-title="Design Object"><i class="rounded-x fa fa-search"></i></a></li>
-									</ul>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="cbp-title-dark">
-						<div class="cbp-l-grid-agency-title">남과 여</div>
-						<div class="cbp-l-grid-agency-desc">이미지 추가/수정</div>
-					</div>
-				</div>
-				<div class="cbp-item identity web-design">
-					<div class="cbp-caption margin-bottom-20">
-						<div class="cbp-caption-defaultWrap">
-							<img src="/img/movie/movie006.jpg" alt="">
-						</div>
-						<div class="cbp-caption-activeWrap">
-							<div class="cbp-l-caption-alignCenter">
-								<div class="cbp-l-caption-body">
-									<ul class="link-captions no-bottom-space">
-										<li><a href="portfolio_single_item.html"><i class="rounded-x fa fa-link"></i></a></li>
-										<li><a href="/img/movie/movie006.jpg" class="cbp-lightbox" data-title="Design Object"><i class="rounded-x fa fa-search"></i></a></li>
-									</ul>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="cbp-title-dark">
-						<div class="cbp-l-grid-agency-title">동주[1]</div>
-						<div class="cbp-l-grid-agency-desc">이미지 추가/수정</div>
-					</div>
-				</div>
-				<div class="cbp-item web-design identity">
-					<div class="cbp-caption margin-bottom-20">
-						<div class="cbp-caption-defaultWrap">
-							<img src="/img/movie/movie_007.jpg" alt="">
-						</div>
-						<div class="cbp-caption-activeWrap">
-							<div class="cbp-l-caption-alignCenter">
-								<div class="cbp-l-caption-body">
-									<ul class="link-captions no-bottom-space">
-										<li><a href="portfolio_single_item.html"><i class="rounded-x fa fa-link"></i></a></li>
-										<li><a href="/img/movie/movie_007.jpg" class="cbp-lightbox" data-title="Design Object"><i class="rounded-x fa fa-search"></i></a></li>
-									</ul>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="cbp-title-dark">
-						<div class="cbp-l-grid-agency-title">미스 컨덕트[1]</div>
-						<div class="cbp-l-grid-agency-desc">이미지 추가/수정</div>
-					</div>
-				</div>
-				<div class="cbp-item identity logo">
-					<div class="cbp-caption margin-bottom-20">
-						<div class="cbp-caption-defaultWrap">
-							<img src="/img/movie/no_image.jpeg" alt="">
-						</div>
-						<div class="cbp-caption-activeWrap">
-							<div class="cbp-l-caption-alignCenter">
-								<div class="cbp-l-caption-body">
-									<ul class="link-captions no-bottom-space">
-										<li><a href="portfolio_single_item.html"><i class="rounded-x fa fa-link"></i></a></li>
-										<li><a href="/img/movie/no_image.jpeg" class="cbp-lightbox" data-title="Design Object"><i class="rounded-x fa fa-search"></i></a></li>
-									</ul>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="cbp-title-dark">
-						<div class="cbp-l-grid-agency-title">조제, 호랑이 그리고 물고기들[0]</div>
-						<div class="cbp-l-grid-agency-desc">이미지 추가/수정</div>
-					</div>
-				</div>
-				<div class="cbp-item graphic">
-					<div class="cbp-caption margin-bottom-20">
-						<div class="cbp-caption-defaultWrap">
-							<img src="/img/movie/movie_008.jpg" alt="">
-						</div>
-						<div class="cbp-caption-activeWrap">
-							<div class="cbp-l-caption-alignCenter">
-								<div class="cbp-l-caption-body">
-									<ul class="link-captions no-bottom-space">
-										<li><a href="portfolio_single_item.html"><i class="rounded-x fa fa-link"></i></a></li>
-										<li><a href="/img/movie/movie_008.jpg" class="cbp-lightbox" data-title="Design Object"><i class="rounded-x fa fa-search"></i></a></li>
-									</ul>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="cbp-title-dark">
-						<div class="cbp-l-grid-agency-title">그레이의 50가지 그림자</div>
-						<div class="cbp-l-grid-agency-desc">이미지 추가/수정</div>
-					</div>
-				</div>
-				<div class="cbp-item web-design logos">
-					<div class="cbp-caption margin-bottom-20">
-						<div class="cbp-caption-defaultWrap">
-							<img src="/img/movie/movie_009.jpg" alt="">
-						</div>
-						<div class="cbp-caption-activeWrap">
-							<div class="cbp-l-caption-alignCenter">
-								<div class="cbp-l-caption-body">
-									<ul class="link-captions no-bottom-space">
-										<li><a href="portfolio_single_item.html"><i class="rounded-x fa fa-link"></i></a></li>
-										<li><a href="/img/movie/movie_009.jpg" class="cbp-lightbox" data-title="Design Object"><i class="rounded-x fa fa-search"></i></a></li>
-									</ul>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="cbp-title-dark">
-						<div class="cbp-l-grid-agency-title">007 스펙터</div>
-						<div class="cbp-l-grid-agency-desc">이미지 추가/수정</div>
-					</div>
-				</div>
-				<div class="cbp-item graphic logos">
-					<div class="cbp-caption margin-bottom-20">
-						<div class="cbp-caption-defaultWrap">
-							<img src="/img/movie/no_image.jpeg" alt="">
-						</div>
-						<div class="cbp-caption-activeWrap">
-							<div class="cbp-l-caption-alignCenter">
-								<div class="cbp-l-caption-body">
-									<ul class="link-captions no-bottom-space">
-										<li><a href="portfolio_single_item.html"><i class="rounded-x fa fa-link"></i></a></li>
-										<li><a href="/img/movie/no_image.jpeg" class="cbp-lightbox" data-title="Design Object"><i class="rounded-x fa fa-search"></i></a></li>
-									</ul>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="cbp-title-dark">
-						<div class="cbp-l-grid-agency-title">Design Object 11</div>
-						<div class="cbp-l-grid-agency-desc">Web Design</div>
-					</div>
-				</div>
-				<div class="cbp-item web-design graphic">
-					<div class="cbp-caption margin-bottom-20">
-						<div class="cbp-caption-defaultWrap">
-							<img src="/img/movie/no_image.jpeg" alt="">
-						</div>
-						<div class="cbp-caption-activeWrap">
-							<div class="cbp-l-caption-alignCenter">
-								<div class="cbp-l-caption-body">
-									<ul class="link-captions no-bottom-space">
-										<li><a href="portfolio_single_item.html"><i class="rounded-x fa fa-link"></i></a></li>
-										<li><a href="/img/movie/no_image.jpeg" class="cbp-lightbox" data-title="Design Object"><i class="rounded-x fa fa-search"></i></a></li>
-									</ul>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="cbp-title-dark">
-						<div class="cbp-l-grid-agency-title">Design Object 12</div>
-						<div class="cbp-l-grid-agency-desc">Web Design</div>
-					</div>
-				</div-->
 			</div><!--/end Grid Container-->
 		</div>
 		<!--=== End Cube-Portfdlio ===-->
@@ -344,6 +128,9 @@
 	<script type="text/javascript" src="/plugins/back-to-top.js"></script>
 	<script type="text/javascript" src="/plugins/smoothScroll.js"></script>
 	<script type="text/javascript" src="/plugins/cubeportfolio/js/jquery.cubeportfolio.min.js"></script>
+	<script type="text/javascript" src="/plugins/sky-forms-pro/skyforms/js/jquery.maskedinput.min.js"></script>
+	<script type="text/javascript" src="/plugins/sky-forms-pro/skyforms/js/jquery-ui.min.js"></script>
+	<script type="text/javascript" src="/plugins/sky-forms-pro/skyforms/js/jquery.validate.min.js"></script>
 	<!-- JS Customization -->
 	<script type="text/javascript" src="/js/admin/movie/movie_image_list.js"></script>
 	<!-- JS Page Level -->

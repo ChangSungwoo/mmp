@@ -1,4 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <!--[if IE 8]> <html lang="en" class="ie8"> <![endif]-->
 <!--[if IE 9]> <html lang="en" class="ie9"> <![endif]-->
@@ -64,12 +66,25 @@
 								</section>
 							</div>
 							<div class="row">
-								<section class="col col-6">
+								<section class="col col-3">
 									<label class="label">개봉일</label>
 									<label class="input state-success"">
 										<i class="icon-append fa fa-calendar"></i>
-										<input type="text" name="releaseDate" id="releaseDate">
+										<input type="text" name="releaseDt" id="releaseDt">
 									</label>
+								</section>
+								<section class="col col-3">
+									<label class="label">기준관람료${fn:length(list)}</label>
+									<div class="inline-group">
+									<c:choose>
+										<c:when test="${fn:length(list) > 0}">
+											<c:forEach items="${list}" var="row">
+												<label class="radio"><input type="radio" name="stdPriceDiv" id="stdPriceDiv" value="${row.dSeq}" <c:if test="${row.defaultYn eq 'Y' }"> checked </c:if>><i class="rounded-x"></i>${row.DName}원</label>
+												<!-- label class="radio"><input type="radio" name="stdPriceDiv" id="stdPriceDiv" value="2"><i class="rounded-x"></i>8,000원</label-->
+											</c:forEach>
+										</c:when>
+									</c:choose>
+									</div>
 								</section>
 								<section class="col col-3">
 									<label class="label">종영 여부</label>
@@ -82,12 +97,12 @@
 							</div>
 							<div class="row">
 							</div>
-							<section>
+							<!-- section>
 								<label class="label">영화 포스터</label>
 								<label for="file" class="input input-file">
 									<div class="button"><input type="file" id="file" onchange="this.parentNode.nextSibling.value = this.value">Browse</div><input type="text" readonly>
 								</label>
-							</section>
+							</section-->
 						</fieldset>
 						<footer>
 							<button type="button" id="btnSave" name="btnSave" class="btn-u">저장</button>

@@ -9,11 +9,16 @@ $(document).ready(function() {
 
 function setEvent(){
 	
+	// 영화 신규 등록
+	$("button[id=btnRegist]").click(function(){
+		location.href="/admin/movie/createMovie";
+		
+	});
+	
+}
+
+function movieDetail(mid) {
+	location.href="/admin/movie/movieDetail";
 }
 
 
-// 영화 신규 등록
-$("button[id=btnRegist]").click(function(){
-	location.href="/admin/movie/createMovie";
-	
-});

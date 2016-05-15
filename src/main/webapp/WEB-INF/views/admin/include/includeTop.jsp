@@ -74,14 +74,7 @@
 								서비스 관리
 							</a>
 							<ul class="dropdown-menu">
-								<li class="dropdown-submenu">
-									<a href="javascript:void(0);">메인화면 관리</a>
-									<ul class="dropdown-menu">
-										<li><a href="blog_large_right_sidebar1.html">Right Sidebar</a></li>
-										<li><a href="blog_large_left_sidebar1.html">Left Sidebar</a></li>
-										<li><a href="blog_large_full_width1.html">Full Width</a></li>
-									</ul>
-								</li>
+								<li><a href="/admin/service/mainContentList">메인 화면관리</a></li>
 								<li class="dropdown-submenu">
 									<a href="javascript:void(0);">서비스 기준 정책관리</a>
 									<ul class="dropdown-menu">

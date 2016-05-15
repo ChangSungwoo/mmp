@@ -5,7 +5,7 @@ public class MovieCondition {
 	private String movieId;
 	private String movieKorTitle;
 	private String movieEngTitle;
-	private String releaseDate;
+	private String releaseDt;
 	private String displayYn;
 	private String endYn;
 	private String creDt;
@@ -31,11 +31,11 @@ public class MovieCondition {
 	public void setMovieEngTitle(String movieEngTitle) {
 		this.movieEngTitle = movieEngTitle;
 	}
-	public String getReleaseDate() {
-		return releaseDate;
+	public String getReleaseDt() {
+		return releaseDt;
 	}
-	public void setReleaseDate(String releaseDate) {
-		this.releaseDate = releaseDate;
+	public void setReleaseDt(String releaseDt) {
+		this.releaseDt = releaseDt;
 	}
 	public String getDisplayYn() {
 		return displayYn;

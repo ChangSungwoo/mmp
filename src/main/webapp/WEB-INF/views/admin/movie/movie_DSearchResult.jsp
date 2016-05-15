@@ -129,7 +129,7 @@
 	<form name="hForm" id="hForm">
 		<input type="hidden" name="movieTitle" id="movieTitle">
 		<input type="hidden" name="movieEngTitle" id="movieEngTitle">
-		<input type="hidden" name="releaseDate" id="releaseDate">
+		<input type="hidden" name="releaseDt" id="releaseDt">
 	</form>
 
 	<!-- JS Global Compulsory -->

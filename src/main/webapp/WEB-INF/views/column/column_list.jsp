@@ -43,7 +43,7 @@
 <body class="index-page" data-page="index">
 	<div class="wrapper">
 	<!--=== Start Header v8 ===-->
-		<jsp:include page="/WEB-INF/views/include/header.jsp" flush="false">
+		<jsp:include page="/common/header" flush="false">
 			<jsp:param name="dummy" value=""/>
 		</jsp:include>
 		<jsp:include page="/WEB-INF/views/include/menu.jsp" flush="false">

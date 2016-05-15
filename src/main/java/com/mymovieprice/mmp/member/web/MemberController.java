@@ -5,6 +5,7 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -84,7 +85,12 @@ public class MemberController {
 				
 				if(strLoginId.equals(reqLoginId)) {
 					if(strLoginPwd.equals(reqLoginPwd)) {
-						logger.info("password Success");
+						// 정상 로그인 됨.
+						HttpSession session = request.getSession(true);
+						session.setAttribute("member", loginMember);
+						session.setAttribute("member.userNick", strUserNickNm);
+						
+						
 						strRsltCode = "A00";
 					} else {
 						msg = "Password not correct";
@@ -104,6 +110,17 @@ public class MemberController {
 		map.put("message", msg);
 		
 		return map;
+	}
+	
+	@RequestMapping(value = "/member/logOut")
+	public ModelAndView memberLogout(Map<String,Object> condition, HttpServletRequest request) {
+		
+		ModelAndView mav = new ModelAndView("main/main");
+		
+		HttpSession session = request.getSession(true);
+		session.invalidate();
+		
+		return mav;
 	}
 	
 	@RequestMapping(value = "/member/regist", method = RequestMethod.GET)

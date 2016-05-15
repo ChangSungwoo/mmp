@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <!--[if IE 8]> <html lang="en" class="ie8"> <![endif]-->
 <!--[if IE 9]> <html lang="en" class="ie9"> <![endif]-->
@@ -40,7 +43,7 @@
 </head>
 <body class="header-fixed header-fixed-space-v2">
 <div class="wrapper">
-		<jsp:include page="/WEB-INF/views/include/header.jsp" flush="false">
+		<jsp:include page="/common/header" flush="false">
 			<jsp:param name="dummy" value=""/>
 		</jsp:include>
 		<jsp:include page="/WEB-INF/views/include/menu.jsp" flush="false">
@@ -52,9 +55,9 @@
 		<!--=== Breadcrumbs ===-->
 		<div class="breadcrumbs breadcrumbs-light">
 			<div class="container">
-				<h1 class="pull-left">사울의 아들 (Saul fia, Son of Saul)</h1>
+				<h1 class="pull-left">${movie.movieKorTitle} (${movie.movieEngTitle})</h1>
 				<ul class="pull-right breadcrumb">
-					<li>개봉일 : 2016-02-25</li>
+					<li>개봉일 : ${movie.releaseDt}</li>
 				</ul>
 			</div>
 		</div><!--/breadcrumbs-->
@@ -71,15 +74,21 @@
 					</ol>
 
 					<div class="carousel-inner">
-						<div class="item active">
-							<img class="full-width img-responsive" src="/img/movie/movie002.jpg" alt="">
-						</div>
-						<div class="item">
-							<img class="full-width img-responsive" src="/img/movie/movie002_002.jpg" alt="">
-						</div>
-						<div class="item">
-							<img class="full-width img-responsive" src="/img/movie/movie002_003.jpg" alt="">
-						</div>
+						<c:choose>
+							<c:when test="${fn:length(list) > 0}">
+								<c:forEach items="${list}" var="row" varStatus="status">
+									<div class="item <c:if test="${status.count eq 1 }">active</c:if> ">
+										<img class="full-width img-responsive" src="${row.filePath}/${row.fileNm}" alt="">
+									</div>
+								</c:forEach>
+							</c:when>
+						</c:choose>
+								<!-- div class="item">
+									<img class="full-width img-responsive" src="/img/movie/movie002_002.jpg" alt="">
+								</div>
+								<div class="item">
+									<img class="full-width img-responsive" src="/img/movie/movie002_003.jpg" alt="">
+								</div-->
 					</div>
 
 					<a class="left carousel-control rounded-x" href="#portfolio-carousel" role="button" data-slide="prev">
@@ -103,7 +112,7 @@
 						<div class="headline"><h2>영화 개요</h2></div>
 						<ul class="list-unstyled project-details">
 							<li><strong>감독 :</strong>라즐로 네메스</li>
-							<li><strong>개봉일 :</strong> 2016-02-25</li>
+							<li><strong>개봉일 :</strong> ${movie.releaseDt}</li>
 							<li><strong>출연 :</strong> 게자 뢰리히 외...</li>
 						</ul>
 					</div>
@@ -121,91 +130,19 @@
 							<div class="panel-body">
 								<table class="table">
 									<tbody>
+										<c:choose>
+											<c:when test="${fn:length(pList) > 0}">
+												<c:forEach items="${pList}" var="rowP">
 										<tr>
-											<td colspan="3">나치 수용소 1인칭 체험효과를 극대화시키기 위한 설정들, 즉 </td>
+											<td>${rowP.priceComment}</td>
+											<td width="80" align="right" class="price-red">+${rowP.price}원</td>
+											<fmt:formatNumber var="totalPrice" value="${totalPrice+rowP.price}" pattern="###0"/>
 										</tr>
+												</c:forEach>
+											</c:when>
+										</c:choose>
 										<tr>
-											<td>1</td>
-											<td>4:3 화면비의 채택</td>
-											<td width="80" align="right" class="price-red">+150원</td>
-										</tr>
-										<tr>
-											<td>2</td>
-											<td>철저한 주인공 밀착 근접촬영</td>
-											<td align="right" class="price-red">+200원</td>
-										</tr>
-										<tr>
-											<td>3</td>
-											<td>그로 인해 더욱 좁아지는 시야</td>
-											<td align="right" class="price-red">+150원</td>
-										</tr>
-										<tr>
-											<td>4</td>
-											<td>얕은 심도의 촬영으로 인해 마치 고도근시처럼, 주인공에서 조금만 떨어져도 모두 흐릿해져버리는 전경</td>
-											<td align="right" class="price-red">+250원</td>
-										</tr>
-										<tr>
-											<td>5</td>
-											<td>이와 정반대로, 가스실과 소각로 등 현장의 모든 소리를 가장 생생한 느낌으로 담아낸 현미경적 음향</td>
-											<td align="right" class="price-red">+250원</td>
-										</tr>
-										<tr>
-											<td>6</td>
-											<td> ③+④+⑤로 인한 시청각적 상상력의 극대화</td>
-											<td align="right" class="price-red">+300원</td>
-										</tr>
-										<tr>
-											<td>7</td>
-											<td>①+②+⑥로 인한 폐쇄공포</td>
-											<td align="right" class="price-red">+300원</td>
-										</tr>
-										<tr>
-											<td>8</td>
-											<td>컷을 최대한 배제한 롱테이크 중심의 구성</td>
-											<td align="right" class="price-red">+150원</td>
-										</tr>
-										<tr>
-											<td>9</td>
-											<td>음악 사용 배제</td>
-											<td align="right" class="price-red">+150원</td>
-										</tr>
-										<tr>
-											<td>10</td>
-											<td>이 모두를 결정하고 실행해 낸 과감함</td>
-											<td align="right" class="price-red">+300원</td>
-										</tr>
-										<tr>
-											<td>11</td>
-											<td>그것을 현실로 만들어낸 주연배우(게자 뢰리히)의 연기</td>
-											<td align="right" class="price-red">+150원</td>
-										</tr>
-										<tr>
-											<td>12</td>
-											<td>그리고 엑스트라까지 포함하는 모든 배우들의 연기</td>
-											<td align="right" class="price-red">+150원</td>
-										</tr>
-										<tr>
-											<td>13</td>
-											<td>더하여, 섬뜩하도록 리얼한 세트</td>
-											<td align="right" class="price-red">+100원</td>
-										</tr>
-										<tr>
-											<td>14</td>
-											<td>수용소 내 시신처리 전담반 ‘존더코만도’라는 소재의 극적 긴장감 및 양면성</td>
-											<td align="right" class="price-red">+150원</td>
-										</tr>
-										<tr>
-											<td>15</td>
-											<td>매우 제한된 공간과 자유도에도 불구하고, 계속해서 이어지는 새로운 전개</td>
-											<td align="right" class="price-red">+200원</td>
-										</tr>
-										<tr>
-											<td>16</td>
-											<td>한마디로, 이제껏 총격액션에서나 쓰여 왔던 1인칭 RPG 기법을, 예술의 경지로 단숨에 격상시킨 놀라운 시도</td>
-											<td align="right" class="price-red">+250원</td>
-										</tr>
-										<tr>
-											<th colspan="3" class="price-red" style="text-align:right;">Total : + 3,100원</th>
+											<th colspan="3" class="price-red" style="text-align:right;">Total : + <fmt:formatNumber value="${totalPrice+rowP.price}"/>원</th>
 										</tr>
 									</tbody>
 								</table>
@@ -222,41 +159,19 @@
 							<div class="panel-body">
 								<table class="table">
 									<tbody>
+										<c:choose>
+											<c:when test="${fn:length(nList) > 0}">
+												<c:forEach items="${nList}" var="rowN">
 										<tr>
-											<td colspan="3">[아래 네 항목들은 이 영화의 의도이자 목표임을 감안하고]</td>
+											<td>${rowN.priceComment}</td>
+											<td width="80" align="right" class="price-blue">-${rowN.price}원</td>
+											<fmt:formatNumber var="totalPriceMinus" value="${totalPriceMinus+rowN.price}" pattern="###0"/>
 										</tr>
+												</c:forEach>
+											</c:when>
+										</c:choose>
 										<tr>
-											<td>1</td>
-											<td>극도의 폐쇄공포 및 숨막힘</td>
-											<td width="80" align="right" class="price-blue">-1,500원</td>
-										</tr>
-										<tr>
-											<td>2</td>
-											<td>암울함 및 처참함</td>
-											<td align="right" class="price-blue">-1,500원</td>
-										</tr>
-										<tr>
-											<td>3</td>
-											<td>그리고 거의 아무런 희망도 허용하지 않는 냉정함</td>
-											<td align="right" class="price-blue">-1,000원</td>
-										</tr>
-										<tr>
-											<td>4</td>
-											<td>요컨대, 궁극의 나치 수용소 체험에 대한 마음의 준비가 되어 있지 않은 관객에게는 일종의 정서적 고문일 수도 있음</td>
-											<td align="right" class="price-blue">-500원</td>
-										</tr>
-										<tr>
-											<td>5</td>
-											<td>이 영화의 또 하나의 핵심이자, 평가가 갈릴 가장 큰 분수령일 ‘아들의 장례식’이라는 설정은, 그 의도와 의미에 십분 공감한다 하더라도, 상당히 무리하고 인위적으로 느껴짐</td>
-											<td align="right" class="price-blue">-300원</td>
-										</tr>
-										<tr>
-											<td>6</td>
-											<td>더구나 그 설정에 더해진 모호성을 감안한다면 더욱</td>
-											<td align="right" class="price-blue">-150원</td>
-										</tr>
-										<tr>
-											<th colspan="3" class="price-blue" style="text-align:right;">Total : -450원 또는 -4,950원</th>
+											<th colspan="3" class="price-blue" style="text-align:right;">Total : - <fmt:formatNumber value="${totalPrice+rowN.price}"/>원</th>
 										</tr>
 									</tbody>
 								</table>

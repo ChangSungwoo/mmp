@@ -76,7 +76,7 @@
 										<c:forEach items="${list}" var="row">
 											<tr>
 												<td>${row.movieId}</td>
-												<td>${row.movieKorTitle}(${row.movieEngTitle})</td>
+												<td><a href="javascript:movieDetail('${row.movieId}');">${row.movieKorTitle}(${row.movieEngTitle})</a></td>
 												<td>${row.releaseDt}</td>
 												<td>0원</td>
 												<td>${row.creDt}</td>

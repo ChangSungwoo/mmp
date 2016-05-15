@@ -14,6 +14,6 @@ function setEvent(){
 
 // 영화 신규 등록
 $("button[id=btnRegist]").click(function(){
-	location.href="/admin/movie/uploadMovieImage";
+	location.href="/admin/movie/createMovieImage";
 	
 });

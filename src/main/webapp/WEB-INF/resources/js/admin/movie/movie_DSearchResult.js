@@ -23,11 +23,11 @@ function setEvent(){
 		
 		$("#movieTitle").val($("[id=tmpTitle]").eq(i).val());
 		$("#movieEngTitle").val($("[id=tmpEngTitle]").eq(i).val().trim());
-		$("#releaseDate").val($("[id=tmpDate]").eq(i).val());
+		$("#releaseDt").val($("[id=tmpDate]").eq(i).val());
 		
-		if($("#releaseDate").val()=="") {
+		if($("#releaseDt").val()=="") {
 			alert("개봉일이 등록되지 않은 영화라 영화 정보 등록이 불가능합니다.");
-		} else if($("#releaseDate").val()=="") {
+		} else if($("#releaseDt").val()=="") {
 			alert("개봉일이 등록되지 않은 영화라 영화 정보 등록이 불가능합니다.");
 		} else {
 			addMovie();
