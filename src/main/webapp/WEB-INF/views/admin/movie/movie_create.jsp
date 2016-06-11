@@ -66,6 +66,20 @@
 								</section>
 							</div>
 							<div class="row">
+								<section class="col col-6">
+									<label class="label">감독 정보</label>
+									<label class="input state-success">
+										<input type="text" name="directorText" id="directorText">
+									</label>
+								</section>
+								<section class="col col-6">
+									<label class="label">배우 정보</label>
+									<label class="input">
+										<input type="text" name="actorText" id="actorText">
+									</label>
+								</section>
+							</div>
+							<div class="row">
 								<section class="col col-3">
 									<label class="label">개봉일</label>
 									<label class="input state-success"">
@@ -74,35 +88,33 @@
 									</label>
 								</section>
 								<section class="col col-3">
-									<label class="label">기준관람료${fn:length(list)}</label>
+									<label class="label">종영 여부</label>
+									<div class="inline-group">
+										<label class="radio"><input type="radio" name="endYn" id="endYn" value="Y"><i class="rounded-x"></i>종영</label>
+										<label class="radio"><input type="radio" name="endYn" id="endYn" value="N" checked><i class="rounded-x"></i>상영중</label>
+									</div>
+								</section>
+								<section class="col col-3">
+									<label class="label">프런트 노출여부</label>
+									<div class="inline-group">
+										<label class="radio"><input type="radio" name="displayYn" id="displayYn" value="Y"><i class="rounded-x"></i>노출</label>
+										<label class="radio"><input type="radio" name="displayYn" id="displayYn" value="N" checked><i class="rounded-x"></i>대기</label>
+									</div>
+								</section>
+								<section class="col col-3">
+									<label class="label">기준관람료</label>
 									<div class="inline-group">
 									<c:choose>
 										<c:when test="${fn:length(list) > 0}">
 											<c:forEach items="${list}" var="row">
-												<label class="radio"><input type="radio" name="stdPriceDiv" id="stdPriceDiv" value="${row.dSeq}" <c:if test="${row.defaultYn eq 'Y' }"> checked </c:if>><i class="rounded-x"></i>${row.DName}원</label>
-												<!-- label class="radio"><input type="radio" name="stdPriceDiv" id="stdPriceDiv" value="2"><i class="rounded-x"></i>8,000원</label-->
+												<label class="radio"><input type="radio" name="stdPriceDiv" id="stdPriceDiv" value="${row.dSeq}" <c:if test="${'Y' eq row.defaultYn }"> checked </c:if>><i class="rounded-x"></i>${row.DName}원</label>
 											</c:forEach>
 										</c:when>
 									</c:choose>
 									</div>
 								</section>
-								<section class="col col-3">
-									<label class="label">종영 여부</label>
-									<label class="toggle"><input type="checkbox" name="endYn" value="Y" checked><i></i>종영</label>
-								</section>
-								<section class="col col-3">
-									<label class="label">프런트 노출여부</label>
-									<label class="toggle"><input type="checkbox" name="displayYn" value="Y" checked><i></i>노출</label>
-								</section>								
+						
 							</div>
-							<div class="row">
-							</div>
-							<!-- section>
-								<label class="label">영화 포스터</label>
-								<label for="file" class="input input-file">
-									<div class="button"><input type="file" id="file" onchange="this.parentNode.nextSibling.value = this.value">Browse</div><input type="text" readonly>
-								</label>
-							</section-->
 						</fieldset>
 						<footer>
 							<button type="button" id="btnSave" name="btnSave" class="btn-u">저장</button>

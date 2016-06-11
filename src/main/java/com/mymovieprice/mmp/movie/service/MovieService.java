@@ -8,6 +8,7 @@ import com.mymovieprice.mmp.movie.model.MovieImage;
 import com.mymovieprice.mmp.movie.model.MovieImageCondition;
 import com.mymovieprice.mmp.movie.model.MovieMaster;
 import com.mymovieprice.mmp.movie.model.MoviePriceCondition;
+import com.mymovieprice.mmp.movie.model.MovieReviewCondition;
 
 public interface MovieService {
 	
@@ -18,6 +19,8 @@ public interface MovieService {
 	public List<Map<String,Object>> getMovieListByEditor(Map<String,Object> condition) throws Exception;
 	
 	public Map<String, Object> addMovieMaster(MovieCondition movieCondition) throws Exception;
+	
+	public Map<String, Object> editMovieMaster(MovieCondition movieCondition) throws Exception;
 	
 	public List<Map<String,Object>> getOneMovieImageList(Map<String,Object> condition) throws Exception;
 	
@@ -32,6 +35,8 @@ public interface MovieService {
 	public List<Map<String,Object>> getMoviePriceList(Map<String,Object> condition) throws Exception;
 	
 	public Map<String, Object> addMoviePrice(MoviePriceCondition moviePriceCondition) throws Exception;
+	
+	public Map<String, Object> addMovieReview(MovieReviewCondition movieReviewCondition) throws Exception;
 	
 	public List<Map<String,Object>> getOneMoviePriceList(MoviePriceCondition moviePriceCondition) throws Exception;
 

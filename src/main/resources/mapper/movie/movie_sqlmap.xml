@@ -10,6 +10,10 @@
 		<result column="RELEASE_DT"	property="releaseDt"/>
 		<result column="DISPLAY_YN"	property="displayYn"/>
 		<result column="END_YN"	property="endYn"/>
+		<result column="STD_PRICE_DIV"	property="stdPriceDiv"/>
+		<result column="STD_PRICE"	property="stdPrice"/>
+		<result column="ACTOR_TEXT"	property="actorText"/>
+		<result column="DIRECTOR_TEXT"	property="directorText"/>
 		<result column="CRE_DT"	property="creDt"/>
 		<result column="CRE_ID"	property="creId"/>
 		<result column="UPD_DT"	property="updDt"/>
@@ -31,6 +35,10 @@
 		RELEASE_DT as releaseDt,
 		DISPLAY_YN as displayYn,
 		END_YN as endYn,
+		STD_PRICE_DIV as stdPriceDiv, 
+		(select CODE_D_NM from CMM_CODE_D where CODE_D_SEQ = STD_PRICE_DIV) as stdPrice,
+		ACTOR_TEXT as actorText,
+		DIRECTOR_TEXT as directorText, 
 		CRE_DT as creDt,
 		CRE_ID as creId,
 		UPD_DT as updDt,
@@ -55,41 +63,6 @@
 		order by CRE_DT DESC;
 	</select>
 	
-	<select id="selectMovieListByEditor" parameterType="hashmap" resultType="hashmap">
-		select A.MOVIE_ID as movieId
-		, C.FILE_NM as imgFileNm
-		, C.FILE_PATH as imgFilePath
-		, A.MOVIE_KOR_TITLE as movieKorTitle
-		, A.MOVIE_ENG_TITLE as movieEngTitle
-		, ifnull(CAST(B.CODE_D_NM as UNSIGNED)+sum(A.PRICE) , 0) as price
-		, (SELECT sum(price) from MOVIE_PRICE mp1 where mp1.MOVIE_ID = A.MOVIE_ID and mp1.PRICE_DIV = 'P') as positivePrice
-		, (SELECT sum(price) from MOVIE_PRICE mp2 where mp2.MOVIE_ID = A.MOVIE_ID and mp2.PRICE_DIV = 'N') as negativePrice
-		, max(A.UPD_DT) as updDt
-		, A.CRE_DT as creDt
-		, A.RELEASE_DT as releaseDt
-		from (
-			select mm.MOVIE_ID
-			, mm.MOVIE_KOR_TITLE
-			, mm.MOVIE_ENG_TITLE
-			, case mp.PRICE_DIV when 'N' then mp.PRICE*-1 else mp.PRICE end PRICE
-			, mp.PRICE_DIV
-			, mm.STD_PRICE_DIV
-			, mm.DISPLAY_YN
-			, mp.UPD_DT
-			, mm.CRE_DT
-			, mm.RELEASE_DT
-			from MOVIE_MASTER mm 
-			left outer join MOVIE_PRICE mp
-			on mm.MOVIE_ID = mp.MOVIE_ID 
-			and mm.DISPLAY_YN = 'Y'
-		) A , CMM_CODE_D B , MOVIE_IMAGE C
-		where A.STD_PRICE_DIV = B.CODE_D_SEQ
-		and A.DISPLAY_YN = 'Y'
-		and A.MOVIE_ID = C.MOVIE_ID
-		and C.DELEGATE_YN = 'Y'
-		group by A.MOVIE_ID, A.MOVIE_KOR_TITLE;
-	</select>
-	
 	<insert id="insertMovieMaster" parameterType="com.mymovieprice.mmp.movie.model.MovieMaster">
 		insert into MOVIE_MASTER(
 			MOVIE_KOR_TITLE, 
@@ -97,6 +70,9 @@
 			RELEASE_DT,
 			END_YN,
 			DISPLAY_YN,
+			STD_PRICE_DIV,
+			DIRECTOR_TEXT,
+			ACTOR_TEXT,
 			CRE_ID,
 			CRE_DT, 
 			UPD_ID
@@ -106,11 +82,33 @@
 			#{releaseDt},
 			#{endYn},
 			#{displayYn},
+			(select CODE_D_SEQ 
+				from CMM_CODE_D
+				where CODE_M_SEQ = 1
+				and DEFAULT_YN = 'Y'
+				and USE_YN = 'Y'),
+			#{directorText},
+			#{actorText},
 			#{creId},
 			NOW(),
 			#{updId}
 			);
 	</insert>
+	
+	<update id="updateMovieMaster" parameterType="com.mymovieprice.mmp.movie.model.MovieMaster">
+		update MOVIE_MASTER
+		set MOVIE_KOR_TITLE = #{movieKorTitle},
+		MOVIE_ENG_TITLE = #{movieEngTitle},
+		RELEASE_DT = #{releaseDt},
+		END_YN = #{endYn},
+		DISPLAY_YN = #{displayYn},
+		STD_PRICE_DIV = #{stdPriceDiv},
+		DIRECTOR_TEXT = #{directorText},
+		ACTOR_TEXT = #{actorText},
+		CRE_DT = #{creDt}
+		where MOVIE_ID = #{movieId}
+		;
+	</update>
 
 	<select id="selectOneMovieImageList" parameterType="hashmap" resultType="hashmap">
 			select 
@@ -188,33 +186,49 @@
 	</update>
 	
 	<select id="selectMoviePriceList" parameterType="hashmap" resultType="hashmap">
-		select A.MOVIE_ID as movieId
-		, A.MOVIE_KOR_TITLE as movieKorTitle
-		, A.MOVIE_ENG_TITLE as movieEngTitle
-		, ifnull(CAST(B.CODE_D_NM as UNSIGNED)+sum(A.PRICE) , 0) as price
-		, max(A.UPD_DT) as updDt
-		, A.CRE_DT as creDt
-		from (
-			select mm.MOVIE_ID
-			, mm.MOVIE_KOR_TITLE
-			, mm.MOVIE_ENG_TITLE
-			, case mp.PRICE_DIV when 'N' then mp.PRICE*-1 else mp.PRICE end PRICE
-			, mp.PRICE_DIV
-			, mm.STD_PRICE_DIV
-			, mp.UPD_DT
-			, mm.CRE_DT
-			from MOVIE_MASTER mm 
-			left outer join MOVIE_PRICE mp
-			on mm.MOVIE_ID = mp.MOVIE_ID 
-			and mm.DISPLAY_YN = 'Y'
-		) A , CMM_CODE_D B
-		where A.STD_PRICE_DIV = B.CODE_D_SEQ
-		group by A.MOVIE_ID, A.MOVIE_KOR_TITLE;
+		select
+		B.MOVIE_ID as movieId
+		, B.MOVIE_KOR_TITLE as movieKorTitle
+		, B.MOVIE_ENG_TITLE as movieEngTitle
+		, ifnull(CAST(C.CODE_D_NM as UNSIGNED)+sum(B.PRICE) , 0) as price
+		, B.CRE_DT as creDt
+		, B.REVIEW_SEQ as reviewSeq
+		, B.CRE_ID
+		, B.DISPLAY_YN
+		from (		
+			select
+				A.MOVIE_ID
+				, A.MOVIE_KOR_TITLE
+				, A.MOVIE_ENG_TITLE
+				, A.STD_PRICE_DIV
+				, A.CRE_DT
+				, A.REVIEW_SEQ
+				, A.DISPLAY_YN
+				, A.CRE_ID
+				, case mp.PRICE_DIV when 'N' then mp.PRICE*-1 else mp.PRICE end PRICE
+				, mp.PRICE_DIV
+			from (	
+				select
+				mm.MOVIE_ID
+				, mm.MOVIE_KOR_TITLE
+				, mm.MOVIE_ENG_TITLE
+				, mm.STD_PRICE_DIV
+				, mm.CRE_DT
+				, mr.REVIEW_SEQ
+				, mr.CRE_ID
+				, mm.DISPLAY_YN
+				from MOVIE_MASTER mm , MOVIE_REVIEW mr
+				where mm.MOVIE_ID = mr.MOVIE_ID
+				and mr.WRITER_DIV = 'E') A left outer join MOVIE_PRICE mp
+					on A.REVIEW_SEQ = mp.REVIEW_SEQ
+					) B , CMM_CODE_D C
+		where B.STD_PRICE_DIV = C.CODE_D_SEQ
+		group by B.MOVIE_ID, B.MOVIE_KOR_TITLE;
 	</select>
 	
 	<insert id="insertMoviePrice" parameterType="com.mymovieprice.mmp.movie.model.MoviePrice">
 		insert into MOVIE_PRICE(
-			MOVIE_ID, 
+			REVIEW_SEQ, 
 			PRICE_DIV,
 			PRICE_COMMENT,
 			PRICE,
@@ -223,7 +237,7 @@
 			CRE_DT, 
 			UPD_ID
 			) VALUES (
-			#{movieId},
+			#{reviewSeq},
 			#{priceDiv},
 			#{priceComment},
 			#{price},
@@ -234,6 +248,27 @@
 			);
 	</insert>
 	
+	<insert id="insertMovieReview" parameterType="com.mymovieprice.mmp.movie.model.MovieReview">
+		insert into MOVIE_REVIEW(
+			MOVIE_ID, 
+			USER_NO,
+			REVIEW_TEXT,
+			WRITER_DIV,
+			IMAGE_SEQ , 
+			CRE_ID,
+			CRE_DT, 
+			UPD_ID
+			) VALUES (
+			#{movieId},
+			#{userNo},
+			#{reviewText},
+			#{writerDiv},
+			(select IMAGE_SEQ from MOVIE_IMAGE mi where mi.MOVIE_ID = #{movieId} and mi.DELEGATE_YN = 'Y'),
+			#{creId},
+			NOW(),
+			#{updId}
+			);
+	</insert>
 	
 	<select id="selectOneMoviePrice" parameterType="com.mymovieprice.mmp.movie.model.MoviePriceCondition" resultMap="MoviePriceList">
 			select 
@@ -241,7 +276,7 @@
 			PRICE_COMMENT as priceComment,
 			PRICE as price
 			from MOVIE_PRICE
-			where MOVIE_ID = #{movieId}
+			where REVIEW_SEQ = #{reviewSeq}
 			and PRICE_DIV = #{priceDiv}
 			;
 	</select>

@@ -86,13 +86,14 @@
 										<div class="col-sm-7">
 											<div class="news-v3">
 												<ul class="list-inline posted-info">
-													<li>&nbsp;<!-- TODO : 배우정보 --></li>
+													<li>감독 : ${row.directorText}</li>
+													<li>배우 : ${row.actorText}</li>
 													<li>개봉일 : ${row.releaseDt}</li>
 												</ul>
-												<h2><a href="/movie/movieDetail?movieId=${row.movieId}">${row.movieKorTitle} (${row.movieEngTitle})</a></h2>
-												<p><!-- TODO : 감상평 --></p>
+												<h2><a href="/movie/movieDetail?reviewSeq=${row.reviewSeq}">${row.movieKorTitle} (${row.movieEngTitle})</a></h2>
+												<p>${row.reviewText}</p>
 												<ul class="post-shares">
-													<li class="movie-prices text-highlights text-highlights-purple rounded tooltips"><fmt:formatNumber value="${row.price}" pattern="#,###"/>원</li>
+													<li class="movie-prices text-highlights text-highlights-purple rounded tooltips"><fmt:formatNumber value="${row.stdPrice+row.positivePrice-row.negativePrice}" pattern="#,###"/>원</li>
 													<span aria-hidden="true" class="icon-arrow-up"></span>&nbsp;<li class="movie-small-prices price-red">+<fmt:formatNumber value="${row.positivePrice}" pattern="#,###"/>원</li>
 													<span aria-hidden="true" class="icon-arrow-down"></span>&nbsp;<li class="movie-small-prices price-blue">-<fmt:formatNumber value="${row.negativePrice}" pattern="#,###"/>원</li>
 												</ul>
@@ -104,72 +105,6 @@
 								</c:forEach>
 							</c:when>
 						</c:choose>
-						
-							<!-- div class="row margin-bottom-5">
-								<div class="col-sm-5 sm-margin-bottom-5">
-									<img class="img-responsive" src="/img/movie/movie002_002.jpg" alt="">
-								</div>
-								<div class="col-sm-7">
-									<div class="news-v3">
-										<ul class="list-inline posted-info">
-											<li>By 라즐로 네메스</li>
-											<li>개봉일 : 2016-02-25</li>
-										</ul>
-										<h2><a href="/movie/movieDetail">사울의 아들 (Saul fia, Son of Saul)</a></h2>
-										<p>압도적인 집요함과 유구한 끈질김으로 해볼 건 웬만하면 다 해본 듯하여 이제는 더 이상 나올 게 없어보였던 나치만행 고발무비에서, 보란 듯 등장한 혁신과 진일보를 앞에 두고 그만 무어라 드릴 말씀을 잊는 와중에도 계속해서 떠오르는 것은...</p>
-										<ul class="post-shares">
-											<li class="movie-prices text-highlights text-highlights-purple rounded tooltips" style="text-align:center">11,650원 <br/>OR<br/> 7,150원</li>
-											<span aria-hidden="true" class="icon-arrow-up"></span>&nbsp;<li class="movie-small-prices price-red">+3,100원</li>
-											<span aria-hidden="true" class="icon-arrow-down"></span>&nbsp;<li class="movie-small-prices price-blue">-450원 or -4,950원</li>
-										</ul>
-									</div>
-								</div>
-							</div>
-							<div class="clearfix margin-bottom-5"><hr></div>
-							
-							<div class="row margin-bottom-5">
-								<div class="col-sm-5 sm-margin-bottom-5">
-									<img class="img-responsive" src="/img/movie/movie003.jpg" alt="">
-								</div>
-								<div class="col-sm-7">
-									<div class="news-v3">
-										<ul class="list-inline posted-info">
-											<li>By 바이론 하워드, 리치 무어</li>
-											<li>개봉일 : 2016-02-17</li>
-										</ul>
-										<h2><a href="/movie/movieDetail"> 주토피아 (Zootopia)</a></h2>
-										<p>교양 있고 세련된 라이프 스타일을 주도하는 도시 주토피아. 이 곳을 단숨에 혼란에 빠트린 연쇄 실종사건이 발생한다! 주토피아 최초의 토끼 경찰관 주디 홉스는 48시간 안에 사건 해결을 지시 받자 뻔뻔한 사기꾼 여우 닉 와일드에게 협동 수사를 제안하는데...</p>
-										<ul class="post-shares">
-											<li class="movie-prices text-highlights text-highlights-purple rounded tooltips">9,300원</li>
-											<span aria-hidden="true" class="icon-arrow-up"></span>&nbsp;<li class="movie-small-prices price-red">+900원</li>
-											<span aria-hidden="true" class="icon-arrow-down"></span>&nbsp;<li class="movie-small-prices price-blue">-600원</li>
-										</ul>
-									</div>
-								</div>
-							</div>
-							<div class="clearfix margin-bottom-5"><hr></div>
-							
-							<div class="row margin-bottom-5">
-								<div class="col-sm-5 sm-margin-bottom-5">
-									<img class="img-responsive" src="/img/movie/movie004.jpg" alt="">
-								</div>
-								<div class="col-sm-7">
-									<div class="news-v3">
-										<ul class="list-inline posted-info">
-											<li>By 토마스 맥카시</li>
-											<li>개봉일 : 2016-02-24</li>
-										</ul>
-										<h2><a href="/movie/movieDetail">스포트라이트 (Spotlight)</a></h2>
-										<p>미국의 3대 일간지 중 하나인 보스턴 글로브 내 ‘스포트라이트’팀은 가톨릭 보스턴 교구 사제들의 아동 성추행 사건을 취재한다.하지만 사건을 파헤치려 할수록 더욱 굳건히 닫히는 진실의 장벽....</p>
-										<ul class="post-shares">
-											<li class="movie-prices text-highlights text-highlights-purple rounded tooltips">9,150원</li>
-											<span aria-hidden="true" class="icon-arrow-up"></span>&nbsp;<li class="movie-small-prices price-red">+450원</li>
-											<span aria-hidden="true" class="icon-arrow-down"></span>&nbsp;<li class="movie-small-prices price-blue">-300원</li>
-										</ul>
-									</div>
-								</div>
-							</div>
-							<div class="clearfix margin-bottom-5"><hr></div-->
 							<!-- Pager v3 -->
 							<ul class="pager pager-v3 pager-md no-margin-bottom">
 								<li class="previous"><a href="#">&larr; Older</a></li>

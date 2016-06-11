@@ -79,7 +79,8 @@
 									<th>원제</th>
 									<th>개봉일</th>
 									<th>감독</th>
-									<th>작업</th>
+									<th width="300">배우</th>
+									<th width="120">작업</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -98,12 +99,18 @@
 													${row.openInfo}
 													<input type="hidden" id="tmpDate" name="tmpDate" value="${row.openInfo}">
 												</td>
-												<td>${row.director}</td>
+												<td>
+													${row.director}
+													<input type="hidden" id="tmpDirector" name="tmpDirector" value="${row.director}">
+												</td>
+												<td>
+													${row.actor}
+													<input type="hidden" id="tmpActor" name="tmpActor" value="${row.actor}">
+												</td>
 												<td>
 													<input type="hidden" id="tmpLink" name="tmpLink" value="${row.link}">
 													<button class="btn-u btn-u-xs btn-u-blue" type="button" id="btnMove" name="btnMove">이동</button>
 													<button class="btn-u btn-u-xs btn-u-red" type="button" id="btnSave" name="btnSave">등록</button>
-													<!-- a href="javascript:addMovie();" target="_blank">등록</a-->
 												</td>
 											</tr>
 										</c:forEach>
@@ -130,6 +137,8 @@
 		<input type="hidden" name="movieTitle" id="movieTitle">
 		<input type="hidden" name="movieEngTitle" id="movieEngTitle">
 		<input type="hidden" name="releaseDt" id="releaseDt">
+		<input type="text" name="directorText" id="directorText">
+		<input type="text" name="actorText" id="actorText">
 	</form>
 
 	<!-- JS Global Compulsory -->

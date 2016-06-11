@@ -50,35 +50,50 @@
 			<div class="col-md-12">
 			<h4>영화 기본정보</h4>
 				<table class="table table-bordered">
-					<thead>
-						<tr>
-							<th>영화ID</th>
-							<th>영화명</th>
-							<th>적정관람료</th>
-							<th>개봉일</th>
-							<th>게시일</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr>
-							<td>${movie.movieId}</td>
-							<td>${movie.movieKorTitle}</td>
-							<td>9,300원 <span class="font-red">(+ 300원)</span></td>
-							<td>${movie.releaseDt}</td>
-							<td>${movie.creDt}</td>
-						</tr>
-					</tbody>
+					<tr>
+						<th width="260" rowspan="4"><img src="${review.filePath}/${review.fileNm}" width="250" alt=""></th>
+						<th>영화명</th>
+						<th>개봉일</th>
+						<th>게시일</th>
+					</tr>
+					<tr>
+						<td>${movie.movieKorTitle}</td>
+						<td>${movie.releaseDt}</td>
+						<td>${movie.creDt}</td>
+					</tr>
+					<tr>
+						<th>감독</th>
+						<th colspan="2">배우</th>
+					</tr>
+					<tr>
+						<td>${movie.directorText}</td>
+						<td colspan="2">${movie.actorText}</td>
+					</tr>
 				</table>
 			</div>
 			<div class="col-md-12">
-				<h4>영화 감상평</h4>
-				<p>추후 <code>네이버 스마트 에디터</code> 적용 예정.</p>
-				<textarea class="form-control" rows="7"></textarea>
+				<form name="reviewForm" id="reviewForm" class="sky-form">
+					<input type="hidden" id="movieId" name="movieId" value="${movie.movieId}">
+					<input type="hidden" id="writerDiv" name="writerDiv" value="E">
+					<h4>영화 감상평</h4>
+					<p>추후 <code>네이버 스마트 에디터</code> 적용 예정.</p>
+					<textarea class="form-control" id="review" name="review" rows="7">${review.reviewText}</textarea>
+					<c:choose>
+						<c:when test="${review.reviewText eq null}">
+							<button class="btn-u btn-u-sm btn-u-green" type="button" id="btnReviewSave" name="btnReviewSave" >리뷰등록</button>
+						</c:when>
+						<c:otherwise>
+							<button class="btn-u btn-u-sm btn-u-green" type="button" id="btnReviewEdit" name="btnReviewEdit" >리뷰수정</button>
+						</c:otherwise>
+					</c:choose>
+					
+				</form>
 			</div>
 			<div class="col-sm-12">
 				<h4>적정 관람료</h4>
 				<form name="priceForm" id="priceForm" class="sky-form">
 					<input type="hidden" id="movieId" name="movieId" value="${movie.movieId}">
+					<input type="hidden" id="reviewSeq" name="reviewSeq" value="${review.reviewSeq}">
 					<input type="hidden" id="writerDiv" name="writerDiv" value="E">
 					<table class="table">
 						<thead>
@@ -152,11 +167,21 @@
 								<c:choose>
 									<c:when test="${fn:length(nList) > 0}">
 										<c:forEach items="${nList}" var="row1">
-								<tr>
-									<td>${row1.priceComment}</td>
-									<td width="80" align="right" class="price-blue">-${row1.price}원</td>
-									<fmt:formatNumber var="totalPriceMinus" value="${totalPriceMinus+row1.price}" pattern="###0"/>
-								</tr>
+											<tr>
+												<td>${row1.priceComment}</td>
+												<td width="80" align="right" class="price-blue">
+													<c:choose>
+													<c:when test="${row1.price == 0}">
+														&nbsp;
+													</c:when>
+													<c:otherwise>
+														-${row1.price}원
+													</c:otherwise>
+													</c:choose>
+												
+												</td>
+												<fmt:formatNumber var="totalPriceMinus" value="${totalPriceMinus+row1.price}" pattern="###0"/>
+											</tr>
 										</c:forEach>
 									</c:when>
 								</c:choose>

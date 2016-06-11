@@ -31,7 +31,6 @@ function addMovie() {
 		data : $("#movieAddForm").serialize(true),
 		dataType : "json",
 		success : function(data){
-			alert(data.error);
 			if(data.error != undefined){
 				alert("에러코드 : " + data.additionalInfo.errCode + "\n" + data.message);
 				return false;

@@ -3,7 +3,7 @@ package com.mymovieprice.mmp.movie.model;
 public class MoviePrice {
 	
 	private String moviePriceSeq;
-	private String movieId;
+	private String reviewSeq;
 	private String priceDiv;
 	private String priceComment;
 	private int price;
@@ -18,11 +18,11 @@ public class MoviePrice {
 	public void setMoviePriceSeq(String moviePriceSeq) {
 		this.moviePriceSeq = moviePriceSeq;
 	}
-	public String getMovieId() {
-		return movieId;
+	public String getReviewSeq() {
+		return reviewSeq;
 	}
-	public void setMovieId(String movieId) {
-		this.movieId = movieId;
+	public void setReviewSeq(String reviewSeq) {
+		this.reviewSeq = reviewSeq;
 	}
 	public String getPriceDiv() {
 		return priceDiv;

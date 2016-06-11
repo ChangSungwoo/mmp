@@ -35,7 +35,8 @@
 		LOGIN_PWD as loginPwd,
 		USER_NICK_NM as userNickNm,
 		USER_GRADE as userGrade,
-		USER_TYPE as userType
+		USER_TYPE as userType,
+		USER_NO as userNo
 		from USER_MASTER
 		where LOGIN_ID = #{loginId};
 	</select>

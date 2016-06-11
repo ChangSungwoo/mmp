@@ -12,6 +12,7 @@ $(document).ready(function() {
 
 function setEvent(){
 
+
 	$("#btnLogin").click(function(){
 		if($("#loginForm").valid()) {
 			console.log("valid Form");
@@ -19,13 +20,16 @@ function setEvent(){
 			return false;
 		} else {
 			console.log("unvalid Form");
-			validFormCheck();
+			//validFormCheck();
 			return false;
 		}
 	});
 }
 
+
 function loginStart() {
+	
+	var rtnUrl = getUrlParameter("returnUrl");
 	
 	$.ajax({
 		url : "/member/loginProc",
@@ -36,18 +40,20 @@ function loginStart() {
 	
 			if(data.error != undefined){
 				alert("에러코드 : " + data.additionalInfo.errCode + "\n" + data.message);
-				//alert(data.message);
 				return false;
 			} else {
 				if(data.resultCode == 'A00') {
-					//Main 화면으로 이동
-					location.href="/";						
+					//ReturnURL로 이동
+					location.href=data.rtnUrl;						
 				} else if(data.resultCode == 'A04') {
-					
 					alert("입력하신 로그인ID가 올바르지 않습니다.");
 					return false;
 				} else if(data.resultCode == 'A03') {
 					alert("입력하신 비밀번호가 올바르지 않습니다.");
+					return false;
+				}else if(data.resultCode == 'A05') {
+					alert("관리자 화면에 대한 접근 권한이 없습니다.");
+					location.href="/";
 					return false;
 				}
 			
@@ -110,7 +116,19 @@ var Validation = function () {
 }();
 
 
-
+function getUrlParameter(sParam)
+{
+    var sPageURL = window.location.search.substring(1);
+    var sURLVariables = sPageURL.split('&');
+    for (var i = 0; i < sURLVariables.length; i++) 
+    {
+        var sParameterName = sURLVariables[i].split('=');
+        if (sParameterName[0] == sParam) 
+        {
+            return sParameterName[1];
+        }
+    }
+}
 
 
 // This is called with the results from from FB.getLoginStatus().

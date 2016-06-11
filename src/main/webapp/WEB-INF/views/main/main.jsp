@@ -74,7 +74,7 @@
 									<div class="cbp-l-caption-alignCenter">
 										<div class="cbp-l-caption-body">
 											<ul class="link-captions">
-												<li><a href="/movie/movieDetail"><i class="rounded-x fa fa-link"></i></a></li>
+												<li><a href="/review/reviewDetail?reviewSeq=1"><i class="rounded-x fa fa-link"></i></a></li>
 												<li><a href="${row.filePath}/${row.fileNm}" class="cbp-lightbox" data-title="Design Object"><i class="rounded-x fa fa-search"></i></a></li>
 											</ul>
 											<div class="cbp-l-grid-agency-title">${row.mainSubject}</div>
@@ -116,6 +116,13 @@
 
 <!-- JS Customization -->
 <script src="/js/main/main.js"></script>
+
+<script>
+window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+ga('create', 'UA-XXXXX-Y', 'auto');
+ga('send', 'pageview');
+</script>
+<script async src='https://www.google-analytics.com/analytics.js'></script>
 
 <!--[if lt IE 9]>
 	<script src="plugins/respond.js"></script>

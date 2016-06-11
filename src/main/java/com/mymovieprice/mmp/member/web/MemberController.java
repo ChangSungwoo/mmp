@@ -38,9 +38,18 @@ public class MemberController {
     private MemberService memberService;
 	
 	@RequestMapping(value = "/member/login", method = RequestMethod.GET)
-	public ModelAndView login(Map<String,Object> condition) {
+	public ModelAndView login(HttpServletRequest request) {
+		
+		String redirectUrl = request.getScheme() + "://" + request.getServerName() + ":" + request.getLocalPort() + request.getAttribute("requestedUri");
+		String returnUrl = request.getParameter("returnUrl");
+		
+		logger.info("returnUrl : "+redirectUrl);
+		logger.info("returnUrl2 : "+request.getParameter("returnUrl"));
+		
 		
 		ModelAndView mav = new ModelAndView("member/member_login");
+		
+		mav.addObject("rtnUrl", returnUrl);
 		
 		return mav;
 	}
@@ -48,18 +57,26 @@ public class MemberController {
 	@RequestMapping(value = "/member/loginProc")
 	@ResponseBody
 	public Map<String, Object> memberSaveloginProc(Map<String,Object> condition, HttpServletRequest request) {
+	//public String memberSaveloginProc(Map<String,Object> condition, HttpServletRequest request) {
 				
 		String msg = null;
 		String strRsltCode = null;
 		
 		MemberCondition memberCondition = new MemberCondition();
+		//String viewPage = null; //"redirect:/admin/movie/manageMovieImage?movieId="+MovieID
 		
 		String reqLoginId = request.getParameter("loginId");
 		String reqLoginPwd = request.getParameter("loginPwd");
+		String returnUrl = request.getParameter("returnUrl");
+		int intAdminCheck = StringUtils.cntInStr(returnUrl, "/admin/");
+		
+		logger.info("returnUrl : "+returnUrl);
 		
 		String strLoginId = null;
 		String strLoginPwd = null;
 		String strUserNickNm = null;
+		String strUserNo = null;
+		String strUserGrade = null;
 			
 		memberCondition.setLoginId(reqLoginId);
 		memberCondition.setLoginPwd(reqLoginPwd);
@@ -75,13 +92,11 @@ public class MemberController {
 				strRsltCode = "A04";
 			} else {
 				
-				logger.info("userID : "+loginMember.getLoginId());
-				logger.info("password : "+loginMember.getLoginPwd());
-				logger.info("nickName : "+loginMember.getUserNickNm());
-				
 				strLoginId = loginMember.getLoginId();
 				strLoginPwd = loginMember.getLoginPwd();
 				strUserNickNm = loginMember.getUserNickNm();
+				strUserNo = loginMember.getUserNo();
+				strUserGrade = loginMember.getUserGrade();
 				
 				if(strLoginId.equals(reqLoginId)) {
 					if(strLoginPwd.equals(reqLoginPwd)) {
@@ -89,12 +104,26 @@ public class MemberController {
 						HttpSession session = request.getSession(true);
 						session.setAttribute("member", loginMember);
 						session.setAttribute("member.userNick", strUserNickNm);
+						session.setAttribute("member.userNo", strUserNo);
+						session.setAttribute("member.userGrade", strUserGrade);
 						
-						
-						strRsltCode = "A00";
+						if(intAdminCheck >0) {
+							
+							if(strUserGrade.equals("0")) {
+								strRsltCode = "A00";		//Admin권한으로 정상 접근
+							} else {
+								strRsltCode = "A05";		// 권한 없는 사용자가 Admin URL로 접근
+								returnUrl = "/";
+							}
+							
+						} else {
+							strRsltCode = "A00";			//일반 사용자 권한으로 정상 접근
+							returnUrl = "/";
+						}
 					} else {
 						msg = "Password not correct";
 						strRsltCode = "A03";
+						returnUrl = "member/login";
 					}
 				}	
 			}			
@@ -107,9 +136,12 @@ public class MemberController {
 		}
 		
 		map.put("resultCode", strRsltCode);
+		logger.info("last returnUrl : "+returnUrl);
+		map.put("rtnUrl", returnUrl);
 		map.put("message", msg);
 		
 		return map;
+		//return viewPage;
 	}
 	
 	@RequestMapping(value = "/member/logOut")

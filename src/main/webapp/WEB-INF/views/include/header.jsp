@@ -18,7 +18,7 @@
 					<c:when test="${empty loginInfo}">
 						<div class="row">
 							<div class="col-sm-8 col-xs-8">
-							<div class="header">
+							<div class="header" style="padding-left:400px;">
 								<a href="/">
 								적정관람료
 								</a>

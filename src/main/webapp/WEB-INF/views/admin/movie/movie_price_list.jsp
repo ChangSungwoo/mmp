@@ -61,7 +61,7 @@
 									<th>영화ID</th>
 									<th>영화명</th>
 									<th>적정관람료</th>
-									<th>관람료 최종수정일</th>
+									<th>Review 여부</th>
 									<th>영화 등록일</th>
 								</tr>
 							</thead>
@@ -71,9 +71,18 @@
 										<c:forEach items="${list}" var="row">
 											<tr>
 												<td>${row.movieId}</td>
-												<td><a href="javascript:moviePriceDetail('${row.movieId}');">${row.movieKorTitle} (${row.movieEngTitle})</a></td>
+												<td><a href="javascript:moviePriceDetail('${row.movieId}' , '${row.reviewSeq}');">${row.movieKorTitle} (${row.movieEngTitle})</a></td>
 												<td align="right"><fmt:formatNumber value="${row.price}" pattern="#,##0"/> 원</td>
-												<td>${row.updDt}</td>
+												<td>
+													<c:choose>
+														<c:when test="${row.reviewSeq eq null}">
+															미작성
+														</c:when>
+														<c:otherwise>
+															작성완료
+														</c:otherwise>
+													</c:choose>
+												</td>
 												<td>${row.creDt}</td>
 											</tr>
 										</c:forEach>

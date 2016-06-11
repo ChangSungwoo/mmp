@@ -3,7 +3,7 @@
 		<div class="header">
 			<div class="container">
 				<!-- Logo -->
-				<a class="logo" href="index.html">
+				<a class="logo" href="/admin/main">
 					<h1>M.M.P</h1>
 					<h6>Administrator</h6>
 				</a>

@@ -8,6 +8,9 @@ public class MovieCondition {
 	private String releaseDt;
 	private String displayYn;
 	private String endYn;
+	private String stdPriceDiv;
+	private String directorText;
+	private String actorText;
 	private String creDt;
 	private String creId;
 	private String updDt;
@@ -48,6 +51,24 @@ public class MovieCondition {
 	}
 	public void setEndYn(String endYn) {
 		this.endYn = endYn;
+	}
+	public String getStdPriceDiv() {
+		return stdPriceDiv;
+	}
+	public void setStdPriceDiv(String stdPriceDiv) {
+		this.stdPriceDiv = stdPriceDiv;
+	}
+	public String getDirectorText() {
+		return directorText;
+	}
+	public void setDirectorText(String directorText) {
+		this.directorText = directorText;
+	}
+	public String getActorText() {
+		return actorText;
+	}
+	public void setActorText(String actorText) {
+		this.actorText = actorText;
 	}
 	public String getCreDt() {
 		return creDt;

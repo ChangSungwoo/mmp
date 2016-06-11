@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <!--[if IE 8]> <html lang="en" class="ie8"> <![endif]-->
 <!--[if IE 9]> <html lang="en" class="ie9"> <![endif]-->
@@ -64,10 +65,11 @@
 			<div class="col-md-12 col-sm-6 form-block equal-height-column">
 				<h2 class="margin-bottom-30">Login To Your Account</h2>
 				<form id="loginForm" name="loginForm" class="sky-form2">
+				<input type="hidden" id="returnUrl" name="returnUrl" value="${rtnUrl}">
 					<div class="login-block">
 						<div class="input-group margin-bottom-20">
 							<span class="input-group-addon rounded-left"><i class="icon-user color-blue"></i></span>
-							<input type="text" id="loginId" name="loginId" class="form-control rounded-right" placeholder="로그인 아이디">
+							<input type="email" id="loginId" name="loginId" class="form-control rounded-right" placeholder="로그인 아이디">
 						</div>
 
 						<div class="input-group margin-bottom-20">

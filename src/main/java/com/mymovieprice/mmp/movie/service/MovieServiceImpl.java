@@ -16,6 +16,7 @@ import com.mymovieprice.mmp.movie.model.MovieImage;
 import com.mymovieprice.mmp.movie.model.MovieImageCondition;
 import com.mymovieprice.mmp.movie.model.MovieMaster;
 import com.mymovieprice.mmp.movie.model.MoviePriceCondition;
+import com.mymovieprice.mmp.movie.model.MovieReviewCondition;
 
 
 @Service("movieService")
@@ -48,6 +49,18 @@ public class MovieServiceImpl implements MovieService {
 	public Map<String, Object> addMovieMaster(MovieCondition movieCondition) throws Exception {
 		
 		int rsltCnt = movieRepository.insertMovieMaster(movieCondition);
+		logger.debug("rsltCnt : "+rsltCnt);
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("resultCnt" , rsltCnt);
+		
+		return map;
+	}
+	
+	@Override
+	public Map<String, Object> editMovieMaster(MovieCondition movieCondition) throws Exception {
+		
+		int rsltCnt = movieRepository.updateMovieMaster(movieCondition);
 		logger.debug("rsltCnt : "+rsltCnt);
 		
 		Map<String, Object> map = new HashMap<String, Object>();
@@ -109,6 +122,18 @@ public class MovieServiceImpl implements MovieService {
 	public Map<String, Object> addMoviePrice(MoviePriceCondition moviePriceCondition) throws Exception {
 		
 		int rsltCnt = movieRepository.insertMoviePrice(moviePriceCondition);
+		logger.debug("rsltCnt : "+rsltCnt);
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("resultCnt" , rsltCnt);
+		
+		return map;
+	}
+	
+	@Override
+	public Map<String, Object> addMovieReview(MovieReviewCondition movieReviewCondition) throws Exception {
+		
+		int rsltCnt = movieRepository.insertMovieReview(movieReviewCondition);
 		logger.debug("rsltCnt : "+rsltCnt);
 		
 		Map<String, Object> map = new HashMap<String, Object>();

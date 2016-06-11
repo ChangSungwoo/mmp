@@ -18,7 +18,8 @@ function setEvent(){
 }
 
 function movieDetail(mid) {
-	location.href="/admin/movie/movieDetail";
+	console.log("aaa");
+	location.href="/admin/movie/movieDetail?movieId="+mid;
 }
 
 

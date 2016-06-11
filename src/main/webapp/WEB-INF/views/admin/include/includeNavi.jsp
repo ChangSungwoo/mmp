@@ -13,7 +13,7 @@ parentName = java.net.URLDecoder.decode((String)request.getParameter("parentName
 	<div class="container">
 		<h1 class="pull-left"><%=thisName %></h1>
 		<ul class="pull-right breadcrumb">
-			<li><a href="/mmp/admin/main">Home</a></li>
+			<li><a href="/admin/main">Home</a></li>
 			<li><a href=""><%=parentName %></a></li>
 			<li class="active"><%=thisName %></li>
 		</ul>

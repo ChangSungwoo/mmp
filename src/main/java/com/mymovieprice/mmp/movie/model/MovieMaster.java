@@ -8,6 +8,10 @@ public class MovieMaster {
 	private String releaseDt;
 	private String displayYn;
 	private String endYn;
+	private String stdPriceDiv;
+	private int stdPrice;
+	private String directorText;
+	private String actorText;
 	private String creDt;
 	private String creId;
 	private String updDt;
@@ -48,6 +52,32 @@ public class MovieMaster {
 	}
 	public void setEndYn(String endYn) {
 		this.endYn = endYn;
+	}
+	
+	public String getStdPriceDiv() {
+		return stdPriceDiv;
+	}
+	public void setStdPriceDiv(String stdPriceDiv) {
+		this.stdPriceDiv = stdPriceDiv;
+	}
+	public int getStdPrice() {
+		return stdPrice;
+	}
+	public void setStdPrice(int stdPrice) {
+		this.stdPrice = stdPrice;
+	}
+	
+	public String getDirectorText() {
+		return directorText;
+	}
+	public void setDirectorText(String directorText) {
+		this.directorText = directorText;
+	}
+	public String getActorText() {
+		return actorText;
+	}
+	public void setActorText(String actorText) {
+		this.actorText = actorText;
 	}
 	public String getCreDt() {
 		return creDt;

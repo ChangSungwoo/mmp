@@ -24,6 +24,8 @@ function setEvent(){
 		$("#movieTitle").val($("[id=tmpTitle]").eq(i).val());
 		$("#movieEngTitle").val($("[id=tmpEngTitle]").eq(i).val().trim());
 		$("#releaseDt").val($("[id=tmpDate]").eq(i).val());
+		$("#directorText").val($("[id=tmpDirector]").eq(i).val());
+		$("#actorText").val($("[id=tmpActor]").eq(i).val());
 		
 		if($("#releaseDt").val()=="") {
 			alert("개봉일이 등록되지 않은 영화라 영화 정보 등록이 불가능합니다.");
@@ -37,7 +39,6 @@ function setEvent(){
 }
 
 function addMovie() {
-	
 	$.ajax({
 		url : "/admin/movie/movieSave",
 		type : 'POST',

@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
@@ -104,8 +104,9 @@
 					<div class="col-sm-8">
 						<div class="headline"><h2>영화 감상평</h2></div>
 						<p>
-							<span class="dropcap">압</span>도적인 집요함과 유구한 끈질김으로 해볼 건 웬만하면 다 해본 듯하여 이제는 더 이상 나올 게 없어보였던 나치만행 고발무비에서, 보란 듯 등장한 혁신과 진일보를 앞에 두고 그만 무어라 드릴 말씀을 잊는 와중에도 계속해서 떠오르는 것은, 이만하면 됐으니 이제 과거는 웬만하면 다 털고 가자는 목소리들.
-							나치를 잊지 말자는 그 목소리 만큼이나 집요하고 끈질긴 그 목소리들.
+							<!-- span class="dropcap">압</span>도적인 집요함과 유구한 끈질김으로 해볼 건 웬만하면 다 해본 듯하여 이제는 더 이상 나올 게 없어보였던 나치만행 고발무비에서, 보란 듯 등장한 혁신과 진일보를 앞에 두고 그만 무어라 드릴 말씀을 잊는 와중에도 계속해서 떠오르는 것은, 이만하면 됐으니 이제 과거는 웬만하면 다 털고 가자는 목소리들.
+							나치를 잊지 말자는 그 목소리 만큼이나 집요하고 끈질긴 그 목소리들. -->
+							${movie.reviewText}
 						</p>
 					</div>
 					<div class="col-sm-4">
@@ -136,7 +137,7 @@
 										<tr>
 											<td>${rowP.priceComment}</td>
 											<td width="80" align="right" class="price-red">+${rowP.price}원</td>
-											<fmt:formatNumber var="totalPrice" value="${totalPrice+rowP.price}" pattern="###0"/>
+											<fmt:formatNumber var="totalPrice" value="${totalPrice+rowP.price}" pattern="####"/>
 										</tr>
 												</c:forEach>
 											</c:when>
@@ -165,13 +166,13 @@
 										<tr>
 											<td>${rowN.priceComment}</td>
 											<td width="80" align="right" class="price-blue">-${rowN.price}원</td>
-											<fmt:formatNumber var="totalPriceMinus" value="${totalPriceMinus+rowN.price}" pattern="###0"/>
+											<fmt:formatNumber var="totalPriceMinus" value="${totalPriceMinus+rowN.price}" pattern="####"/>
 										</tr>
 												</c:forEach>
 											</c:when>
 										</c:choose>
 										<tr>
-											<th colspan="3" class="price-blue" style="text-align:right;">Total : - <fmt:formatNumber value="${totalPrice+rowN.price}"/>원</th>
+											<th colspan="3" class="price-blue" style="text-align:right;">Total : - <fmt:formatNumber value="${totalPriceMinus+rowN.price}"/>원</th>
 										</tr>
 									</tbody>
 								</table>
@@ -183,7 +184,7 @@
 						<!--Basic Table Option (Spacing)-->
 						<div class="panel panel-grey margin-bottom-10">
 							<div class="panel-heading">
-								<h3 class="price-total"><i class="fa fa-krw"></i>총 적정관람료 : 9,000원 + 3,100원 - 450원 (또는 4,950원) = 11,650원 (또는 7,150원)</h3>
+								<h3 class="price-total"><i class="fa fa-krw"></i>총 적정관람료 : <fmt:formatNumber value="${movie.stdPrice}" pattern="#,###" />원 + <fmt:formatNumber value="${totalPrice}" pattern="#,###" />원 - <fmt:formatNumber value="${totalPriceMinus}" pattern="#,###" />원 = <fmt:formatNumber value="${movie.stdPrice+totalPrice-totalPriceMinus}" pattern="#,###" />원 </h3>
 							</div>
 						</div>
 						<!--End Basic Table-->

@@ -24,7 +24,7 @@ public class AdminLoginController {
 	@RequestMapping(value = "/admin/", method = RequestMethod.GET)
 	public ModelAndView adminRoot(Map<String,Object> condition) {
 		
-		ModelAndView mav = new ModelAndView("admin/login");
+		ModelAndView mav = new ModelAndView("admin/main");
 		
 		return mav;
 	}

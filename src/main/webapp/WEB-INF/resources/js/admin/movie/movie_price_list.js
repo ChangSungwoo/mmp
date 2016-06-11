@@ -11,6 +11,6 @@ function setEvent(){
 
 }
 
-function moviePriceDetail(mid) {
-	location.href="/admin/movie/moviePriceDetail?movieId="+mid;
+function moviePriceDetail(mid , rid) {
+	location.href="/admin/movie/moviePriceDetail?movieId="+mid+"&reviewSeq="+rid;
 }

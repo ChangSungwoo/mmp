@@ -25,14 +25,18 @@ function setEvent(){
 		}
 	});
 	
+	$("#btnReviewSave").click(function(){
+		console.log("리뷰 저장");
+		addMovieReview();
+	});
+	
 }
 
 
 function addMoviePrice() {
 	
 	var movieID = getUrlParameter("movieId");
-	
-	console.log("movieID : "+movieID);
+	var reviewSeq = getUrlParameter("reviewSeq");
 	
 	$.ajax({
 		url : "/admin/movie/moviePriceSave",
@@ -45,7 +49,42 @@ function addMoviePrice() {
 				return false;
 			} else {
 				alert("정상 저장 되었습니다.");
-				location.href="/admin/movie/moviePriceDetail?movieId="+movieID;				
+				location.href="/admin/movie/moviePriceDetail?movieId="+movieID+"&reviewSeq="+reviewSeq;				
+			}
+		},
+		error : function(e){
+			if(e.status==200){
+				alert("error code 정상 저장 되었습니다.");
+				location.href="/admin/movie/moviePriceList";
+			}else{
+				console.log(e);
+				alert("오류가 발생했습니다. 다시 시도해 주시기 바랍니다.");
+			}
+		}
+	});
+}
+
+function addMovieReview() {
+	
+	var movieID = getUrlParameter("movieId");
+	var reviewSeq = getUrlParameter("reviewSeq");
+	
+	console.log("Review movieID : "+movieID);
+	
+	$.ajax({
+		url : "/admin/movie/movieReviewSave",
+		type : 'POST',
+		data : $("#reviewForm").serialize(true),
+		dataType : "json",
+		success : function(data){
+			console.log("errNo : "+data.error);
+			if(data.error != undefined){
+				console.log("Error?");
+				alert("에러코드 : " + data.additionalInfo.errCode + "\n" + data.message);
+				return false;
+			} else {
+				alert("정상 저장 되었습니다.");
+				location.href="/admin/movie/moviePriceDetail?movieId="+movieID+"&reviewSeq="+reviewSeq;
 			}
 		},
 		error : function(e){

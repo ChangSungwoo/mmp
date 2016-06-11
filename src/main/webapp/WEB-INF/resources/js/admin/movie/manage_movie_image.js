@@ -39,12 +39,6 @@ function setEvent(){
 		if($("[id=delegateYnChk]").eq(idx).prop("checked"))	
 			delegateImgChk = "Y";
 		
-		//console.log("delegate count : "+$("[id=delegateYnChk]").length);
-		//console.log("index : "+idx);
-		//console.log("delegateImgChk : "+$("input[name=delegateYnChk]:checkbox:checked").length);
-		
-		//console.log("useYn : "+useImgChk);
-		//console.log("delegateYn : "+delegateImgChk);
 		delegateCnt = $("input[name=delegateYnChk]:checkbox:checked").length;
 		
 		if(delegateCnt > 1) {

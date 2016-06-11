@@ -2,7 +2,54 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="contents">
+	<resultMap type="com.mymovieprice.mmp.contents.model.ContentMaster" id="ContentMaster">
+		<result column="MOVIE_ID"	property="movieId"/>
+		<result column="MOVIE_KOR_TITLE"	property="movieKorTitle"/>
+		<result column="MOVIE_ENG_TITLE"	property="movieEngTitle"/>
+		<result column="RELEASE_DT"	property="releaseDt"/>
+		<result column="DISPLAY_YN"	property="displayYn"/>
+		<result column="END_YN"	property="endYn"/>
+		<result column="STD_PRICE_DIV"	property="stdPriceDiv"/>
+		<result column="STD_PRICE"	property="stdPrice"/>
+		<result column="ACTOR_TEXT"	property="actorText"/>
+		<result column="DIRECTOR_TEXT"	property="directorText"/>
+		<result column="CRE_DT"	property="creDt"/>
+		<result column="CRE_ID"	property="creId"/>
+		<result column="UPD_DT"	property="updDt"/>
+		<result column="UPD_ID"	property="updId"/>
+	</resultMap>
+
 	<select id="selectMainContent" parameterType="hashmap" resultType="hashmap">
 
 	</select>
+	
+	<insert id="insertMainContent" parameterType="com.mymovieprice.mmp.contents.model.ContentMaster">
+		insert into CONTENT_MASTER(
+			PAGE_ID, 
+			CONTENT_DIV,
+			CONTENT_SEQ,
+			IMAGE_SEQ,
+			USE_YN,
+			DISPLAY_ORDER,
+			CRE_ID,
+			CRE_DT, 
+			UPD_ID
+			) VALUES (
+			#{pageId},
+			#{contentDiv},
+			#{contentSeq},
+			#{endYn},
+			#{displayYn},
+			(select CODE_D_SEQ 
+				from CMM_CODE_D
+				where CODE_M_SEQ = 1
+				and DEFAULT_YN = 'Y'
+				and USE_YN = 'Y'),
+			#{directorText},
+			#{actorText},
+			#{creId},
+			NOW(),
+			#{updId}
+			);
+	</insert>
 </mapper>

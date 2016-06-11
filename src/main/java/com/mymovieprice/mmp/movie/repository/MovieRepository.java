@@ -12,6 +12,7 @@ import com.mymovieprice.mmp.movie.model.MovieCondition;
 import com.mymovieprice.mmp.movie.model.MovieImageCondition;
 import com.mymovieprice.mmp.movie.model.MovieMaster;
 import com.mymovieprice.mmp.movie.model.MoviePriceCondition;
+import com.mymovieprice.mmp.movie.model.MovieReviewCondition;
 
 
 @Repository("movieRepository")
@@ -36,12 +37,18 @@ public class MovieRepository extends AbstractDao {
 			Map<String, Object> condition) {
 		
 		return (List<Map<String, Object>>)selectList("movie.selectMovieListByEditor", condition);
-		//return null;
 	}
+	
+
 	
 	public int insertMovieMaster(MovieCondition movieCondition) {
 		
 		return (Integer)insert("movie.insertMovieMaster", movieCondition);
+	}
+	
+	public int updateMovieMaster(MovieCondition movieCondition) {
+		
+		return (Integer)update("movie.updateMovieMaster", movieCondition);
 	}
 
 	@SuppressWarnings("unchecked")
@@ -86,6 +93,11 @@ public class MovieRepository extends AbstractDao {
 	public int insertMoviePrice(MoviePriceCondition moviePriceCondition) {
 		
 		return (Integer)insert("movie.insertMoviePrice", moviePriceCondition);
+	}
+	
+	public int insertMovieReview(MovieReviewCondition movieReviewCondition) {
+		
+		return (Integer)insert("movie.insertMovieReview", movieReviewCondition);
 	}
 	
 	@SuppressWarnings("unchecked")
