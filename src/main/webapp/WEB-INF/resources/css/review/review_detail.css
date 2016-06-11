@@ -1,0 +1,17 @@
+@CHARSET "UTF-8";
+
+/*Shop Color Red*/
+.price-red {
+  color: #c9253c;
+}
+
+.price-blue {
+  color: #0000ff;
+}
+
+.price-total {
+  font-size:22px;
+  margin-top: 0;
+  margin-bottom: 0;
+  color: inherit;
+}

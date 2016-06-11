@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="review">
+
+	<resultMap type="com.mymovieprice.mmp.review.model.MovieReview" id="MovieReview">
+		<result column="REVIEW_SEQ"	property="reviewSeq"/>
+		<result column="MOVIE_ID"	property="movieId"/>
+		<result column="USER_NO"	property="userNo"/>
+		<result column="REVIEW_TEXT"	property="reviewText"/>
+		<result column="WRITER_DIV"	property="writerDiv"/>
+		<result column="IMAGE_SEQ"	property="imageSeq"/>
+		<result column="CRE_DT"	property="creDt"/>
+		<result column="CRE_ID"	property="creId"/>
+		<result column="UPD_DT"	property="updDt"/>
+		<result column="UPD_ID"	property="updId"/>
+	</resultMap>
+
+	<select id="selectReviewListByEditor" parameterType="hashmap" resultType="hashmap">
+		select mr.REVIEW_SEQ as reviewSeq
+		, mr.MOVIE_ID as movieID
+		, mi.FILE_NM as imgFileNm
+		, mi.FILE_PATH as imgFilePath
+		, mm.MOVIE_KOR_TITLE as movieKorTitle
+		, mm.MOVIE_ENG_TITLE as movieEngTitle
+		, mm.DIRECTOR_TEXT as directorText
+		, mm.ACTOR_TEXT as actorText
+		, mm.CRE_DT as creDt
+		, mm.RELEASE_DT as releaseDt
+		, cd.CODE_D_NM as stdPrice
+		, (SELECT sum(price) from MOVIE_PRICE mp1 where mp1.REVIEW_SEQ = mr.REVIEW_SEQ and mp1.PRICE_DIV = 'P') as positivePrice
+		, (SELECT sum(price) from MOVIE_PRICE mp2 where mp2.REVIEW_SEQ = mr.REVIEW_SEQ and mp2.PRICE_DIV = 'N') as negativePrice 
+		, mr.REVIEW_TEXT as reviewText 
+		from MOVIE_REVIEW mr , MOVIE_MASTER mm, MOVIE_IMAGE mi , CMM_CODE_D cd
+		where mr.MOVIE_ID = mm.MOVIE_ID
+		and mr.MOVIE_ID = mi.MOVIE_ID
+		and mm.STD_PRICE_DIV = cd.CODE_D_SEQ
+		and mr.WRITER_DIV = 'E'		
+		and mi.DELEGATE_YN = 'Y'
+		order by mm.CRE_DT desc
+		;
+	</select>
+	
+	<select id="selectMovieReview" parameterType="hashmap" resultMap="MovieReview">
+		select
+		mr.REVIEW_SEQ as reviewSeq,
+		mr.MOVIE_ID as movieId,
+		mr.USER_NO as userNo,
+		mr.REVIEW_TEXT as reviewText,
+		mr.WRITER_DIV as writerDiv,
+		mr.IMAGE_SEQ as imageSeq,
+		mi.FILE_PATH as filePath,
+		mi.FILE_NM as fileNm,
+		mr.CRE_DT AS creDt,
+		mr.CRE_ID AS creId,
+		mr.UPD_DT AS updDt,
+		mr.UPD_ID AS updId
+		from MOVIE_REVIEW mr , MOVIE_IMAGE mi
+		where mr.IMAGE_SEQ = mi.IMAGE_SEQ
+		and mr.REVIEW_SEQ = #{reviewSeq}
+	</select>
+	
+	
+</mapper>

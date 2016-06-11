@@ -1,0 +1,54 @@
+@CHARSET "UTF-8";
+
+/*Shop Color Red*/
+.price-red {
+  color: #c9253c;
+}
+
+.price-blue {
+  color: #0000ff;
+}
+
+.price-green {
+  color: #18ba9b;
+}
+
+.movie-prices {
+	font-size: 30px;
+	font-weight:400;
+}
+
+.movie-small-prices {
+	font-size: 20px;
+}
+
+.cbp-l-filters-text {
+  margin-bottom: 30px;
+  text-align: center;
+  font: 400 12px/21px "Lato", sans-serif;
+  color: #DADADA;
+  padding: 0 15px; }
+  
+  
+.cbp-filter-item {
+  color: #949494;
+  cursor: pointer;
+  font: 400 13px/21px "Open Sans", sans-serif;
+  padding: 0 12px;
+  transition: all .3s ease-in-out;
+  position: relative;
+  overflow: visible;
+  margin: 0 0 10px;
+  display: inline-block; }
+
+.cbp-filter-item:hover {
+  color: #2D2C2C; }
+
+.cbp-filter-item.cbp-filter-item-active {
+  color: #2D2C2C;
+  cursor: default; }
+  
+.sort-xs {
+	padding-top: 5px;
+	padding-bottom: 5px;
+}
