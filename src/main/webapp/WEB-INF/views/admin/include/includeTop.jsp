@@ -1,18 +1,40 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<body>
+	<div class="wrapper">
 		<!--=== Header ===-->
 		<div class="header">
 			<div class="container">
 				<!-- Logo -->
 				<a class="logo" href="/admin/main">
-					<h1>M.M.P</h1>
-					<h6>Administrator</h6>
+					<img src="/img/mmp_logo.jpg" width="100" alt="Logo">
 				</a>
 				<!-- End Logo -->
-
 				<!-- Topbar -->
-				<div class="topbar">&nbsp;</div>
+				<div class="topbar">
+					<ul class="loginbar pull-right">
+						<li class="hoverSelector">
+							<i class="fa fa-globe"></i>
+							<a><%=session.getAttribute("member.userNick")%></a>
+							<ul class="languages hoverSelectorBlock">
+								<li class="active">
+									<a href="#">비밀번호 변경<i class="fa fa-check"></i></a>
+								</li>
+								<li><a href="#">Front</a></li>
+								<li><a href="#">Logout</a></li>
+							</ul>
+						</li>
+						<li class="topbar-devider"></li>
+						<li><a href="page_faq.html">Logout</a></li>
+					</ul>
+				</div>
 				<!-- End Topbar -->
 
+				<!-- Toggle get grouped for better mobile display -->
+				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-responsive-collapse">
+					<span class="sr-only">Toggle navigation</span>
+					<span class="fa fa-bars"></span>
+				</button>
+				<!-- End Toggle -->
 			</div><!--/end container-->
 
 			<!-- Collect the nav links, forms, and other content for toggling -->
@@ -20,63 +42,37 @@
 				<div class="container">
 					<ul class="nav navbar-nav">
 						<!-- 영화관리 Start -->
-						<li class="dropdown">
-							<a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown">영화관리</a>
+						<li class="dropdown  active">
+							<a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown">적정관람료</a>
 							<ul class="dropdown-menu">
 								<!-- 영화 데이터 관리 Start -->
-								<li><a href="/admin/movie/movieList">영화 등록관리</a></li>
-								<li><a href="/admin/movie/movieImageList">영화 이미지 등록관리</a></li>
-								<li><a href="/admin/movie/moviePriceList">적정관람료 관리</a></li>
-								<li><a href="/admin/movie/movieDSearch">Daum API Test</a></li>
-									<!-- ul class="dropdown-menu">
-										<li><a href="/mmp/admin/movie/movieList">영화목록 조회</a></li>
-										<li><a target="_blank" href="One-Pages/Classic/one_page_dark.html">외부 데이터 관리</a></li>
-										<li><a target="_blank" href="One-Pages/Classic/one_page_dark.html">영화 신규 등록</a></li>
-									</ul-->
+								<li><a href="/admin/movie/movieList">영화 등록</a></li>
+								<li><a href="/admin/movie/movieImageList">이미지 등록</a></li>
+								<li><a href="/admin/review/moviePriceList">적정관람료 작성</a></li>
+								<li><a href="/admin/movie/movieDSearch">Daum 영화정보</a></li>
 								<!-- 영화 데이터 관리 End -->
 							</ul>
 						</li>
 						<!-- 영화관리 End -->
 
 						<!-- Pages -->
-						<li class="dropdown active">
+						<li class="dropdown">
 							<a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown">회원관리</a>
 							<ul class="dropdown-menu">
-								<!-- About Pages -->
-								<li class="dropdown-submenu">
-									<a href="javascript:void(0);">회원 관리</a>
-									<ul class="dropdown-menu">
-										<li><a href="page_about2.html">회원 목록</a></li>
-										<li><a href="page_about3.html">비밀번호 초기화 및 메일 발송</a></li>
-										<li><a href="page_about1.html">블랙리스트 관리</a></li>
-									</ul>
-								</li>
-								<!-- End About Pages -->
-
-								<!-- Service Pages -->
-								<li class="dropdown-submenu">
-									<a href="javascript:void(0);">회원 컨텐츠 관리</a>
-									<ul class="dropdown-menu">
-										<li><a href="page_services.html">Our Services</a></li>
-										<li><a href="page_services1.html">Our Services 1</a></li>
-										<li><a href="page_services2.html">Our Services 2</a></li>
-										<li><a href="page_services3.html">Our Services 3</a></li>
-									</ul>
-								</li>
-								<!-- End Service Pages -->
+								<li><a href="/admin/member/memberList">회원 리스트</a></li>
+								<li><a href="page_services.html">회원 적정관람료</a></li>
 							</ul>
 						</li>
 						<!-- End Pages -->
 
 						<!-- Blog -->
 						<li class="dropdown">
-							<a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown">
-								서비스 관리
-							</a>
+							<a href="javascript:void(0);" class="dropdown-toggle" data-toggle="dropdown">기타 관리</a>
 							<ul class="dropdown-menu">
-								<li><a href="/admin/service/mainContentList">메인 화면관리</a></li>
+								<li><a href="/admin/service/mainContentList">메인 화면</a></li>
+								<li><a href="/admin/reader/readerList">읽을거리</a></li>
 								<li class="dropdown-submenu">
-									<a href="javascript:void(0);">서비스 기준 정책관리</a>
+									<a href="javascript:void(0);">정책관리</a>
 									<ul class="dropdown-menu">
 										<li><a href="blog_large_right_sidebar_item1.html">User평 기준 상한선</a></li>
 									</ul>
@@ -91,9 +87,8 @@
 								시스템 관리
 							</a>
 							<ul class="dropdown-menu">
-								<li><a href="#">관리자 목록</a></li>
-								<li><a href="#">게시판 관리</a></li>
-								<li><a href="#">공통코드 관리</a></li>
+								<li><a href="/admin/member/memberAdminList">관리자 리스트</a></li>
+								<li><a href="/admin/common/commonCodeList">공통코드 관리</a></li>
 							</ul>
 						</li>
 						<!-- End Portfolio -->
@@ -113,3 +108,5 @@
 			</div><!--/navbar-collapse-->
 		</div>
 		<!--=== End Header ===-->
+	</div>
+</body>

@@ -1,6 +1,7 @@
 package com.mymovieprice.mmp.member.service;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
@@ -33,7 +34,22 @@ public class MemberServiceImpl implements MemberService {
 		// TODO Auto-generated method stub
 		return memberRepository.selectMember(memberCondition);
 	}
+
+	@Override
+	public List<Map<String, Object>> getMemberList(Map<String, Object> condition) throws Exception {
+		// TODO Auto-generated method stub
+		return memberRepository.selectMemberList(condition);
+	}
 	
+	@Override
+	public List<Map<String,Object>> getMyFavoriteUserList(Map<String,Object> condition) throws Exception {
+		return memberRepository.selectMyFavoriteUserList(condition);
+	}
+	
+	@Override
+	public List<Map<String,Object>> getFavoriteMeUserList(Map<String,Object> condition) throws Exception {
+		return memberRepository.selectFavoriteMeUserList(condition);
+	}
 	
 
 }

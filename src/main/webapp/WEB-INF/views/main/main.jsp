@@ -68,16 +68,21 @@
 						<div class="cbp-item graphic">
 							<div class="cbp-caption" >
 								<div class="cbp-caption-defaultWrap">
-									<img src="${row.imgFilePath}/${row.imgFileNm}" alt="">
+									<a href="/review/reviewDetail?reviewSeq=${row.reviewSeq}"><img src="${row.imgFilePath}/${row.imgFileNm}" alt=""></a>
 								</div>
 								<div class="cbp-caption-activeWrap">
 									<div class="cbp-l-caption-alignCenter">
 										<div class="cbp-l-caption-body">
 											<ul class="link-captions">
-												<li><a href="/review/reviewDetail?reviewSeq=1"><i class="rounded-x fa fa-link"></i></a></li>
-												<li><a href="${row.filePath}/${row.fileNm}" class="cbp-lightbox" data-title="Design Object"><i class="rounded-x fa fa-search"></i></a></li>
-											</ul>
-											<div class="cbp-l-grid-agency-title">${row.mainSubject}</div>
+												<c:choose>
+													<c:when test="${row.uploadDay < 8}">
+														<li><img src="/img/p01_new_yellow_trans.gif"></li>
+													</c:when>
+												</c:choose>
+											</ul>											
+											<div class="cbp-l-grid-agency-title">
+												<a href="/review/reviewDetail?reviewSeq=${row.reviewSeq}">${row.mainSubject}</a>
+											</div>
 											<div class="cbp-l-grid-agency-desc">by 한동원</div>
 										</div>
 									</div>

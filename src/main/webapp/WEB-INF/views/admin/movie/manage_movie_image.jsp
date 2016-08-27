@@ -42,31 +42,19 @@
 			<jsp:param name="dummy" value=""/>
 		</jsp:include>
 		<jsp:include page="/WEB-INF/views/admin/include/includeNavi.jsp" flush="true">
-			<jsp:param name="thisName" value='<%=java.net.URLEncoder.encode("영화 신규 등록")%>'/>
+			<jsp:param name="thisName" value='<%=java.net.URLEncoder.encode("새 이미지 등록")%>'/>
 			<jsp:param name="parentName" value='<%=java.net.URLEncoder.encode("영화 관리")%>'/>
 		</jsp:include>
 		<!--=== Content ===-->
 		<div class="container content height-500">
 			<div class="col-md-12">
 				<table class="table table-bordered">
-					<thead>
-						<tr>
-							<th>영화ID</th>
-							<th>영화명</th>
-							<th>적정관람료</th>
-							<th>개봉일</th>
-							<th>게시일</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr>
-							<td>${movie.movieId}</td>
-							<td>${movie.movieKorTitle}</td>
-							<td>9,300원 <span class="font-red">(+ 300원)</span></td>
-							<td>${movie.releaseDt}</td>
-							<td>${movie.creDt}</td>
-						</tr>
-					</tbody>
+					<tr>
+						<th width="10%" bgcolor="#EFEFEF">영화명</th>
+						<td>${movie.movieKorTitle}</td>
+						<th width="10%" bgcolor="#EFEFEF">개봉일</th>
+						<td width="20%">${movie.releaseDt}</td>
+					</tr>
 				</table>
 			</div>
 			<div class="col-md-12">
@@ -102,7 +90,7 @@
 					</fieldset>
 					<footer>
 						<button type="button" id="btnSave" name="btnSave" class="btn-u">Upload</button>
-						<button type="button" class="btn-u btn-u-default" onclick="window.history.back();">취소</button>
+						<button type="button" class="btn-u btn-u-default" onclick="window.history.back();">리스트</button>
 					</footer>
 				</form:form>
 				<!-- General Unify Forms -->
@@ -115,7 +103,7 @@
 							<tr>
 								<th width="200">영화 이미지</th>
 								<th>대표이미지</th>
-								<th>삭제</th>
+								<th>이미지구분</th>
 								<th>업로드일</th>
 								<th>Action</th>
 							</tr>
@@ -135,15 +123,17 @@
 												</label>
 											</td>
 											<td>
-												<label class="checkbox">
-													<input type="checkbox" id="useYnChk" name="useYnChk" value="Y" <c:if test="${row.useYn eq 'Y' }"> checked </c:if>><i></i>사용중
-												</label>
+												<div class="inline-group">
+													<label class="radio"><input type="radio" id="dtlImageDiv" name="dtlImageDiv" value="0" <c:if test="${row.imageDiv eq '0' }"> checked </c:if>><i class="rounded-x"></i>포스터</label>
+													<label class="radio"><input type="radio" id="dtlImageDiv" name="dtlImageDiv" value="1" <c:if test="${row.imageDiv eq '1' }"> checked </c:if>><i class="rounded-x"></i>스크린샷</label>
+													<label class="radio"><input type="radio" id="dtlImageDiv" name="dtlImageDiv" value="2" <c:if test="${row.imageDiv eq '2' }"> checked </c:if>><i class="rounded-x"></i>기타 영화이미지</label>
+												</div>	
 											</td>
 											<td>
 												${fn:substring(row.creDt,0,10) }
 											</td>
 											<td rowspan="2">
-												<button class="btn-u btn-u-xs btn-u-default" type="button">이동</button>
+												<button id="btnDelete" name="btnDelete" class="btn-u btn-u-xs btn-u-default" type="button">삭제</button>
 												<button id="btnUpdate" name="btnUpdate" class="btn-u btn-u-xs btn-u-green btnUpdate" type="button">저장</button>
 											</td>
 										</tr>
@@ -172,6 +162,7 @@
 				<input type="hidden" id="imageSeq" name="imageSeq">
 				<input type="hidden" id="editUseYn" name="editUseYn">
 				<input type="hidden" id="editDelegateYn" name="editDelegateYn">
+				<input type="hidden" id="editImageDiv" name="editImageDiv">
 				<input type="hidden" id="editImageDesc" name="editImageDesc">
 			</form>
 			

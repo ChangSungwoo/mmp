@@ -1,6 +1,7 @@
 package com.mymovieprice.mmp.member.web;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
@@ -15,10 +16,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.mymovieprice.mmp.common.web.MMPExceptionHandler;
 import com.mymovieprice.mmp.main.web.MainController;
 import com.mymovieprice.mmp.member.model.Member;
 import com.mymovieprice.mmp.member.model.MemberCondition;
 import com.mymovieprice.mmp.member.service.MemberService;
+import com.mymovieprice.mmp.review.service.ReviewService;
 import com.mymovieprice.mmp.util.StringUtils;
 
 /**
@@ -36,6 +39,9 @@ public class MemberController {
 	
 	@Resource(name="memberService")
     private MemberService memberService;
+	
+	@Resource(name="reviewService")
+    private ReviewService reviewService;
 	
 	@RequestMapping(value = "/member/login", method = RequestMethod.GET)
 	public ModelAndView login(HttpServletRequest request) {
@@ -178,7 +184,7 @@ public class MemberController {
 		logger.info("USerNickName : "+memberCondition.getUserNickNm());
 		memberCondition.setUserNm("");			// 당사 직접 가입일 경우 이름 필드는 Null
 		memberCondition.setUserType("0");		// 회원 가입 페이지를 통하여 가입된 사용자는 0 ,SNS인증을 통한 미가입 회원은 1
-		memberCondition.setProviderCd("0");		// 당사 :  0 , Facebook : 1
+		memberCondition.setProviderCd("0");		// 당사 :  4 , SNS : 5
 		memberCondition.setUserGrade("1");		// 관리자 : 0, 일반회원 : 1
 		memberCondition.setCreId(WorkerId);
 		memberCondition.setUpdId(WorkerId);
@@ -199,9 +205,38 @@ public class MemberController {
 	}
 	
 	@RequestMapping(value = "/member/myPage", method = RequestMethod.GET)
-	public ModelAndView myPage(Map<String,Object> condition) {
+	public ModelAndView myPage(Map<String,Object> condition, HttpServletRequest request) {
 		
 		ModelAndView mav = new ModelAndView("member/myPage");
+		
+		List<Map<String, Object>> list;
+		List<Map<String, Object>> myFavoitrList;
+		List<Map<String, Object>> favoriteMeList;
+		
+		HttpSession session = request.getSession(true);
+		
+		String WorkerId = (String)session.getAttribute("member.userNo");
+		
+		condition.put("userId", WorkerId);
+		
+		logger.info("userId : "+WorkerId);
+		
+		try {
+			list = reviewService.getReviewListByOneUser(condition);
+			logger.info("list size : "+list.size());
+			
+			myFavoitrList = memberService.getMyFavoriteUserList(condition);
+			favoriteMeList = memberService.getFavoriteMeUserList(condition);
+			
+			mav.addObject("list", list);
+			mav.addObject("reviewCount" , list.size());
+			
+			mav.addObject("mfList", myFavoitrList);
+			mav.addObject("fmList", favoriteMeList);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		
 		return mav;
 	}
@@ -211,6 +246,40 @@ public class MemberController {
 		
 		ModelAndView mav = new ModelAndView("member/myPage2");
 		
+		return mav;
+	}
+	
+	@RequestMapping(value = "/admin/member/memberList", method = RequestMethod.GET)
+	public ModelAndView adminMemberList(Map<String,Object> condition, HttpServletRequest request) {
+		
+		ModelAndView mav = new ModelAndView("admin/member/member_list");
+		
+		List<Map<String, Object>> list;
+		
+		try {
+			list = memberService.getMemberList(condition);
+			mav.addObject("list", list);
+		} catch (Exception e) {
+			e.printStackTrace();
+			
+		}
+		
+		return mav;
+	}
+	
+	@RequestMapping(value = "/admin/member/memberDetail", method = RequestMethod.GET)
+	public ModelAndView adminMemberDetail(Map<String,Object> condition) {
+		
+		ModelAndView mav = new ModelAndView("admin/member/member_detail");
+		
+		return mav;
+	}
+	
+	@RequestMapping(value = "/admin/member/memberAdminList", method = RequestMethod.GET)
+	public ModelAndView adminMemberAdminList(Map<String,Object> condition) {
+		
+		ModelAndView mav = new ModelAndView("admin/member/member_admin_list");
+
 		return mav;
 	}
 	

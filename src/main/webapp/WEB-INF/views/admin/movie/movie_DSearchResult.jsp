@@ -156,6 +156,21 @@
 	<script type="text/javascript" src="/js/admin/movie/movie_DSearchResult.js"></script>
 	<!-- JS Page Level -->
 	<script type="text/javascript" src="/js/app.js"></script>
+	
+	<script>
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-77964332-1', 'auto');
+	ga('send', 'pageview');
+	
+	ga('create', {
+	  trackingId: 'UA-77964332-1',
+	  cookieDomain: 'auto',
+	  name: 'myTracker',
+	  userId: 'poppoya'
+	});
+	
+	</script>
+	<script async src='https://www.google-analytics.com/analytics.js'></script>
 
 </body>
 </html>

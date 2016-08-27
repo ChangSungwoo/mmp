@@ -38,10 +38,19 @@ public class MainController {
 		
 		ModelAndView mav = new ModelAndView("main/main");
 		List<Map<String, Object>> list;
+		List<Map<String, Object>> sublist;
 		
 		try {
 			list = mainService.getMainContentList(condition);
+			
+			logger.info("list Size : "+list.size());
 			mav.addObject("list", list);
+			
+			if(list.size() < 10) {
+				condition.put("maxCnt", 10-list.size());
+				sublist = mainService.getMainSubReviewList(condition);
+				mav.addObject("list", sublist);
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new MMPExceptionHandler("영화 목록 조회중에 에러가 발생하였습니다.","100", "/admin/movie/movieList");

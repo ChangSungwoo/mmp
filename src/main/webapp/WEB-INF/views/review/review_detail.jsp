@@ -8,7 +8,7 @@
 <!--[if IE 9]> <html lang="en" class="ie9"> <![endif]-->
 <!--[if !IE]><!--> <html lang="en"> <!--<![endif]-->
 <head>
-	<title>My Movie Price</title>
+	<title>적정관람료-${movie.movieKorTitle}</title>
 	<!-- Meta -->
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -54,13 +54,11 @@
 	<!--=== End Header v8 ===-->
 		<!--=== Breadcrumbs ===-->
 		<div class="breadcrumbs breadcrumbs-light">
-			<div class="container">
-				<h1 class="pull-left">${movie.movieKorTitle} (${movie.movieEngTitle})</h1>
-				<ul class="pull-right breadcrumb">
-					<li>개봉일 : ${movie.releaseDt}</li>
-				</ul>
+			<div class="container" height="100">
+				<h1 class="pull-right">${movie.movieKorTitle}<br />${movie.movieEngTitle}</h1><br /><p /><br /><p /><br /><br />
+				<h6 class="pull-right">개봉일 : ${movie.releaseDt}</h6>
 			</div>
-		</div><!--/breadcrumbs-->
+		</div>
 		<!--=== End Breadcrumbs ===-->		
 		<!--=== Container Part ===-->
 		<div class="container">
@@ -98,8 +96,6 @@
 					<div class="col-sm-8">
 						<div class="headline"><h2>영화 감상평</h2></div>
 						<p>
-							<!-- span class="dropcap">압</span>도적인 집요함과 유구한 끈질김으로 해볼 건 웬만하면 다 해본 듯하여 이제는 더 이상 나올 게 없어보였던 나치만행 고발무비에서, 보란 듯 등장한 혁신과 진일보를 앞에 두고 그만 무어라 드릴 말씀을 잊는 와중에도 계속해서 떠오르는 것은, 이만하면 됐으니 이제 과거는 웬만하면 다 털고 가자는 목소리들.
-							나치를 잊지 말자는 그 목소리 만큼이나 집요하고 끈질긴 그 목소리들. -->
 							${review.reviewText}
 						</p>
 					</div>
@@ -202,98 +198,34 @@
 						</div>
 						<!--End Basic Table-->
 					</div>
-				</div>
+					<div class="col-sm-12" align="center">
+						<c:set var="userid" value="${sessionScope.member.userNo}" />
+						<c:choose>
+							<c:when test="${userid eq null}">
+								<a href="javascript:goLoginPage();"><img src="/img/p07_agree.jpg"></a>&nbsp;&nbsp;&nbsp;
+								<a href="javascript:goLoginPage();"><img src="/img/p07_disagree.jpg"></a>
+							</c:when>
+							<c:otherwise>
+								<c:choose>
+									<c:when test="${sessionScope.member.userNo eq review.creId}">
+										<button id="btnModify" name="btnModify" class="btn-u btn-u-blue" type="button"><i class="fa fa-pencil-square-o"></i> 수 정</button>
+									</c:when>
+									<c:otherwise>
+										<a href="javascript:reviewRecommend('1');"><img src="/img/p07_agree.jpg"></a>&nbsp;&nbsp;&nbsp;
+										<a href="javascript:reviewRecommend('2');"><img src="/img/p07_disagree.jpg"></a>										
+									</c:otherwise>
+								</c:choose>
+							</c:otherwise>
+						</c:choose>
 
-				<div class="cube-portfolio height-300">
-					<div class="col-sm-12">
-						<div class="headline"><h2>최근 등록글</h2></div>
+						
 					</div>
-					<div id="grid-container" class="cbp-l-grid-agency">
-						<div class="cbp-item">
-							<div class="cbp-caption margin-bottom-5">
-								<div class="cbp-caption-defaultWrap">
-									<img src="/img/movie/movie003.jpg" alt="">
-								</div>
-								<div class="cbp-caption-activeWrap">
-									<div class="cbp-l-caption-alignCenter">
-										<div class="cbp-l-caption-body">
-											<ul class="link-captions no-bottom-space">
-												<li><a href="portfolio_single_item.html"><i class="rounded-x fa fa-link"></i></a></li>
-												<li><a href="/img/movie/movie003.jpg" class="cbp-lightbox" data-title="Design Object"><i class="rounded-x fa fa-search"></i></a></li>
-											</ul>
-										</div>
-									</div>
-								</div>
-							</div>
-							<div class="cbp-title-dark">
-								<div class="cbp-l-grid-agency-title">주토피아</div>
-								<div class="cbp-l-grid-agency-desc">Zootopia</div>
-							</div>
-						</div>
-						<div class="cbp-item">
-							<div class="cbp-caption margin-bottom-5">
-								<div class="cbp-caption-defaultWrap">
-									<img src="/img/movie/movie004.jpg" alt="">
-								</div>
-								<div class="cbp-caption-activeWrap">
-									<div class="cbp-l-caption-alignCenter">
-										<div class="cbp-l-caption-body">
-											<ul class="link-captions no-bottom-space">
-												<li><a href="portfolio_single_item.html"><i class="rounded-x fa fa-link"></i></a></li>
-												<li><a href="/img/movie/movie004.jpg" class="cbp-lightbox" data-title="Design Object"><i class="rounded-x fa fa-search"></i></a></li>
-											</ul>
-										</div>
-									</div>
-								</div>
-							</div>
-							<div class="cbp-title-dark">
-								<div class="cbp-l-grid-agency-title">스포트 라이트</div>
-								<div class="cbp-l-grid-agency-desc">Spotlight</div>
-							</div>
-						</div>
-						<div class="cbp-item">
-							<div class="cbp-caption margin-bottom-5">
-								<div class="cbp-caption-defaultWrap">
-									<img src="/img/movie/movie005.jpg" alt="">
-								</div>
-								<div class="cbp-caption-activeWrap">
-									<div class="cbp-l-caption-alignCenter">
-										<div class="cbp-l-caption-body">
-											<ul class="link-captions no-bottom-space">
-												<li><a href="portfolio_single_item.html"><i class="rounded-x fa fa-link"></i></a></li>
-												<li><a href="/img/movie/movie005.jpg" class="cbp-lightbox" data-title="Design Object"><i class="rounded-x fa fa-search"></i></a></li>
-											</ul>
-										</div>
-									</div>
-								</div>
-							</div>
-							<div class="cbp-title-dark">
-								<div class="cbp-l-grid-agency-title">남과 여</div>
-								<div class="cbp-l-grid-agency-desc">&nbsp;</div>
-							</div>
-						</div>
-						<div class="cbp-item">
-							<div class="cbp-caption margin-bottom-5">
-								<div class="cbp-caption-defaultWrap">
-									<img src="/img/movie/movie006.jpg" alt="">
-								</div>
-								<div class="cbp-caption-activeWrap">
-									<div class="cbp-l-caption-alignCenter">
-										<div class="cbp-l-caption-body">
-											<ul class="link-captions no-bottom-space">
-												<li><a href="portfolio_single_item.html"><i class="rounded-x fa fa-link"></i></a></li>
-												<li><a href="/img/movie/movie006.jpg" class="cbp-lightbox" data-title="Design Object"><i class="rounded-x fa fa-search"></i></a></li>
-											</ul>
-										</div>
-									</div>
-								</div>
-							</div>
-							<div class="cbp-title-dark">
-								<div class="cbp-l-grid-agency-title">동주</div>
-								<div class="cbp-l-grid-agency-desc">&nbsp;</div>
-							</div>
-						</div>
-					</div>
+					<form name="recommFrm" id ="recommFrm">
+						<input type="hidden" id="reviewSeq" name="reviewSeq" value="${review.reviewSeq}">
+						<input type="hidden" id="movieId" name="movieId" value="${movie.movieId}">
+						<input type="hidden" id="userNo" name="userNo" value="${review.creId}">
+						<input type="hidden" id=recommDiv name="recommDiv">
+					</form>
 				</div>
 			</div>
 		</div>
@@ -320,7 +252,21 @@
 	<!-- JS Page Level -->
 	<script type="text/javascript" src="/js/app.js"></script>
 	<script type="text/javascript" src="/plugins/cubeportfolio/js/cube-portfolio-4.js"></script>
-
+	
+	<script>
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-77964332-1', 'auto');
+	ga('send', 'pageview');
+	
+	ga('create', {
+	  trackingId: 'UA-77964332-1',
+	  cookieDomain: 'auto',
+	  name: 'myTracker',
+	  userId: 'poppoya'
+	});
+	
+	</script>
+	<script async src='https://www.google-analytics.com/analytics.js'></script>
 
 <!--[if lt IE 9]>
 	<script src="plugins/respond.js"></script>

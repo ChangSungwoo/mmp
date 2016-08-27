@@ -44,7 +44,7 @@
 			<jsp:param name="dummy" value=""/>
 		</jsp:include>
 		<jsp:include page="/WEB-INF/views/admin/include/includeNavi.jsp" flush="true">
-			<jsp:param name="thisName" value='<%=java.net.URLEncoder.encode("영화 이미지 목록조회")%>'/>
+			<jsp:param name="thisName" value='<%=java.net.URLEncoder.encode("영화별 이미지")%>'/>
 			<jsp:param name="parentName" value='<%=java.net.URLEncoder.encode("영화 관리")%>'/>
 		</jsp:include>
 		<!--=== Content ===-->
@@ -75,15 +75,6 @@
 		<!--=== Search End ===-->
 		<!--=== Cube-Portfdlio ===-->
 		<div class="cube-portfolio container margin-bottom-60">
-			<!-- div class="content-xs">
-				<div id="filters-container" class="cbp-l-filters-text content-xs">
-					<div data-filter="*" class="cbp-filter-item-active cbp-filter-item"> All </div> |
-					<div data-filter=".identity" class="cbp-filter-item"> Identity </div> |
-					<div data-filter=".web-design" class="cbp-filter-item"> Web Design </div> |
-					<div data-filter=".graphic" class="cbp-filter-item"> Graphic </div> |
-					<div data-filter=".logos" class="cbp-filter-item"> Logo </div>
-				</div><!--/end Filters Container-->
-			<!-- /div-->
 			<div id="grid-container" class="cbp-l-grid-agency">
 			<c:choose>
 				<c:when test="${fn:length(list) > 0}">
@@ -141,6 +132,21 @@
 	<script src="assets/plugins/html5shiv.js"></script>
 	<script src="assets/plugins/placeholder-IE-fixes.js"></script>
 	<![endif]-->
+	
+	<script>
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-77964332-1', 'auto');
+	ga('send', 'pageview');
+	
+	ga('create', {
+	  trackingId: 'UA-77964332-1',
+	  cookieDomain: 'auto',
+	  name: 'myTracker',
+	  userId: 'poppoya'
+	});
+	
+	</script>
+	<script async src='https://www.google-analytics.com/analytics.js'></script>
 
 </body>
 </html>

@@ -29,10 +29,10 @@
 							<li><a href="/review/oldReviewListByEditor">지난 영화</a></li>
 							<!-- End 추억의 명화관 -->
 							<!-- 팝콘 -->
-							<li><a href="/column/columnList">읽을 거리</a></li>
+							<li><a href="/reader/readerList">읽을 거리</a></li>
 							<!-- End 팝콘 -->
-							<!-- FAQ -->
-							<li><a href="/common/comin_soon">적관 매기기</a></li>
+							<!-- 적관매기기 UI는 고려가 필요하다. >
+							<li><a href="/review/reviewWrite">적관 매기기</a></li-->
 							<!-- End FAQ -->
 							<!-- 마이페이지 -->
 							<li><a href="/member/myPage">마이페이지</a></li>

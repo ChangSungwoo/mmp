@@ -893,5 +893,5 @@ public class StringUtils {
             result = result.substring(0, idx + point); 
         } 
         return result; 
-    } 
+    }
 }

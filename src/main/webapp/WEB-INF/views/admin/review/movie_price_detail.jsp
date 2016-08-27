@@ -74,19 +74,21 @@
 			<div class="col-md-12">
 				<form name="reviewForm" id="reviewForm" class="sky-form">
 					<input type="hidden" id="movieId" name="movieId" value="${movie.movieId}">
+					<input type="hidden" id="reviewSeq" name="reviewSeq" value="${review.reviewSeq}">
 					<input type="hidden" id="writerDiv" name="writerDiv" value="E">
 					<h4>영화 감상평</h4>
-					<p>추후 <code>네이버 스마트 에디터</code> 적용 예정.</p>
-					<textarea class="form-control" id="review" name="review" rows="7">${review.reviewText}</textarea>
-					<c:choose>
-						<c:when test="${review.reviewText eq null}">
-							<button class="btn-u btn-u-sm btn-u-green" type="button" id="btnReviewSave" name="btnReviewSave" >리뷰등록</button>
-						</c:when>
-						<c:otherwise>
-							<button class="btn-u btn-u-sm btn-u-green" type="button" id="btnReviewEdit" name="btnReviewEdit" >리뷰수정</button>
-						</c:otherwise>
-					</c:choose>
-					
+					<!-- textarea class="form-control" id="review" name="review" rows="7">${review.reviewText}</textarea-->
+					<textarea name="ir1" id="ir1" rows="10" style="width:100%; height:412px; ">${review.reviewText}</textarea>
+					<div class="col-md-12" align="right">
+						<c:choose>
+							<c:when test="${review.reviewText eq null}">
+								<button class="btn-u btn-u-sm btn-u-green" type="button" id="btnReviewSave" name="btnReviewSave" >리뷰등록</button>
+							</c:when>
+							<c:otherwise>
+								<button class="btn-u btn-u-sm btn-u-green" type="button" id="btnReviewEdit" name="btnReviewEdit" >리뷰수정</button>
+							</c:otherwise>
+						</c:choose>
+					</div>
 				</form>
 			</div>
 			<div class="col-sm-12">
@@ -94,14 +96,16 @@
 				<form name="priceForm" id="priceForm" class="sky-form">
 					<input type="hidden" id="movieId" name="movieId" value="${movie.movieId}">
 					<input type="hidden" id="reviewSeq" name="reviewSeq" value="${review.reviewSeq}">
+					<input type="hidden" id="moviePriceSeq" name="moviePriceSeq">
 					<input type="hidden" id="writerDiv" name="writerDiv" value="E">
+					<input type="hidden" id="mode" name="mode">
 					<table class="table">
 						<thead>
 							<tr>
-								<td width="10%">구분</td>
+								<td width="20%">구분</td>
 								<td width="*">Comment</td>
 								<td width="10%" nowrap>관람료(원)</td>
-								<td width="5%">&nbsp;</td>
+								<td width="13%">&nbsp;</td>
 							</tr>
 						</thead>
 						<tbody>
@@ -110,6 +114,7 @@
 									<div class="inline-group">
 										<label class="radio"><input type="radio" name="priceDiv" id="priceDiv" value="P" checked><i class="rounded-x"></i>인상</label>
 										<label class="radio"><input type="radio" name="priceDiv" id="priceDiv" value="N"><i class="rounded-x"></i>인하</label>
+										<label class="checkbox"><input type="checkbox" name="commentYn" id="commentYn" value="Y"><i></i>Comment</label>
 									</div>
 								</td>
 								<td>
@@ -120,6 +125,8 @@
 								</td>
 								<td>
 									<button class="btn-u btn-u-sm btn-u-red" type="button" id="btnPriceSave" name="btnPriceSave" >등록</button>
+									<button class="btn-u btn-u-sm btn-u-green" type="button" id="btnPriceModify" name="btnPriceModify" >수정</button>
+									<button class="btn-u btn-u-sm btn-u-green" type="button" id="btnChange" name="btnChange" >전환</button>
 								</td>
 							</tr>
 						</tbody>
@@ -137,12 +144,39 @@
 							<tbody>
 								<c:choose>
 									<c:when test="${fn:length(pList) > 0}">
-										<c:forEach items="${pList}" var="row">
-								<tr>
-									<td>${row.priceComment}</td>
-									<td width="80" align="right" class="price-red">+${row.price}원</td>
-									<fmt:formatNumber var="totalPrice" value="${totalPrice+row.price}" pattern="###0"/>
-								</tr>
+										<c:forEach items="${pList}" var="row" varStatus="status">
+											<span id="pCommentYn">${row.commentYn}</span>
+												<tr>
+													<td>
+														<a href="javascript:removeComment('${row.moviePriceSeq}');">
+															<span class="item" style="cursor:hand;">
+																<i class="fa fa-times-circle-o"></i>
+															</span>
+														</a>
+														&nbsp;<a href="javascript:modifyComment('${row.moviePriceSeq}', 'P', '${status.index}');"><span id="pComment">${row.priceComment}</span></a>&nbsp;&nbsp;
+														<a href="javascript:moveComment('N', '${row.moviePriceSeq}');"><span class="glyphicon glyphicon-hand-right"></span></a>
+													</td>
+													<td width="80" align="right" class="price-red">
+														<span id="pPrice">
+															<c:choose>
+																<c:when test="${row.commentYn == 'Y'}">
+																	&nbsp;
+																</c:when>
+																<c:otherwise>
+																	<c:choose>
+																		<c:when test="${row.price == 0}">
+																			0원
+																		</c:when>
+																		<c:otherwise>
+																			+${row.price}원
+																		</c:otherwise>
+																	</c:choose>
+																</c:otherwise>
+															</c:choose>
+														</span>
+													</td>
+													<fmt:formatNumber var="totalPrice" value="${totalPrice+row.price}" pattern="###0"/>
+												</tr>
 										</c:forEach>
 									</c:when>
 								</c:choose>
@@ -166,19 +200,36 @@
 							<tbody>
 								<c:choose>
 									<c:when test="${fn:length(nList) > 0}">
-										<c:forEach items="${nList}" var="row1">
+										<c:forEach items="${nList}" var="row1"  varStatus="status1">
+										<span id="nCommentYn">${row1.commentYn}</span>
 											<tr>
-												<td>${row1.priceComment}</td>
+												<td>
+													<a href="javascript:removeComment('${row1.moviePriceSeq}');">
+														<span class="item" style="cursor:hand;">
+															<i class="fa fa-times-circle-o"></i>
+														</span>
+													</a>
+													&nbsp;<a href="javascript:modifyComment('${row1.moviePriceSeq}', 'N', '${status1.index}');"><span id="nComment">${row1.priceComment}</span></a>&nbsp;
+													<a href="javascript:moveComment('P' , '${row1.moviePriceSeq}');"><span class="glyphicon glyphicon-hand-left"></span></a>
+												</td>
 												<td width="80" align="right" class="price-blue">
-													<c:choose>
-													<c:when test="${row1.price == 0}">
-														&nbsp;
-													</c:when>
-													<c:otherwise>
-														-${row1.price}원
-													</c:otherwise>
-													</c:choose>
-												
+													<span id="nPrice">
+														<c:choose>
+															<c:when test="${row1.commentYn == 'Y'}">
+																&nbsp;
+															</c:when>
+															<c:otherwise>
+																<c:choose>
+																	<c:when test="${row1.price == 0}">
+																		0원
+																	</c:when>
+																	<c:otherwise>
+																		-${row1.price}원
+																	</c:otherwise>
+																</c:choose>
+															</c:otherwise>
+														</c:choose>
+													</span>
 												</td>
 												<fmt:formatNumber var="totalPriceMinus" value="${totalPriceMinus+row1.price}" pattern="###0"/>
 											</tr>
@@ -195,6 +246,10 @@
 				<!--End Basic Table-->
 			</div>
 			<!-- End Content -->
+			<form name="frmMovePriceCmt" id="frmMovePriceCmt">
+				<input type="hidden" id="tmpPriceDiv" name="tmpPriceDiv" />
+				<input type="hidden" id="tmpMoviePriceSeq" name="tmpMoviePriceSeq" />
+			</form>
 		</div>
 		<!--=== End Content ===-->
 		<jsp:include page="/WEB-INF/views/admin/include/includeBottom.jsp" flush="false">
@@ -214,8 +269,62 @@
 	<script type="text/javascript" src="/plugins/back-to-top.js"></script>
 	<script type="text/javascript" src="/plugins/smoothScroll.js"></script>
 	<!-- JS Customization -->
-	<script type="text/javascript" src="/js/admin/movie/movie_price_detail.js"></script>
+	<script type="text/javascript" src="/js/admin/review/movie_price_detail.js"></script>
+	<script type="text/javascript" src="/js/editor/HuskyEZCreator.js" charset="utf-8"></script>
 	<!-- JS Page Level -->
 	<script type="text/javascript" src="/js/app.js"></script>
+	
+		<script type="text/javascript">
+		var oEditors = [];
+		
+		// 추가 글꼴 목록
+		//var aAdditionalFontSet = [["MS UI Gothic", "MS UI Gothic"], ["Comic Sans MS", "Comic Sans MS"],["TEST","TEST"]];
+		
+		nhn.husky.EZCreator.createInIFrame({
+			oAppRef: oEditors,
+			elPlaceHolder: "ir1",
+			sSkinURI: "/js/editor/SmartEditor2Skin.html",	
+			htParams : {
+				bUseToolbar : true,				// 툴바 사용 여부 (true:사용/ false:사용하지 않음)
+				bUseVerticalResizer : true,		// 입력창 크기 조절바 사용 여부 (true:사용/ false:사용하지 않음)
+				bUseModeChanger : true,			// 모드 탭(Editor | HTML | TEXT) 사용 여부 (true:사용/ false:사용하지 않음)
+				//aAdditionalFontList : aAdditionalFontSet,		// 추가 글꼴 목록
+				fOnBeforeUnload : function(){
+					//alert("완료!");
+				}
+			}, //boolean
+			fOnAppLoad : function(){
+				//예제 코드
+				//oEditors.getById["ir1"].exec("PASTE_HTML", ["로딩이 완료된 후에 본문에 삽입되는 text입니다."]);
+			},
+			fCreator: "createSEditor2"
+		});
+		
+		function pasteHTML() {
+			var sHTML = "<span style='color:#FF0000;'>이미지도 같은 방식으로 삽입합니다.<\/span>";
+			oEditors.getById["ir1"].exec("PASTE_HTML", [sHTML]);
+		}
+		
+		function showHTML() {
+			var sHTML = oEditors.getById["ir1"].getIR();
+			alert(sHTML);
+		}
+			
+		function submitContents(elClickedObj) {
+			oEditors.getById["ir1"].exec("UPDATE_CONTENTS_FIELD", []);	// 에디터의 내용이 textarea에 적용됩니다.
+			
+			// 에디터의 내용에 대한 값 검증은 이곳에서 document.getElementById("ir1").value를 이용해서 처리하면 됩니다.
+			
+			try {
+				elClickedObj.form.submit();
+			} catch(e) {}
+		}
+		
+		function setDefaultFont() {
+			var sDefaultFont = '궁서';
+			var nFontSize = 24;
+			oEditors.getById["ir1"].setDefaultFont(sDefaultFont, nFontSize);
+		}
+	</script>
 </body>
 </html>

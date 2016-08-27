@@ -3,6 +3,26 @@
 
 <mapper namespace="member">
 
+		<resultMap type="com.mymovieprice.mmp.member.model.MemberCondition" id="MemberCondition">
+			<result column="USER_NO"	property="userNo"/>
+			<result column="USER_TYPE"	property="userType"/>
+			<result column="USER_TYPE_NM"	property="userTypeNm"/>
+			<result column="PROVIDER_CD"	property="providerCd"/>
+			<result column="LOGIN_ID"	property="loginId"/>
+			<result column="LOGIN_PWD"	property="loginPwd"/>
+			<result column="USER_PROFILE"	property="userProfile"/>
+			<result column="USER_IMAGE_DIV"	property="userImageDiv"/>
+			<result column="USER_NICK_NM"	property="userNickNm"/>
+			<result column="USER_NM"	property="userNm"/>
+			<result column="USER_GRADE"	property="userGrade"/>
+			<result column="USER_BIRTH"	property="userBirth"/>
+			<result column="CRE_DT"	property="creDt"/>
+			<result column="CRE_ID"	property="creId"/>
+			<result column="UPD_DT"	property="updDt"/>
+			<result column="UPD_ID"	property="updId"/>
+		</resultMap>
+		
+		
 		<insert id="insertMember" parameterType="com.mymovieprice.mmp.member.model.Member">
 		insert into USER_MASTER(
 			USER_TYPE, 
@@ -40,4 +60,45 @@
 		from USER_MASTER
 		where LOGIN_ID = #{loginId};
 	</select>
+	
+	<select id="selectMemberList" parameterType="hashmap" resultMap="MemberCondition">
+		select
+			um.USER_NO as userNo,
+			um.USER_TYPE as userType,
+			(select cd.CODE_D_NM as USER_TYPE_NM from CMM_CODE_D cd where cd.CODE_M_SEQ = 2 and CODE_D_SEQ = um.USER_TYPE) as userTypeNm,
+			um.PROVIDER_CD as providerCd,
+			um.LOGIN_ID as loginId,
+			um.LOGIN_PWD as loginPwd,
+			um.USER_PROFILE as userProfile,
+			um.USER_IMAGE_DIV as userImageDiv,
+			um.USER_NICK_NM as userNickNm,
+			um.USER_NM as userNm,
+			um.USER_GRADE as userGrade,
+			um.USER_BIRTH as userBirth,
+			um.CRE_DT as creDt,
+			um.CRE_ID as creId,
+			um.UPD_DT as updDt,
+			um.UPD_ID as UpdId
+		from USER_MASTER um
+		order by um.CRE_DT;
+	</select>
+	
+	<select id="selectFavoriteMeUserList" parameterType="hashmap" resultType="hashmap">
+		select um.USER_NICK_NM as userNickName, count(*) recomm_cnt
+		from MOVIE_RECOMM mc , USER_MASTER um
+		where mc.RECOMM_USER_NO = um.USER_NO
+		and mc.USER_NO = #{userId}
+		group by um.USER_NICK_NM
+		LIMIT 0, 3;
+	</select>
+	
+	<select id="selectMyFavoriteUserList" parameterType="hashmap" resultType="hashmap">
+		select um.USER_NICK_NM as userNickName, count(*) recomm_cnt
+		from MOVIE_RECOMM mc , USER_MASTER um
+		where mc.USER_NO = um.USER_NO
+		and mc.RECOMM_USER_NO = #{userId}
+		group by um.USER_NICK_NM
+		LIMIT 0, 3;
+	</select>
+	
 </mapper>

@@ -97,21 +97,14 @@
 								</section>							
 							</div>
 							<div class="row">
-								<section class="col col-4">
-									<label class="label">종영 여부</label>
-									<div class="inline-group">
-										<label class="radio"><input type="radio" name="endYn" id="endYn" value="Y" <c:if test="${movie.endYn eq 'Y' }"> checked </c:if>><i class="rounded-x"></i>종영</label>
-										<label class="radio"><input type="radio" name="endYn" id="endYn" value="N" <c:if test="${movie.endYn eq 'N' }"> checked </c:if>><i class="rounded-x"></i>상영중</label>
-									</div>
-								</section>
-								<section class="col col-4">
-									<label class="label">프런트 노출여부</label>
+								<section class="col col-6">
+									<label class="label">노출여부</label>
 									<div class="inline-group">
 										<label class="radio"><input type="radio" name="displayYn" id="displayYn" value="Y" <c:if test="${movie.displayYn eq 'Y' }"> checked </c:if>><i class="rounded-x"></i>노출</label>
 										<label class="radio"><input type="radio" name="displayYn" id="displayYn" value="N" <c:if test="${movie.displayYn eq 'N' }"> checked </c:if>><i class="rounded-x"></i>대기</label>
 									</div>
 								</section>
-								<section class="col col-4">
+								<section class="col col-6">
 									<label class="label">기준관람료</label>
 									<div class="inline-group">
 									<c:choose>
@@ -129,7 +122,7 @@
 						</fieldset>
 						<footer>
 							<button type="button" id="btnModify" name="btnModify" class="btn-u">저장</button>
-							<button type="button" class="btn-u btn-u-default" onclick="window.history.back();">취소</button>
+							<button type="button" class="btn-u btn-u-default" onclick="window.history.back();">리스트</button>
 						</footer>
 					</form>
 					<!-- General Unify Forms -->

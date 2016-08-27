@@ -3056,7 +3056,15 @@ body.dark .news-v3 h2 a {
 	color: #ccc;
 }
 
+body.dark .news-v3 h3 a {
+	color: #ccc;
+}
+
 body.dark .news-v3 h2 a:hover {
+	color: #72c02c;
+}
+
+body.dark .news-v3 h3 a:hover {
 	color: #72c02c;
 }
 

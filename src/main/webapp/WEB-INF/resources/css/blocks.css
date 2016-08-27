@@ -281,6 +281,7 @@
 
 @media (max-width: 550px) {
   .breadcrumbs h1.pull-left,
+  .breadcrumbs h1.pull-right,
   .breadcrumbs ul.pull-right {
     width: 100%;
     text-align: center;
@@ -4008,7 +4009,7 @@
   font-weight: 200;
   margin: 0 0 20px;
   line-height: 45px;
-  text-transform: uppercase;
+  /*text-transform: uppercase;*/
 }
 
 .news-v3 .news-v3-in-sm h2 {
@@ -4086,7 +4087,7 @@
 .news-v3 .post-shares {
   padding-left: 0;
   list-style: none;
-  margin: 40px 0 0 -5px;
+  margin: 10px 0 0 -5px;
 }
 
 .news-v3 .news-v3-in-sm .post-shares {
@@ -7754,7 +7755,7 @@ img.img-mouse {
 }
 
 .project-details strong {
-  min-width: 100px;
+  min-width: 50px;
   display: inline-block;
 }
 

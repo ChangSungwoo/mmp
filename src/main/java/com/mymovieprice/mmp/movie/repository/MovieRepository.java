@@ -6,13 +6,13 @@ import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
+import org.apache.ibatis.session.RowBounds;
 
 import com.mymovieprice.mmp.common.repository.AbstractDao;
 import com.mymovieprice.mmp.movie.model.MovieCondition;
+import com.mymovieprice.mmp.movie.model.MovieImage;
 import com.mymovieprice.mmp.movie.model.MovieImageCondition;
 import com.mymovieprice.mmp.movie.model.MovieMaster;
-import com.mymovieprice.mmp.movie.model.MoviePriceCondition;
-import com.mymovieprice.mmp.movie.model.MovieReviewCondition;
 
 
 @Repository("movieRepository")
@@ -25,21 +25,22 @@ public class MovieRepository extends AbstractDao {
 	}
 	
 	@SuppressWarnings("unchecked")
-	public List<Map<String, Object>> selectMovieList(
-			Map<String, Object> condition) {
+	public List<Map<String, Object>> selectMovieList(Map<String, Object> condition) {
 		
 		return (List<Map<String, Object>>)selectList("movie.selectMovieMasterList", condition);
 		//return null;
 	}
 	
 	@SuppressWarnings("unchecked")
-	public List<Map<String, Object>> selectMovieListByEditor(
-			Map<String, Object> condition) {
+	public List<Map<String, Object>> selectMovieListByEditor(Map<String, Object> condition) {
 		
 		return (List<Map<String, Object>>)selectList("movie.selectMovieListByEditor", condition);
 	}
 	
-
+	public MovieImage selectDelegateMovieImage(Map<String, Object> condition) {
+		
+		return (MovieImage)selectOne("movie.selectDelegateMovieImage", condition);
+	}
 	
 	public int insertMovieMaster(MovieCondition movieCondition) {
 		
@@ -78,32 +79,13 @@ public class MovieRepository extends AbstractDao {
 		return (Integer)update("movie.updateMovieImage", movieImgCondition);
 	}
 	
+	public int deleteMovieImage(MovieImageCondition movieImgCondition) {
+		
+		return (Integer)update("movie.deleteMovieImage", movieImgCondition);
+	}
+	
 	public int updateDelegateImgDiable(MovieImageCondition movieImgCondition) {
 		
 		return (Integer)update("movie.delegateImgDisable", movieImgCondition);
-	}
-	
-	@SuppressWarnings("unchecked")
-	public List<Map<String, Object>> selectAdminMoviePriceList(Map<String,Object> condition) {
-		
-		return (List<Map<String, Object>>)selectList("movie.selectMoviePriceList", condition);
-		//return null;
-	}
-	
-	public int insertMoviePrice(MoviePriceCondition moviePriceCondition) {
-		
-		return (Integer)insert("movie.insertMoviePrice", moviePriceCondition);
-	}
-	
-	public int insertMovieReview(MovieReviewCondition movieReviewCondition) {
-		
-		return (Integer)insert("movie.insertMovieReview", movieReviewCondition);
-	}
-	
-	@SuppressWarnings("unchecked")
-	public List<Map<String, Object>> selectMoviePriceList(MoviePriceCondition moviePriceCondition) {
-		
-		return (List<Map<String, Object>>)selectList("movie.selectOneMoviePrice", moviePriceCondition);
-		//return null;
 	}
 }

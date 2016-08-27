@@ -41,7 +41,7 @@
 			<jsp:param name="dummy" value=""/>
 		</jsp:include>
 		<jsp:include page="/WEB-INF/views/admin/include/includeNavi.jsp" flush="true">
-			<jsp:param name="thisName" value='<%=java.net.URLEncoder.encode("메인화 컨텐츠 목록조회")%>'/>
+			<jsp:param name="thisName" value='<%=java.net.URLEncoder.encode("메인 컨텐츠 목록조회")%>'/>
 			<jsp:param name="parentName" value='<%=java.net.URLEncoder.encode("서비스 관리")%>'/>
 		</jsp:include>
 		<!--=== Content ===-->

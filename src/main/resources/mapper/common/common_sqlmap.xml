@@ -19,5 +19,94 @@
 		where CODE_M_SEQ = #{mSeq}
 		and USE_YN = 'Y'
 	</select>
+	
+	<select id="selectCommonCodeMasterOne" parameterType="hashmap" resultType="com.mymovieprice.mmp.common.model.CodeMaster">
+		select m.CODE_M_SEQ as codeMSeq
+		, m.CODE_M_NM as codeMNm
+		, m.USE_YN as useYn
+		, m.CRE_ID as creId
+		, m.CRE_DT as creDt
+		, u.USER_NM as userNm
+		, (select count(*) from CMM_CODE_D d where d.CODE_M_SEQ = m.CODE_M_SEQ) dtlCount
+		, (select count(*) from CMM_CODE_M) as totalCount
+		from CMM_CODE_M m , USER_MASTER u
+		where m.CRE_ID = u.USER_NO
+		and m.CODE_M_SEQ = #{codeMSeq};
+	</select>
+	
+	
+	<select id="selectCommonCodeMasterList" parameterType="hashmap" resultType="hashmap">
+		select m.CODE_M_SEQ as codeMSeq
+		, m.CODE_M_NM as codeMName
+		, m.USE_YN as useYn
+		, m.CRE_ID as creId
+		, m.CRE_DT as creDt
+		, u.USER_NM as userNm
+		, (select count(*) from CMM_CODE_D d where d.CODE_M_SEQ = m.CODE_M_SEQ) dtlCount
+		, (select count(*) from CMM_CODE_M) as totalCount
+		from CMM_CODE_M m , USER_MASTER u
+		where m.CRE_ID = u.USER_NO
+		order by m.CODE_M_SEQ
+		LIMIT #{pagingHelper.startRow}, #{pagingHelper.linePerPage};
+	</select>
+	
+	<insert id="insertCommonCodeMaster" parameterType="com.mymovieprice.mmp.common.model.CodeMaster">
+		insert into CMM_CODE_M(
+			CODE_M_NM, 
+			USE_YN,
+			CRE_ID,
+			CRE_DT, 
+			UPD_ID
+			) VALUES (
+			#{codeMNm},
+			'Y',
+			#{creId},
+			NOW(),
+			#{updId}
+			);
+	</insert>
+	
+	<select id="selectCommonCodeDetailList" parameterType="hashmap" resultType="hashmap">
+		select cd.CODE_D_SEQ as codeDSeq, 
+		cd.CODE_M_SEQ as codeMSeq,
+		cd.CODE_D_NM as codeDNm,
+		cd.TEMP_COL1 as tempCol1,
+		cd.TEMP_COL2 as tempCol2,
+		cd.TEMP_COL3 as tempCol3,
+		cd.DEFAULT_YN as defaultYn,
+		cd.USE_YN as useYn,
+		cd.CRE_DT as creDt,
+		cd.CRE_ID as creId,
+		um.USER_NICK_NM as creNm,
+		cd.UPD_DT as updDt,
+		cd.UPD_ID as updId,
+		um2.USER_NICK_NM as updNm,
+		(select count(*) from CMM_CODE_D cdt where cdt.CODE_M_SEQ =#{codeMSeq}) as totalCount
+		from CMM_CODE_D cd , USER_MASTER um , USER_MASTER um2
+		where cd.CODE_M_SEQ = #{codeMSeq}
+		and cd.CRE_ID = um.USER_NO
+		and cd.UPD_ID = um2.USER_NO
+		LIMIT #{pagingHelper.startRow}, #{pagingHelper.linePerPage};
+	</select>
+	
+	<insert id="insertCommonCodeDetail" parameterType="com.mymovieprice.mmp.common.model.CodeDetail">
+		insert into CMM_CODE_D(
+			CODE_M_SEQ,
+			CODE_D_NM, 
+			USE_YN,
+			DEFAULT_YN,
+			CRE_ID,
+			CRE_DT, 
+			UPD_ID
+			) VALUES (
+			#{codeMSeq},
+			#{codeDNm},
+			'Y',
+			'N',
+			#{creId},
+			NOW(),
+			#{updId}
+			);
+	</insert>
 
 </mapper>

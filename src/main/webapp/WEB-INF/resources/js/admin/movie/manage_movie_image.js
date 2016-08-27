@@ -27,32 +27,52 @@ function setEvent(){
 	
 	$(document).on("click", "[id=btnUpdate]", function(){
 		var idx = $("[id=btnUpdate]").index(this);
-		//TODO 수정작업
 		
-		var useImgChk = "N";
 		var delegateImgChk = "N";
 		var delegateCnt = 0;
-		
-		if($("[id=useYnChk]").eq(idx).prop("checked"))	
-			useImgChk = "Y";
 		
 		if($("[id=delegateYnChk]").eq(idx).prop("checked"))	
 			delegateImgChk = "Y";
 		
 		delegateCnt = $("input[name=delegateYnChk]:checkbox:checked").length;
 		
+		console.log("imageDiv : "+$(":input:radio[name='dtlImageDiv']:checked").eq(idx).val());
+		
 		if(delegateCnt > 1) {
 			alert("영화의 대표이미지는 하나만 설정 가능합니다\n대표이미지는 목록 표시에 사용되는 이미지 입니다.");
 		} else {
 			$("#imageSeq").val($("[id=imgSeq]").eq(idx).val());
-			$("#editUseYn").val(useImgChk);
 			$("#editDelegateYn").val(delegateImgChk);
+			$("#editImageDiv").val($(":input:radio[name='dtlImageDiv']:checked").eq(idx).val());		
 			$("#editImageDesc").val($("[id=imageDescription]").eq(idx).val());
 			
-			//var hiddenFrm = $("form#hiddenFrm");
-			//hiddenFrm.submit();
 			modifyMovieImageInfo();
+			//return false;
 		}
+	});
+	
+	
+	$(document).on("click", "[id=btnDelete]", function(){
+		
+		var idx = $("[id=btnDelete]").index(this);
+		$("#imageSeq").val($("[id=imgSeq]").eq(idx).val());
+		
+		var imageCount = $("[id=btnDelete]").length;
+		
+		console.log("imageCount : "+imageCount);
+		
+		if($("[id=delegateYnChk]").eq(idx).prop("checked"))	{
+			alert("대표이지미는 삭제할 수 없습니다.");
+			return false;
+		}
+		
+		if(imageCount <= 1) {
+			alert("이미지는 최소 하나 이상 존재해야 합니다.삭제할 수 없습니다.");
+			return false;
+		}
+		
+		deleteImage();
+			
 	});
 	
 }
@@ -105,7 +125,6 @@ function uploadImage() {
 */
 
 function modifyMovieImageInfo() {
-	console.log("Start Modify");
 	
 	$.ajax({
 		url : "/admin/movie/movieImageModify",
@@ -126,6 +145,35 @@ function modifyMovieImageInfo() {
 			if(e.status==200){
 				alert("error code 정상 저장 되었습니다.");
 				location.href="/admin/movie/movieList";
+			}else{
+				console.log(e);
+				alert("오류가 발생했습니다. 다시 시도해 주시기 바랍니다.");
+			}
+		}
+	});
+}
+
+function deleteImage() {
+	
+	$.ajax({
+		url : "/admin/movie/movieImageDelete",
+		type : 'POST',
+		data : $("#hiddenFrm").serialize(true),
+		dataType : "json",
+		success : function(data){
+			console.log(data.error);
+			if(data.error != undefined){
+				alert("에러코드 : " + data.additionalInfo.errCode + "\n" + data.message);
+				return false;
+			} else {
+				alert("이미지 정보가 정상적으로 삭제되었습니다.");
+				location.href="/admin/movie/movieImageList";				
+			}
+		},
+		error : function(e){
+			if(e.status==200){
+				alert("error code 정상 저장 되었습니다.");
+				location.href="/admin/movie/movieImageList";
 			}else{
 				console.log(e);
 				alert("오류가 발생했습니다. 다시 시도해 주시기 바랍니다.");

@@ -21,8 +21,14 @@ private static final Logger logger = LoggerFactory.getLogger(MainServiceImpl.cla
 
 	@Override
 	public List<Map<String, Object>> getMainContentList(Map<String, Object> condition) throws Exception {
-		// TODO Auto-generated method stub
+		
 		return mainRepository.selectMainContentList(condition);
+	}
+
+	@Override
+	public List<Map<String, Object>> getMainSubReviewList(Map<String, Object> condition) throws Exception {
+		
+		return mainRepository.selectMainSubReviewList(condition);
 	}
 
 }

@@ -20,11 +20,19 @@
 		<result column="UPD_ID"	property="updId"/>
 	</resultMap>
 	
-	<resultMap type="com.mymovieprice.mmp.movie.model.MoviePrice" id="MoviePriceList">
-		<result column="MOVIE_PRICE_SEQ"	property="moviePriceSeq"/>
-		<result column="PRICE_COMMENT"	property="priceComment"/>
-		<result column="PRICE"	property="price"/>
-		
+	<resultMap type="com.mymovieprice.mmp.movie.model.MovieImage" id="MovieImage">
+		<result column="MOVIE_ID"	property="movieId"/>
+		<result column="IMAGE_SEQ"	property="imageSeq"/>
+		<result column="IMAGE_DIV"	property="imageDiv"/>
+		<result column="FILE_NM"	property="fileNm"/>
+		<result column="FILE_PATH"	property="filePath"/>
+		<result column="IMAGE_DESC"	property="imageDesc"/>
+		<result column="USE_YN"	property="useYn"/>
+		<result column="DELEGATE_YN"	property="delegateYn"/>
+		<result column="CRE_DT"	property="creDt"/>
+		<result column="CRE_ID"	property="creId"/>
+		<result column="UPD_DT"	property="updDt"/>
+		<result column="UPD_ID"	property="updId"/>
 	</resultMap>
 	
 	<select id="selectMovieMaster" parameterType="hashmap" resultMap="MovieMaster">
@@ -48,19 +56,36 @@
 	</select>
 
 	<select id="selectMovieMasterList" parameterType="hashmap" resultType="hashmap">
+			select 
+			MOVIE_ID as movieId,
+			MOVIE_KOR_TITLE as movieKorTitle,
+			MOVIE_ENG_TITLE as movieEngTitle,
+			RELEASE_DT as releaseDt,
+			DISPLAY_YN as displayYn,
+			END_YN as endYn,
+			CRE_DT as creDt,
+			CRE_ID as creId,
+			UPD_DT as updDt,
+			UPD_ID as updId, 
+			(select count(*) from MOVIE_MASTER) as totalCount
+			from MOVIE_MASTER
+			order by RELEASE_DT DESC
+			LIMIT #{pagingHelper.startRow}, #{pagingHelper.linePerPage};
+	</select>
+	
+	<select id="selectDelegateMovieImage" parameterType="hashmap" resultMap="MovieImage">
 		select 
 		MOVIE_ID as movieId,
-		MOVIE_KOR_TITLE as movieKorTitle,
-		MOVIE_ENG_TITLE as movieEngTitle,
-		RELEASE_DT as releaseDt,
-		DISPLAY_YN as displayYn,
-		END_YN as endYn,
+		IMAGE_SEQ as imageSeq,
+		FILE_PATH as filePath,
+		FILE_NM as fileNm,
 		CRE_DT as creDt,
 		CRE_ID as creId,
 		UPD_DT as updDt,
 		UPD_ID as updId
-		from MOVIE_MASTER
-		order by CRE_DT DESC;
+		from MOVIE_IMAGE
+		where MOVIE_ID = #{movieId}
+		and DELEGATE_YN = 'Y';
 	</select>
 	
 	<insert id="insertMovieMaster" parameterType="com.mymovieprice.mmp.movie.model.MovieMaster">
@@ -126,6 +151,16 @@
 			UPD_ID as updId 
 			from MOVIE_IMAGE
 			where MOVIE_ID = #{movieId}
+			and USE_YN = 'Y'
+			<choose>
+				<when test="admin.equals('true')">
+					
+				</when>
+				<otherwise>
+					and IMAGE_DIV = 1
+				</otherwise>
+			</choose>
+			
 			;
 	</select>
 	
@@ -135,7 +170,7 @@
 				mm.MOVIE_KOR_TITLE as movieKorTitle, 
 				mi.FILE_PATH as filePath,
 				mi.FILE_NM as fileNm,
-				(SELECT count(*) FROM MOVIE_IMAGE smi WHERE smi.MOVIE_ID = mm.MOVIE_ID) as imageCnt
+				(SELECT count(*) FROM MOVIE_IMAGE smi WHERE smi.MOVIE_ID = mm.MOVIE_ID and smi.USE_YN = 'Y') as imageCnt
 			FROM MOVIE_MASTER mm LEFT OUTER JOIN MOVIE_IMAGE mi
 			ON mm.MOVIE_ID = mi.MOVIE_ID 
 			AND mi.DELEGATE_YN = 'Y'
@@ -170,9 +205,17 @@
 	
 	<update id="updateMovieImage" parameterType="com.mymovieprice.mmp.movie.model.MovieImage">
 		update MOVIE_IMAGE
-		SET USE_YN = #{useYn}
-		, DELEGATE_YN = #{delegateYn}
+		SET DELEGATE_YN = #{delegateYn}
+		, IMAGE_DIV = #{imageDiv}
 		, IMAGE_DESC = #{imageDesc}
+		, UPD_ID = #{updId}
+		where MOVIE_ID = #{movieId}
+		and IMAGE_SEQ = #{imageSeq};
+	</update>
+	
+	<update id="deleteMovieImage" parameterType="com.mymovieprice.mmp.movie.model.MovieImage">
+		update MOVIE_IMAGE
+		SET USE_YN = #{useYn}
 		, UPD_ID = #{updId}
 		where MOVIE_ID = #{movieId}
 		and IMAGE_SEQ = #{imageSeq};
@@ -185,99 +228,5 @@
 		where MOVIE_ID = #{movieId};
 	</update>
 	
-	<select id="selectMoviePriceList" parameterType="hashmap" resultType="hashmap">
-		select
-		B.MOVIE_ID as movieId
-		, B.MOVIE_KOR_TITLE as movieKorTitle
-		, B.MOVIE_ENG_TITLE as movieEngTitle
-		, ifnull(CAST(C.CODE_D_NM as UNSIGNED)+sum(B.PRICE) , 0) as price
-		, B.CRE_DT as creDt
-		, B.REVIEW_SEQ as reviewSeq
-		, B.CRE_ID
-		, B.DISPLAY_YN
-		from (		
-			select
-				A.MOVIE_ID
-				, A.MOVIE_KOR_TITLE
-				, A.MOVIE_ENG_TITLE
-				, A.STD_PRICE_DIV
-				, A.CRE_DT
-				, A.REVIEW_SEQ
-				, A.DISPLAY_YN
-				, A.CRE_ID
-				, case mp.PRICE_DIV when 'N' then mp.PRICE*-1 else mp.PRICE end PRICE
-				, mp.PRICE_DIV
-			from (	
-				select
-				mm.MOVIE_ID
-				, mm.MOVIE_KOR_TITLE
-				, mm.MOVIE_ENG_TITLE
-				, mm.STD_PRICE_DIV
-				, mm.CRE_DT
-				, mr.REVIEW_SEQ
-				, mr.CRE_ID
-				, mm.DISPLAY_YN
-				from MOVIE_MASTER mm , MOVIE_REVIEW mr
-				where mm.MOVIE_ID = mr.MOVIE_ID
-				and mr.WRITER_DIV = 'E') A left outer join MOVIE_PRICE mp
-					on A.REVIEW_SEQ = mp.REVIEW_SEQ
-					) B , CMM_CODE_D C
-		where B.STD_PRICE_DIV = C.CODE_D_SEQ
-		group by B.MOVIE_ID, B.MOVIE_KOR_TITLE;
-	</select>
-	
-	<insert id="insertMoviePrice" parameterType="com.mymovieprice.mmp.movie.model.MoviePrice">
-		insert into MOVIE_PRICE(
-			REVIEW_SEQ, 
-			PRICE_DIV,
-			PRICE_COMMENT,
-			PRICE,
-			WRITER_DIV,
-			CRE_ID,
-			CRE_DT, 
-			UPD_ID
-			) VALUES (
-			#{reviewSeq},
-			#{priceDiv},
-			#{priceComment},
-			#{price},
-			#{writerDiv},
-			#{creId},
-			NOW(),
-			#{updId}
-			);
-	</insert>
-	
-	<insert id="insertMovieReview" parameterType="com.mymovieprice.mmp.movie.model.MovieReview">
-		insert into MOVIE_REVIEW(
-			MOVIE_ID, 
-			USER_NO,
-			REVIEW_TEXT,
-			WRITER_DIV,
-			IMAGE_SEQ , 
-			CRE_ID,
-			CRE_DT, 
-			UPD_ID
-			) VALUES (
-			#{movieId},
-			#{userNo},
-			#{reviewText},
-			#{writerDiv},
-			(select IMAGE_SEQ from MOVIE_IMAGE mi where mi.MOVIE_ID = #{movieId} and mi.DELEGATE_YN = 'Y'),
-			#{creId},
-			NOW(),
-			#{updId}
-			);
-	</insert>
-	
-	<select id="selectOneMoviePrice" parameterType="com.mymovieprice.mmp.movie.model.MoviePriceCondition" resultMap="MoviePriceList">
-			select 
-			MOVIE_PRICE_SEQ as moviePriceSeq,
-			PRICE_COMMENT as priceComment,
-			PRICE as price
-			from MOVIE_PRICE
-			where REVIEW_SEQ = #{reviewSeq}
-			and PRICE_DIV = #{priceDiv}
-			;
-	</select>
+
 </mapper>

@@ -1,8 +1,9 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
-<!DOCTYPE html>
 <!--[if IE 8]> <html lang="en" class="ie8"> <![endif]-->
 <!--[if IE 9]> <html lang="en" class="ie9"> <![endif]-->
 <!--[if !IE]><!--> <html lang="en"> <!--<![endif]-->
@@ -61,149 +62,243 @@
 		<div class="container">
 			<h1 class="pull-left">마이 페이지</h1>
 			<ul class="pull-right breadcrumb">
-				<li>JESSI</li>
+				<li><%=session.getAttribute("member.userNick")%></li>
 			</ul>
 		</div>
 	</div>
 	<!--/breadcrumbs-->
 
 		<!--=== Content Part ===-->
-		<div class="container content">
+		<div class="container content profile">
 			<div class="row">
-				<!-- Begin Sidebar Menu -->
-				<div class="col-md-3">
-					<ul class="list-group sidebar-nav-v1" id="sidebar-nav">
-						<!-- 내가 작성한 적정 관람료 -->
-						<li class="list-group-item active"><a href="shortcode_thumbnails.html">내가 작성한 적정 관람료</a></li>
-						<!-- End 내가 작성한 적정 관람료 -->
-						<!-- 나의 공감유져들 -->
-						<li class="list-group-item list-toggle">
-							<a class="accordion-toggle" href="#collapse-maps" data-toggle="collapse">나의 공감유져들</a>
-							<ul id="collapse-maps" class="collapse">
-								<li>
-									<span class="badge badge-u">New</span>
-									<a href="shortcode_maps_google.html"><i class="fa fa-map-marker"></i>내가 공감하는 User</a>
-								</li>
-								<li>
-									<span class="badge badge-u">New</span>
-									<a href="shortcode_maps_vector.html"><i class="fa fa-align-center"></i>나를 공감하는 User</a>
-								</li>
-							</ul>
-						</li>
-						<!-- End 나의 공감유져들 -->
-						<!-- 나의 댓글모음 -->
-						<li class="list-group-item"><a href="shortcode_thumbnails.html">나의 댓글모음</a></li>
-						<!-- End 나의 댓글모음 -->
-						<!-- 나의 개인정보수정 -->
-						<li class="list-group-item"><a href="shortcode_thumbnails.html">개인정보수정</a></li>
-						<!-- End 개인정보수정 -->
-					</ul>
-				</div>
-				<!-- End Sidebar Menu -->
+				<div class="col-md-12">
+					<div class="profile-body">
+						<!--Service Block v3-->
+						<div class="row margin-bottom-10">
+							<div class="col-sm-6 sm-margin-bottom-20">
+								<div class="service-block-v3 service-block-u">
+									<i class="icon-users"></i>
+									<span class="service-heading">&nbsp;</span>
+									<span class="counter">나의 취향 친구들</span>
 
-				<!-- Begin Content -->
-				<div class="col-md-9">
-					<ul class="timeline-v2">
-						<li class="equal-height-columns">
-							<div class="cbp_tmtime equal-height-column"><span>2016/03/25</span> <span class="font-red">7,660원</span></div>
-							<i class="cbp_tmicon rounded-x hidden-xs"></i>
-							<div class="cbp_tmlabel equal-height-column">
-								<span class="label label-danger">적정관람료</span>&nbsp;<h2>배트맨 대 슈퍼맨 : 저스티스의 시작</h2>
-								<div class="row">
-									<div class="col-md-4">
-										<img class="img-responsive" src="/img/movie/movie_010.jpg" alt="">
-										<div class="md-margin-bottom-20"></div>
-									</div>
-									<div class="col-md-8">
-										<p>뭔가 그리스 신화적 또는 셰익스피어적 모티브를 차용한 듯한 냄새 짙게 흩뿌리며, 이 영화는 절대 애들 영화가 아니에요, 슈퍼 히어로 무비의 탈을 쓰고 신과 인간의 대결이라는 인류 궁극의 테마를 탐구한 액션 철학 영화예요, 를 온몸으로 부르짖고 있는 당 영화였다만, 됐고...</p>
-									</div>
-								</div>
-							</div>
-						</li>
-						<li class="equal-height-columns">
-							<div class="cbp_tmtime equal-height-column"><span>2016/03/22</span> <span>7,530원</span></div>
-							<i class="cbp_tmicon rounded-x hidden-xs"></i>
-							<div class="cbp_tmlabel equal-height-column">
-								<h2><span class="label label-danger">적정관람료</span>&nbsp;글로리데이</h2>
-								<div class="row">
-									<div class="col-md-4">
-										<img class="img-responsive" src="/img/movie/movie_011.jpg" alt="">
-										<div class="md-margin-bottom-20"></div>
-									</div>
-									<div class="col-md-8">
-										<p>드넓은 바다를 향해 환희에 찬 사자후 토해내며 한껏 질주하는 네 청년의 슬로우모션으로 공익광고협의회 ‘청춘 힘내라’ 광고를 방불케 하는 인트로로 시작하여, 전설의 청춘무비 <트레인스포팅>의 질주장면을 연상케 하는 도주장면을 이어감으로써, 그 출발부터 靑하고도 春 무비임을 온몸으로...</p>
+									<div class="clearfix margin-bottom-10"></div>
+
+									<div class="row margin-bottom-20">
+										<div class="col-xs-6 service-in">
+											<small>내가 공감한 User</small>
+											<c:choose>
+												<c:when test="${fn:length(mfList) > 0}">
+													<c:forEach items="${mfList}" var="mfRow">
+														<h4 class="counter">${mfRow.userNickName}</h4>
+													</c:forEach>
+												</c:when>
+											</c:choose>
+										</div>
+										<div class="col-xs-6 text-right service-in">
+											<small>내게 공감한 User</small>
+											<c:choose>
+												<c:when test="${fn:length(fmList) > 0}">
+													<c:forEach items="${fmList}" var="fmRow">
+														<h4 class="counter">${fmRow.userNickName}</h4>
+													</c:forEach>
+												</c:when>
+											</c:choose>
+										</div>
 									</div>
 								</div>
 							</div>
-						</li>
-						<li class="equal-height-columns">
-							<div class="cbp_tmtime equal-height-column"><span>2016/03/03</span> <span>11,650원</span></div>
-							<i class="cbp_tmicon rounded-x hidden-xs"></i>
-							<div class="cbp_tmlabel equal-height-column">
-								<h2><span class="label label-danger">적정관람료</span>&nbsp;사울의 아들</h2>
-								<div class="row">
-									<div class="col-md-4">
-										<img class="img-responsive" src="/img/movie/movie002.jpg" alt="">
-										<div class="md-margin-bottom-20"></div>
-									</div>
-									<div class="col-md-8">
-										<p>압도적인 집요함과 유구한 끈질김으로 해볼 건 웬만하면 다 해본 듯하여 이제는 더 이상 나올 게 없어보였던 나치만행 고발무비에서, 보란 듯 등장한 혁신과 진일보를 앞에 두고 그만 무어라 드릴 말씀을 잊는 와중에도 계속해서 떠오르는 것은, 이만하면 됐으니 이제 과거는 웬만하면 다 털고 가자는 목소리들....</p>
-									</div>
-								</div>
-							</div>
-						</li>
-						<li class="equal-height-columns">
-							<div class="cbp_tmtime equal-height-column"><span>2015/11/20</span> <span>-</span></div>
-							<i class="cbp_tmicon rounded-x hidden-xs"></i>
-							<div class="cbp_tmlabel equal-height-column">
-								<h2><span class="label label-info">읽을거리</span>&nbsp;원조 ‘스파이 영화’의 서글픈 쇠락</h2>
-								<div class="row">
-									<div class="col-md-4">
-										<img class="img-responsive" src="/img/movie/movie_009.jpg" alt="">
-										<div class="md-margin-bottom-20"></div>
-									</div>
-									<div class="col-md-8">
-										<p>‘겉 먹자는 송편, 속 먹자는 만두’라는 고래의 경구로 비추어보아 007 시리즈는 단연 전자에 속하는 영화다. 다시 말해, 007 시리즈는 치밀한 이야기나 묵직한 주제의식 등이 아닌, 느끼미 및 섹시미로 무장한 남녀배우들과 그들의 딱 떨어지고도 화려한 의상과....</p>
+
+							<div class="col-sm-6">
+								<div class="service-block-v3 service-block-blue">
+									<i class="icon-screen-desktop"></i>
+									<span class="service-heading">&nbsp;</span>
+									<span class="counter">나의 적정관람료</span>
+
+									<div class="clearfix margin-bottom-30"></div>
+
+									<div class="row margin-bottom-20">
+										<div class="col-xs-6 service-in">
+											&nbsp;
+										</div>
+										<div class="col-xs-6 text-right service-in">
+											<span class="counter">${reviewCount}편 작성</span>
+										</div>
 									</div>
 								</div>
 							</div>
-						</li>
-						<li class="equal-height-columns">
-							<div class="cbp_tmtime equal-height-column"><span>2015/11/12</span> <span>6,870원</span></div>
-							<i class="cbp_tmicon rounded-x hidden-xs"></i>
-							<div class="cbp_tmlabel equal-height-column">
-								<h2><span class="label label-danger">적정관람료</span>&nbsp;007 스펙터</h2>
-								<div class="row">
-									<div class="col-md-4">
-										<img class="img-responsive" src="/img/movie/movie_009_02.jpg" alt="">
-										<div class="md-margin-bottom-20"></div>
-									</div>
-									<div class="col-md-8">
-										<p>‘겉 먹자는 송편, 속 먹자는 만두’라는 고래의 경구에 비추어 생각할 때, 007 시리즈는 단연 ‘겉 먹자’는 영화. 즉, 내용의 치밀함이나 영양가보다는 그 기상천외한 은근 코믹액션과 장비와 배우와 갑빠와 약식 훌러덩 등에 주안점을 두는 영화일 것인 바...</p>
-									</div>
-								</div>
-							</div>
-						</li>
-						<li class="equal-height-columns">
-							<div class="cbp_tmtime equal-height-column"><span>18/7/13</span> <span>-</span></div>
-							<i class="cbp_tmicon rounded-x hidden-xs"></i>
-							<div class="cbp_tmlabel equal-height-column">
-								<h2><span class="label label-info">읽을거리</span>&nbsp;더 셰프</h2>
-								<div class="row">
-									<div class="col-md-4">
-										<img class="img-responsive" src="/img/movie/movie_012.jpg" alt="">
-										<div class="md-margin-bottom-20"></div>
-									</div>
-									<div class="col-md-8">
-										<p>주방장과 셰프는 다른 존재다. 먹방과 쉐방이 다른 존재이듯. 주방과 키친이 다른 존재이듯. 미셰린과 미슐랭이 다른 존재이듯.그러한 현 정세를 적극 반영하여 'Burnt'라는 원제를 '더 셰프'라는 제목으로 번안하여 각종 쉐방 팬들의 이목을 끈 것은 매우 적절한 조치였다 사료되는 가운...</p>
-									</div>
-								</div>
-							</div>
-						</li>
-					</ul>
-				</div>
-				<!-- End Content -->
+						</div><!--/end row-->
+						<!--End Service Block v3-->
+						</div>
+					</div>
 			</div>
+			<div class="profile-body margin-bottom-20">
+						<div class="tab-v1">
+							<ul class="nav nav-justified nav-tabs">
+								<li class="active"><a data-toggle="tab" href="#myArticle">내가 남긴 글들</a></li>
+								<li><a data-toggle="tab" href="#myFavorite">내가 공감한 유저</a></li>
+								<li><a data-toggle="tab" href="#favoriteMe">내게 공감한 유저</a></li>
+							</ul>
+							<div class="tab-content">
+								<div id="myArticle" class="profile-edit tab-pane fade in active">
+									<ul class="timeline-v2">
+										<c:choose>
+											<c:when test="${fn:length(list) > 0}">
+												<c:forEach items="${list}" var="row" varStatus = "status">
+													<li class="equal-height-columns">
+														<div class="cbp_tmtime equal-height-column"><span>${fn:substring(row.creDt,0,10) }</span> <span class="font-red">${row.totalPrice}원</span></div>
+														<i class="cbp_tmicon rounded-x hidden-xs"></i>
+														<div class="cbp_tmlabel equal-height-column">
+															<span class="label label-danger">적정관람료</span>&nbsp;<h2>${row.movieKorTitle}</h2>
+															<div class="row">
+																<div class="col-md-4">
+																	<img class="img-responsive" src="${row.filePath}/${row.fileNm}" alt="">
+																	<div class="md-margin-bottom-20"></div>
+																</div>
+																<div class="col-md-8">
+																	<p>${row.reviewText}</p>
+																</div>
+															</div>
+															<div class="row">
+																<div class="col-md-10">&nbsp;</div>
+																<div class="col-md-2">
+																	<button id="btnDelete" name="btnDelete" class="btn-u btn-u-xs btn-u-default" type="button">삭제</button>
+																	<button id="btnModify" name="btnModify" class="btn-u btn-u-xs btn-u-green btnUpdate" type="button">수정</button>
+																</div>
+															</div>
+														</div>
+													</li>
+												</c:forEach>
+											</c:when>
+										</c:choose>
+									</ul>
+								</div>
+
+								<div id="myFavorite" class="profile-edit tab-pane fade">
+									<h2 class="heading-md">준비중입니다.</h2>
+									<!--h2 class="heading-md">Manage your Security Settings</h2>
+									<p>Change your password.</p>
+									<br>
+									<form class="sky-form" id="sky-form4" action="#">
+										<dl class="dl-horizontal">
+											<dt>Username</dt>
+											<dd>
+												<section>
+													<label class="input">
+														<i class="icon-append fa fa-user"></i>
+														<input type="text" placeholder="Username" name="username">
+														<b class="tooltip tooltip-bottom-right">Needed to enter the website</b>
+													</label>
+												</section>
+											</dd>
+											<dt>Email address</dt>
+											<dd>
+												<section>
+													<label class="input">
+														<i class="icon-append fa fa-envelope"></i>
+														<input type="email" placeholder="Email address" name="email">
+														<b class="tooltip tooltip-bottom-right">Needed to verify your account</b>
+													</label>
+												</section>
+											</dd>
+											<dt>Enter your password</dt>
+											<dd>
+												<section>
+													<label class="input">
+														<i class="icon-append fa fa-lock"></i>
+														<input type="password" id="password" name="password" placeholder="Password">
+														<b class="tooltip tooltip-bottom-right">Don't forget your password</b>
+													</label>
+												</section>
+											</dd>
+											<dt>Confirm Password</dt>
+											<dd>
+												<section>
+													<label class="input">
+														<i class="icon-append fa fa-lock"></i>
+														<input type="password" name="passwordConfirm" placeholder="Confirm password">
+														<b class="tooltip tooltip-bottom-right">Don't forget your password</b>
+													</label>
+												</section>
+											</dd>
+										</dl>
+										<label class="toggle toggle-change"><input type="checkbox" checked="" name="checkbox-toggle-1"><i class="no-rounded"></i>Remember password</label>
+										<br>
+										<section>
+											<label class="checkbox"><input type="checkbox" id="terms" name="terms"><i></i><a href="#">I agree with the Terms and Conditions</a></label>
+										</section>
+										<button type="button" class="btn-u btn-u-default">Cancel</button>
+										<button class="btn-u" type="submit">Save Changes</button>
+									</form -->
+								</div>
+
+								<div id="favoriteMe" class="profile-edit tab-pane fade">
+									<h2 class="heading-md">준비중입니다.</h2>
+									<!-- h2 class="heading-md">Manage your Payment Settings</h2>
+									<p>Below are the payment options for your account.</p>
+									<br>
+									<form class="sky-form" id="sky-form" action="#">
+										<section>
+											<div class="inline-group">
+												<label class="radio"><input type="radio" checked="" name="radio-inline"><i class="rounded-x"></i>Visa</label>
+												<label class="radio"><input type="radio" name="radio-inline"><i class="rounded-x"></i>MasterCard</label>
+												<label class="radio"><input type="radio" name="radio-inline"><i class="rounded-x"></i>PayPal</label>
+											</div>
+										</section>
+
+										<section>
+											<label class="input">
+												<input type="text" name="name" placeholder="Name on card">
+											</label>
+										</section>
+
+										<div class="row">
+											<section class="col col-10">
+												<label class="input">
+													<input type="text" name="card" id="card" placeholder="Card number">
+												</label>
+											</section>
+											<section class="col col-2">
+												<label class="input">
+													<input type="text" name="cvv" id="cvv" placeholder="CVV2">
+												</label>
+											</section>
+										</div>
+
+										<div class="row">
+											<label class="label col col-4">Expiration date</label>
+											<section class="col col-5">
+												<label class="select">
+													<select name="month">
+														<option disabled="" selected="" value="0">Month</option>
+														<option value="1">January</option>
+														<option value="1">February</option>
+														<option value="3">March</option>
+														<option value="4">April</option>
+														<option value="5">May</option>
+														<option value="6">June</option>
+														<option value="7">July</option>
+														<option value="8">August</option>
+														<option value="9">September</option>
+														<option value="10">October</option>
+														<option value="11">November</option>
+														<option value="12">December</option>
+													</select>
+													<i></i>
+												</label>
+											</section>
+											<section class="col col-3">
+												<label class="input">
+													<input type="text" placeholder="Year" id="year" name="year">
+												</label>
+											</section>
+										</div>
+										<button type="button" class="btn-u btn-u-default">Cancel</button>
+										<button class="btn-u" type="submit">Save Changes</button>
+									</form-->
+								</div>
+							</div>
+						</div>
+					</div>
 		</div><!--/container-->
 		<!--=== End Content Part ===-->
 	
@@ -231,6 +326,21 @@
 
 <!-- JS Customization -->
 <script src="/js/member/myPage.js"></script>
+
+	<script>
+	window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+	ga('create', 'UA-77964332-1', 'auto');
+	ga('send', 'pageview');
+	
+	ga('create', {
+	  trackingId: 'UA-77964332-1',
+	  cookieDomain: 'auto',
+	  name: 'myTracker',
+	  userId: 'poppoya'
+	});
+	
+	</script>
+	<script async src='https://www.google-analytics.com/analytics.js'></script>
 
 <!--[if lt IE 9]>
 	<script src="plugins/respond.js"></script>

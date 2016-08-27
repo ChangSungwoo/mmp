@@ -19,8 +19,8 @@
 						<div class="row">
 							<div class="col-sm-8 col-xs-8">
 							<div class="header" style="padding-left:400px;">
-								<a href="/">
-								적정관람료
+								<a class="logo" href="/">
+									<img src="/img/logo_black.jpg" width="100" alt="Logo">
 								</a>
 							</div>
 								<div class="topbar-toggler"><span class="fa fa-angle-down"></span></div>
@@ -42,8 +42,8 @@
 						<div class="row">
 							<div class="col-sm-8 col-xs-8">
 							<div class="header">
-								<a href="/">
-								적정관람료
+								<a class="logo" href="/">
+									<img src="/img/logo_black.jpg" width="100" alt="Logo">
 								</a>
 							</div>
 								<div class="topbar-toggler"><span class="fa fa-angle-down"></span></div>

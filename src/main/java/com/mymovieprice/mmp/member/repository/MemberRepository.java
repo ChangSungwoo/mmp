@@ -1,7 +1,9 @@
 package com.mymovieprice.mmp.member.repository;
 
+import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.session.RowBounds;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
@@ -24,4 +26,21 @@ public class MemberRepository  extends AbstractDao {
 		return (Member)selectOne("member.selectLoginInfo", memberCondition);
 	}
 
+	@SuppressWarnings("unchecked")
+	public List<Map<String, Object>> selectMemberList(Map<String, Object> condition) {
+			
+		return (List<Map<String, Object>>)selectList("member.selectMemberList", condition);
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<Map<String, Object>> selectMyFavoriteUserList(Map<String, Object> condition) {
+			
+		return (List<Map<String, Object>>)selectList("member.selectMyFavoriteUserList", condition);
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<Map<String, Object>> selectFavoriteMeUserList(Map<String, Object> condition) {
+			
+		return (List<Map<String, Object>>)selectList("member.selectFavoriteMeUserList", condition);
+	}
 }

@@ -57,39 +57,26 @@
 					<!--상단 버튼 영역 End-->
 					<div class="panel panel-grey margin-bottom-40">
 						<div class="panel-heading">
-							<h3 class="panel-title"><i class="fa fa-gear"></i>등록영화 목록조회</h3>
+							<h3 class="panel-title"><i class="fa fa-gear"></i>영화 목록조회</h3>
 						</div>
 						<table class="table table-hover">
 							<thead>
 								<tr>
-									<th>영화ID</th>
+									<th>No.</th>
 									<th>영화명</th>
 									<th>개봉일</th>
-									<th>적정관람료</th>
 									<th>등록일</th>
-									<th>상태</th>
 								</tr>
 							</thead>
 							<tbody>
 								<c:choose>
 									<c:when test="${fn:length(list) > 0}">
-										<c:forEach items="${list}" var="row">
+										<c:forEach items="${list}" var="row" varStatus = "status">
 											<tr>
-												<td>${row.movieId}</td>
+												<td>${status.count+((pageNo-1)*10)}</td>
 												<td><a href="javascript:movieDetail('${row.movieId}');">${row.movieKorTitle}(${row.movieEngTitle})</a></td>
 												<td>${row.releaseDt}</td>
-												<td>0원</td>
-												<td>${row.creDt}</td>
-												<td>
-													<c:choose>
-														<c:when test="${row.endYn == 'Y'}">
-															<a class="btn btn-danger btn-xs">종영</a>
-														</c:when>
-														<c:otherwise>
-															<a class="btn btn-danger btn-xs">상영중</a>
-														</c:otherwise>
-													</c:choose>
-												</td>
+												<td>${fn:substring(row.creDt,0,10) }</td>
 											</tr>
 										</c:forEach>
 									</c:when>
@@ -102,8 +89,14 @@
 							</tbody>
 						</table>
 					</div>
+					<jsp:include page="/WEB-INF/views/admin/include/includePaging.jsp" flush="false">
+						<jsp:param name="formId" value="frm"/>
+					</jsp:include>
 				</div>
 				<!--End Hover Rows-->
+				<form id="pagingFrm" name="pagingFrm" action="/admin/movie/movieList">
+					<input type="hidden" name="pageNo" id="pageNo"/>
+				</form>
 			</div>
 			<!--End Striped and Hover Rows-->
 		</div>

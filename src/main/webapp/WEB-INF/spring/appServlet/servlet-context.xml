@@ -42,6 +42,7 @@
     	<interceptor>
     		<mapping path="/admin/**" />
     		<mapping path="/member/myPage" />
+    		<mapping path="/review/reviewWrite" />
     		<beans:bean class="com.mymovieprice.mmp.common.web.LoginCheckInterceptor" />
     	</interceptor>
     </interceptors>  

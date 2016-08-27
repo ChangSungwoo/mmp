@@ -2,6 +2,7 @@ package com.mymovieprice.mmp.common.repository;
 
 import java.util.List;
 
+import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -53,5 +54,11 @@ public class AbstractDao {
 	public List selectList(String queryId, Object params){
 		printQueryId(queryId);
 		return sqlSession.selectList(queryId,params);
+	}
+	
+	@SuppressWarnings("rawtypes")
+	public List selectList(String queryId, Object params, RowBounds rowBounds){
+		printQueryId(queryId);
+		return sqlSession.selectList(queryId,params, rowBounds);
 	}
 }

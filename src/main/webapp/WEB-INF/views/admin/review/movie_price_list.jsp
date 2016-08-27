@@ -42,8 +42,8 @@
 			<jsp:param name="dummy" value=""/>
 		</jsp:include>
 		<jsp:include page="/WEB-INF/views/admin/include/includeNavi.jsp" flush="true">
-			<jsp:param name="thisName" value='<%=java.net.URLEncoder.encode("영화 목록조회")%>'/>
-			<jsp:param name="parentName" value='<%=java.net.URLEncoder.encode("적정관람료 관리")%>'/>
+			<jsp:param name="thisName" value='<%=java.net.URLEncoder.encode("적정관람료 목록")%>'/>
+			<jsp:param name="parentName" value='<%=java.net.URLEncoder.encode("영화 관리")%>'/>
 		</jsp:include>
 		<!--=== Content ===-->
 		<div class="container content height-500">
@@ -53,51 +53,46 @@
 				<div class="col-md-12">
 					<div class="panel panel-grey margin-bottom-40">
 						<div class="panel-heading">
-							<h3 class="panel-title"><i class="fa fa-gear"></i>적정관람료 목록조회</h3>
+							<h3 class="panel-title"><i class="fa fa-gear"></i>적정관람료 목록</h3>
 						</div>
 						<table class="table table-hover">
 							<thead>
 								<tr>
-									<th>영화ID</th>
+									<th>No.</th>
 									<th>영화명</th>
 									<th>적정관람료</th>
-									<th>Review 여부</th>
 									<th>영화 등록일</th>
 								</tr>
 							</thead>
 							<tbody>
 								<c:choose>
 									<c:when test="${fn:length(list) > 0}">
-										<c:forEach items="${list}" var="row">
+										<c:forEach items="${list}" var="row" varStatus="status">
 											<tr>
-												<td>${row.movieId}</td>
+												<td>${status.count+((pageNo-1)*10)}</td>
 												<td><a href="javascript:moviePriceDetail('${row.movieId}' , '${row.reviewSeq}');">${row.movieKorTitle} (${row.movieEngTitle})</a></td>
 												<td align="right"><fmt:formatNumber value="${row.price}" pattern="#,##0"/> 원</td>
-												<td>
-													<c:choose>
-														<c:when test="${row.reviewSeq eq null}">
-															미작성
-														</c:when>
-														<c:otherwise>
-															작성완료
-														</c:otherwise>
-													</c:choose>
-												</td>
-												<td>${row.creDt}</td>
+												<td>${fn:substring(row.creDt,0,10) }</td>
 											</tr>
 										</c:forEach>
 									</c:when>
 									<c:otherwise>
 										<tr>
-											<td colspan="5" align="center" height="200">등록된 데이터가 존재하지 않습니다.</td>
+											<td colspan="4" align="center" height="200">등록된 데이터가 존재하지 않습니다.</td>
 										</tr>										
 									</c:otherwise>
 								</c:choose>
 							</tbody>
 						</table>
 					</div>
+					<jsp:include page="/WEB-INF/views/admin/include/includePaging.jsp" flush="false">
+						<jsp:param name="formId" value="frm"/>
+					</jsp:include>
 				</div>
 				<!--End Hover Rows-->
+				<form id="pagingFrm" name="pagingFrm" action="/admin/review/moviePriceList">
+					<input type="hidden" name="pageNo" id="pageNo"/>
+				</form>
 			</div>
 			<!--End Striped and Hover Rows-->
 		</div>
@@ -115,7 +110,7 @@
 	<script type="text/javascript" src="/plugins/back-to-top.js"></script>
 	<script type="text/javascript" src="/plugins/smoothScroll.js"></script>
 	<!-- JS Customization -->
-	<script type="text/javascript" src="/js/admin/movie/movie_price_list.js"></script>
+	<script type="text/javascript" src="/js/admin/review/movie_price_list.js"></script>
 	<!-- JS Page Level -->
 	<script type="text/javascript" src="/js/app.js"></script>
 <!--[if lt IE 9]>

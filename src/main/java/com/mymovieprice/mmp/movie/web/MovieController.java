@@ -2,8 +2,10 @@ package com.mymovieprice.mmp.movie.web;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -37,9 +39,6 @@ import com.mymovieprice.mmp.movie.model.MovieCondition;
 import com.mymovieprice.mmp.movie.model.MovieImage;
 import com.mymovieprice.mmp.movie.model.MovieImageCondition;
 import com.mymovieprice.mmp.movie.model.MovieMaster;
-import com.mymovieprice.mmp.movie.model.MoviePrice;
-import com.mymovieprice.mmp.movie.model.MoviePriceCondition;
-import com.mymovieprice.mmp.movie.model.MovieReviewCondition;
 import com.mymovieprice.mmp.movie.service.MovieService;
 import com.mymovieprice.mmp.util.StringUtils;
 import com.mymovieprice.mmp.common.service.CommonService;
@@ -67,16 +66,44 @@ public class MovieController {
 	
 
 		
-	@RequestMapping(value = "/admin/movie/movieList", method = RequestMethod.GET)
+	@RequestMapping(value = "/admin/movie/movieList", method = {RequestMethod.GET, RequestMethod.POST})
 	//@ExceptionHandler({MMPExceptionHandler.class})
-	public ModelAndView adminMovieList(Map<String,Object> condition) throws Exception {
+	public ModelAndView adminMovieList(Map<String,Object> condition, HttpServletRequest request) throws Exception {
 		
 		ModelAndView mav = new ModelAndView("admin/movie/movie_list");
 		List<Map<String, Object>> list;
 		
+		int pageNo = 1;
+		int totalCount = 0;
+		int totalPage = 0;
+		int rowPerPage = 10;
+		
+		String strPageNo = "";
+		
+		strPageNo = StringUtils.nvl(request.getParameter("pageNo"));
+
+		if(("").equals(strPageNo)) {
+			strPageNo = "1";
+		}
+		
+		pageNo = Integer.valueOf(strPageNo);
+		
 		try {
-			list = movieService.getMovieList(condition);
+			list = movieService.getMovieList(condition , pageNo , rowPerPage);
+			
+			if(list.size() > 0) {
+			
+				totalCount = Integer.valueOf(list.get(0).get("totalCount").toString());
+				totalPage = totalCount / rowPerPage;
+			} else {
+				totalCount = 0;
+				totalPage = 0;
+			}
+			
 			mav.addObject("list", list);
+			mav.addObject("totalCount", totalCount);
+			mav.addObject("totalPage", totalPage+1);
+			mav.addObject("pageNo", strPageNo);
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new MMPExceptionHandler("영화 목록 조회중에 에러가 발생하였습니다.","100", "/admin/movie/movieList");
@@ -125,7 +152,6 @@ public class MovieController {
 		
 		try {
 			list = commonService.getDetailUseList(condition);
-			logger.info("common Code Size : "+list.size());
 			mav.addObject("list", list);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -254,18 +280,17 @@ public class MovieController {
 		String movieID = null;
 		
 		movieID = request.getParameter("movieId");
-		logger.info("Parameter Movie_ID : "+movieID);
+		//logger.info("Parameter Movie_ID : "+movieID);
 		condition.put("movieId", movieID);
+		condition.put("admin", "true");
 		
 		try {
 			movieInfo = movieService.getMovieInfo(condition);
-			logger.info("MovieInfo Title : "+movieInfo.getMovieKorTitle());
+			//logger.info("MovieInfo Title : "+movieInfo.getMovieKorTitle());
 			
 			list = movieService.getOneMovieImageList(condition);
-			logger.info("ImageList Size : "+list.size());
+			//logger.info("ImageList Size : "+list.size());
 			
-			//list = null;
-			//movieInfo = null;
 			mav.addObject("list", list);
 			mav.addObject("movie", movieInfo);
 		} catch (Exception e) {
@@ -306,8 +331,8 @@ public class MovieController {
 		iNum = iMovieID/iMovieCnt;
 		
 		strFilePath = String.valueOf(iNum+1);
-		String strRealPath = "/Users/poppoya/git/mmp/src/main/webapp/WEB-INF/resources/uploadImg/"+strFilePath;
-		//String strRealPath = "/home/hosting_users/msc/tomcat/webapps/ROOT/WEB-INF/resources/uploadImg/"+strFilePath;
+		//String strRealPath = "/Users/poppoya/git/mmp/src/main/webapp/WEB-INF/resources/uploadImg/"+strFilePath;
+		String strRealPath = "/home/hosting_users/msc/tomcat/webapps/ROOT/WEB-INF/resources/uploadImg/"+strFilePath;
 		String strViewPath = "/uploadImg/"+strFilePath;
 		
 		
@@ -341,14 +366,6 @@ public class MovieController {
 			movieImgCondition.setUseYn(useYn);
 			movieImgCondition.setDelegateYn(delegateYn);
 			
-			logger.info("movieID : "+movieImgCondition.getMovieId());
-			logger.info("Image Division : "+movieImgCondition.getImageDiv());
-			logger.info("File Name : "+movieImgCondition.getFileNm());
-			logger.info("File Path : "+movieImgCondition.getFilePath());
-			logger.info("Image Description : "+movieImgCondition.getImageDesc());
-			logger.info("Use YesOrNo : "+movieImgCondition.getUseYn());
-			logger.info("Delegate YesOrNo : "+movieImgCondition.getDelegateYn());
-			
 		} 
 		
 		Map<String, Object> map = new HashMap<String, Object>();
@@ -372,7 +389,6 @@ public class MovieController {
 	@ResponseBody
 	public Map<String, Object> adminMovieImageUpdate(Map<String,Object> condition, HttpServletRequest request) {
 		
-		String useYn = StringUtils.nvl(request.getParameter("editUseYn"), "N") ;
 		String delegateYn = StringUtils.nvl(request.getParameter("editDelegateYn"),"N");
 		
 		//TODO WorkerIdv Session 처리
@@ -387,19 +403,11 @@ public class MovieController {
 
 		movieImgCondition.setMovieId(strMovieId);
 		movieImgCondition.setImageSeq(request.getParameter("imageSeq"));
-		//movieImgCondition.setImageDiv(uploadForm.getImageDiv());
+		movieImgCondition.setImageDiv(request.getParameter("editImageDiv"));
 		movieImgCondition.setImageDesc(request.getParameter("editImageDesc"));
-		movieImgCondition.setUseYn(useYn);
 		movieImgCondition.setDelegateYn(delegateYn);
 		movieImgCondition.setUpdId(WorkerId);
 		
-		logger.info("movieID : "+strMovieId);
-		logger.info("Image Division : "+movieImgCondition.getImageDiv());
-		logger.info("File Name : "+movieImgCondition.getFileNm());
-		logger.info("File Path : "+movieImgCondition.getFilePath());
-		logger.info("Image Description : "+movieImgCondition.getImageDesc());
-		logger.info("Use YesOrNo : "+movieImgCondition.getUseYn());
-		logger.info("Delegate YesOrNo : "+movieImgCondition.getDelegateYn());
 				
 		Map<String, Object> map = new HashMap<String, Object>();
 		int disableDelegateCnt = 0;
@@ -422,106 +430,41 @@ public class MovieController {
 		return map;
 	}
 	
-
-	
-/*	@RequestMapping(value = "/admin/movie/oneMoviePriceList")
+	@RequestMapping(value = "/admin/movie/movieImageDelete" , method=RequestMethod.POST)
 	@ResponseBody
-	public List<Map<String, Object>> getOneMoviePriceList(HttpServletRequest request) {
-		
-		MoviePriceCondition moviePriceCondition = new MoviePriceCondition();
-		List<Map<String, Object>> list = null;
-			
-		moviePriceCondition.setMovieId(request.getParameter("movieId"));
-		moviePriceCondition.setPriceDiv(request.getParameter("priceDiv"));
-				
-		Map<String, Object> map = new HashMap<String, Object>();
-		
-		try {
-			list = movieService.getOneMoviePriceList(moviePriceCondition);
-			//list = null;
-
-		} catch (Exception e) {
-
-			map.put("error",e.getMessage());
-			map.put("message","적정 관람료 정보 조회에 실패하였습니다.");
-			e.printStackTrace();
-		}
-		
-		return list;
-	}*/
-	
-
-	
-	@RequestMapping(value = "/admin/movie/moviePriceSave")
-	@ResponseBody
-	public Map<String, Object> adminMoviePriceSave(Map<String,Object> condition, HttpServletRequest request) {
-		
+	public Map<String, Object> adminMovieImageDelete(Map<String,Object> condition, HttpServletRequest request) {
 		
 		//TODO WorkerIdv Session 처리
 		HttpSession session = request.getSession(true);
 		
 		String WorkerId = (String)session.getAttribute("member.userNo");
+		String strMovieId = request.getParameter("movieId");
 		
-		MoviePriceCondition moviePriceCondition = new MoviePriceCondition();
+		MovieImageCondition movieImgCondition = new MovieImageCondition();
 
-			
-		moviePriceCondition.setReviewSeq(request.getParameter("reviewSeq"));
-		moviePriceCondition.setPriceDiv(request.getParameter("priceDiv"));
-		moviePriceCondition.setPriceComment(request.getParameter("priceComment"));
-		moviePriceCondition.setPrice(request.getParameter("price"));
-		moviePriceCondition.setWriterDiv(request.getParameter("writerDiv"));
-		moviePriceCondition.setCreId(WorkerId);
-		moviePriceCondition.setUpdId(WorkerId);
+		movieImgCondition.setMovieId(strMovieId);
+		movieImgCondition.setImageSeq(request.getParameter("imageSeq"));
+		movieImgCondition.setUseYn("N");
+		movieImgCondition.setUpdId(WorkerId);
+		
 				
 		Map<String, Object> map = new HashMap<String, Object>();
 		
 		try {
-			map = movieService.addMoviePrice(moviePriceCondition);
-			//map = null;
+
+			map = movieService.deleteMovieImage(movieImgCondition);
 
 		} catch (Exception e) {
 
 			map.put("error",e.getMessage());
-			map.put("message","적정 관람료 정보 저장에 실패하였습니다.");
+			map.put("message","영화 이미지 삭제에 실패하였습니다.");
 			e.printStackTrace();
 		}
 		
 		return map;
 	}
 	
-	@RequestMapping(value = "/admin/movie/movieReviewSave")
-	@ResponseBody
-	public Map<String, Object> adminMovieReviewSave(Map<String,Object> condition, HttpServletRequest request) {
-		
-		HttpSession session = request.getSession(true);
-		
-		String WorkerId = (String)session.getAttribute("member.userNo");
-		
-		MovieReviewCondition movieReviewCondition = new MovieReviewCondition();
 
-			
-		movieReviewCondition.setMovieId(request.getParameter("movieId"));
-		movieReviewCondition.setUserNo(WorkerId);
-		movieReviewCondition.setReviewText(request.getParameter("review"));
-		movieReviewCondition.setWriterDiv(request.getParameter("writerDiv"));
-		movieReviewCondition.setCreId(WorkerId);
-		movieReviewCondition.setUpdId(WorkerId);
-				
-		Map<String, Object> map = new HashMap<String, Object>();
-		
-		try {
-			map = movieService.addMovieReview(movieReviewCondition);
-			//map = null;
-
-		} catch (Exception e) {
-
-			map.put("error",e.getMessage());
-			map.put("message","영화 리뷰 정보 저장에 실패하였습니다.");
-			e.printStackTrace();
-		}
-		
-		return map;
-	}
 	
 	@RequestMapping(value = "/admin/movie/movieDSearch", method = RequestMethod.GET)
 	public ModelAndView adminMovieSerarchTest(Map<String,Object> condition) {
@@ -531,6 +474,7 @@ public class MovieController {
 		return mav;
 	}
 	
+	@SuppressWarnings("deprecation")
 	@RequestMapping(value = "/admin/movie/movieDSearchProc", method = RequestMethod.POST)
 	@ExceptionHandler({MMPExceptionHandler.class})
 	public ModelAndView adminMovieSerarchProc(Map<String,Object> condition , HttpServletRequest request) {
@@ -538,11 +482,14 @@ public class MovieController {
 		ModelAndView mav = new ModelAndView("admin/movie/movie_DSearchResult");
 		
 		String keyWord = request.getParameter("query");
+		keyWord = URLEncoder.encode(keyWord);
+		
 		logger.info("keyWord : "+keyWord);
 		String apiKey = "ed7ab1d68a4dad3a0f93763de66db28b";
 		String dUrl = "https://apis.daum.net/contents/movie";
-		String keyword = "?apikey="+apiKey+"&q="+keyWord;
+		String keyword = "?apikey="+apiKey+"&q="+keyWord+"&output=xml";
 		String sUrl= dUrl+keyword;
+		
 		
 		String strDirectorList = "";
 		String strActorList = "";
@@ -572,7 +519,7 @@ public class MovieController {
 			
 			for (int i=0 ;i< node.getChildNodes().getLength();i++) {
 				Node channelNode = node.getChildNodes().item(i);
-				//logger.info("전문 : "+channelNode.getTextContent());
+				logger.info("전문 : "+channelNode.getTextContent());
 				String nodeName = channelNode.getNodeName();
 				if ("title".equals(nodeName))
 					dSearch.setTitle(channelNode.getTextContent());

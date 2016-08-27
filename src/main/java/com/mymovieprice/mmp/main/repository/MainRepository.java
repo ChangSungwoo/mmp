@@ -19,6 +19,12 @@ public class MainRepository extends AbstractDao{
 	public List<Map<String, Object>> selectMainContentList(Map<String, Object> condition) {
 		
 		return (List<Map<String, Object>>)selectList("main.selectMainContent", condition);
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<Map<String, Object>> selectMainSubReviewList(Map<String, Object> condition) {
+		
+		return (List<Map<String, Object>>)selectList("main.selectMainSubReviewList", condition);
 		//return null;
 	}
 

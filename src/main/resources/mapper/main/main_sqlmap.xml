@@ -15,7 +15,29 @@
 			and cm.USE_YN = 'Y'
 			and cm.CONTENT_SEQ = mm.MOVIE_ID) A , MOVIE_IMAGE mi
 		where A.IMAGE_SEQ = mi.IMAGE_SEQ
-		order by A.DISPLAY_ORDER
+		order by A.DISPLAY_ORDER;
+	</select>
+	
+	<select id="selectMainSubReviewList" parameterType="hashmap" resultType="hashmap">
+		select 'M' as contentDiv
+		, mr.REVIEW_SEQ as reviewSeq
+		, mr.MOVIE_ID as movieID
+		, mi.FILE_NM as imgFileNm
+		, mi.FILE_PATH as imgFilePath
+		, mm.MOVIE_KOR_TITLE as mainSubject
+		, mm.MOVIE_ENG_TITLE as movieEngTitle
+		, mm.CRE_DT as creDt
+		, mm.RELEASE_DT as releaseDt
+		, DATEDIFF(NOW() , mr.CRE_DT) as uploadDay 
+		from MOVIE_REVIEW mr , MOVIE_MASTER mm, MOVIE_IMAGE mi , CMM_CODE_D cd
+		where mr.MOVIE_ID = mm.MOVIE_ID
+		and mr.MOVIE_ID = mi.MOVIE_ID
+		and mm.STD_PRICE_DIV = cd.CODE_D_SEQ
+		and mr.WRITER_DIV = 'E'		
+		and mi.DELEGATE_YN = 'Y'
+		and mm.DISPLAY_YN = 'Y'
+		order by mm.RELEASE_DT desc limit #{maxCnt}
+		;
 	</select>
 
 </mapper>

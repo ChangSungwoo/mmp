@@ -15,6 +15,13 @@
 		<result column="UPD_DT"	property="updDt"/>
 		<result column="UPD_ID"	property="updId"/>
 	</resultMap>
+	
+	<resultMap type="com.mymovieprice.mmp.review.model.MoviePrice" id="MoviePriceList">
+		<result column="MOVIE_PRICE_SEQ"	property="moviePriceSeq"/>
+		<result column="PRICE_COMMENT"	property="priceComment"/>
+		<result column="PRICE"	property="price"/>
+		
+	</resultMap>
 
 	<select id="selectReviewListByEditor" parameterType="hashmap" resultType="hashmap">
 		select mr.REVIEW_SEQ as reviewSeq
@@ -37,9 +44,199 @@
 		and mm.STD_PRICE_DIV = cd.CODE_D_SEQ
 		and mr.WRITER_DIV = 'E'		
 		and mi.DELEGATE_YN = 'Y'
-		order by mm.CRE_DT desc
+		and mm.DISPLAY_YN = 'Y'
+		and mm.RELEASE_DT between DATE_ADD(NOW(), INTERVAL -2 MONTH) and NOW()
+		order by mm.RELEASE_DT desc
 		;
 	</select>
+	
+	<select id="selectOldReviewListByEditor" parameterType="hashmap" resultType="hashmap">
+		select mr.REVIEW_SEQ as reviewSeq
+		, mr.MOVIE_ID as movieID
+		, mi.FILE_NM as imgFileNm
+		, mi.FILE_PATH as imgFilePath
+		, mm.MOVIE_KOR_TITLE as movieKorTitle
+		, mm.MOVIE_ENG_TITLE as movieEngTitle
+		, mm.DIRECTOR_TEXT as directorText
+		, mm.ACTOR_TEXT as actorText
+		, mm.CRE_DT as creDt
+		, mm.RELEASE_DT as releaseDt
+		, cd.CODE_D_NM as stdPrice
+		, (SELECT sum(price) from MOVIE_PRICE mp1 where mp1.REVIEW_SEQ = mr.REVIEW_SEQ and mp1.PRICE_DIV = 'P') as positivePrice
+		, (SELECT sum(price) from MOVIE_PRICE mp2 where mp2.REVIEW_SEQ = mr.REVIEW_SEQ and mp2.PRICE_DIV = 'N') as negativePrice 
+		, mr.REVIEW_TEXT as reviewText 
+		from MOVIE_REVIEW mr , MOVIE_MASTER mm, MOVIE_IMAGE mi , CMM_CODE_D cd
+		where mr.MOVIE_ID = mm.MOVIE_ID
+		and mr.MOVIE_ID = mi.MOVIE_ID
+		and mm.STD_PRICE_DIV = cd.CODE_D_SEQ
+		and mr.WRITER_DIV = 'E'		
+		and mi.DELEGATE_YN = 'Y'
+		and mm.DISPLAY_YN = 'Y'
+		and mm.RELEASE_DT <![CDATA[<]]> DATE_ADD(NOW(), INTERVAL -2 MONTH)
+		order by mm.RELEASE_DT desc
+		;
+	</select>
+	
+	<select id="selectUserReviewListByMovie" parameterType="hashmap" resultType="hashmap">
+		select
+		tb1.reviewSeq
+		, tb1.reviewText
+		, tb1.movieId
+		, tb1. stdPrice
+		, tb1.recommCount
+		, tb1.userNickName
+		, IFNULL(tb2.totalPrice, 0) totalPrice
+		, format(tb1.stdPrice+IFNULL(tb2.totalPrice, 0),0) as reviewPrice
+		, tb1.reviewCount
+		from (
+			select mr.REVIEW_SEQ as reviewSeq
+			, mr.REVIEW_TEXT as reviewText
+			, mm.MOVIE_ID as movieId
+			, cd.CODE_D_NM AS stdPrice
+			, (select count(*) from MOVIE_RECOMM where REVIEW_SEQ = mr.REVIEW_SEQ and RECOMM_DIV = 1) as recommCount
+			, um.USER_NICK_NM as userNickName
+			, (select count(*) from MOVIE_REVIEW where CRE_ID = mr.CRE_ID) as reviewCount
+			from MOVIE_MASTER mm,  CMM_CODE_D cd, MOVIE_REVIEW mr, USER_MASTER um
+			where mm.MOVIE_ID = #{movieId}
+			and mm.STD_PRICE_DIV = cd.CODE_D_SEQ
+			and mm.MOVIE_ID = mr.MOVIE_ID
+			and mr.CRE_ID = um.USER_NO
+			and mr.WRITER_DIV = 'U'
+		) tb1 left outer join (select mp.REVIEW_SEQ , sum(mp.price) as totalPrice
+				from (
+					select mpp.REVIEW_SEQ , mpp.PRICE as price
+					from MOVIE_PRICE mpp
+					where mpp.WRITER_DIV = 'U'
+					and mpp.PRICE_DIV = 'P'
+					union all
+					select mpn.REVIEW_SEQ , mpn.PRICE*-1 as price
+					from MOVIE_PRICE mpn
+					where mpn.WRITER_DIV = 'U'
+					and mpn.PRICE_DIV = 'N'
+				) mp
+				group by mp.REVIEW_SEQ
+			) tb2
+			on tb1.reviewSeq = tb2.REVIEW_SEQ
+		;
+	</select>
+	
+	<select id="selectReviewListByUser" parameterType="hashmap" resultType="hashmap">
+		select
+		tb3.movieId, 
+		tb3.releaseDt, 
+		tb3.movieKorTitle, 
+		tb3.imageSeq,
+		count(tb3.reviewSeq) as reviewCount,
+		sum(tb3.reviewPrice) reviewTotalPrice ,
+		format(sum(tb3.reviewPrice)/count(tb3.reviewSeq),0) as reviewAvgPrice,
+		mi.FILE_PATH as filePath,
+		mi.FILE_NM as fileNm
+		from (	
+			select
+			tb1.movieId, 
+			tb1.reviewSeq,
+			tb1.releaseDt,
+			tb1.movieKorTitle,
+			tb1.imageSeq,
+			tb1.stdPrice+IfNull(tb2.totalPrice,0) as reviewPrice
+			from (	
+			select mm.MOVIE_ID as movieId
+			, mr.REVIEW_SEQ as reviewSeq
+			, mm.RELEASE_DT as releaseDt
+			, mm.MOVIE_KOR_TITLE as movieKorTitle
+			, mi.IMAGE_SEQ as imageSeq
+			, cd.CODE_D_NM as stdPrice
+			from MOVIE_REVIEW mr, 
+				MOVIE_MASTER mm, 
+				MOVIE_IMAGE mi,
+				CMM_CODE_D cd
+			where mr.MOVIE_ID = mm.MOVIE_ID
+			and mr.WRITER_DIV = 'U'
+			and mr.MOVIE_ID = mi.MOVIE_ID
+			and mi.DELEGATE_YN = 'Y'
+			and cd.CODE_M_SEQ = 1
+			and mm.STD_PRICE_DIV = cd.CODE_D_SEQ
+			and mm.RELEASE_DT between DATE_ADD(NOW(), INTERVAL -2 MONTH) and NOW()
+			) tb1 left outer join (
+				select mp.REVIEW_SEQ , sum(mp.price) as totalPrice
+				from (
+					select mpp.REVIEW_SEQ , mpp.PRICE as price
+					from MOVIE_PRICE mpp
+					where mpp.WRITER_DIV = 'U'
+					and mpp.PRICE_DIV = 'P'
+					union all
+					select mpn.REVIEW_SEQ , mpn.PRICE*-1 as price
+					from MOVIE_PRICE mpn
+					where mpn.WRITER_DIV = 'U'
+					and mpn.PRICE_DIV = 'N'
+				) mp
+				group by mp.REVIEW_SEQ
+			) tb2 on tb1.reviewSeq = tb2.REVIEW_SEQ
+		) tb3 , MOVIE_IMAGE mi
+		where tb3.imageSeq = mi.IMAGE_SEQ
+		group by tb3.movieId, tb3.releaseDt, tb3.movieKortitle, tb3.imageSeq
+		;
+	</select>
+	
+	
+	<select id="selectOldReviewListByUser" parameterType="hashmap" resultType="hashmap">
+		select
+		tb3.movieId, 
+		tb3.releaseDt, 
+		tb3.movieKorTitle, 
+		tb3.imageSeq,
+		count(tb3.reviewSeq) as reviewCount,
+		sum(tb3.reviewPrice) reviewTotalPrice ,
+		format(sum(tb3.reviewPrice)/count(tb3.reviewSeq),0) as reviewAvgPrice,
+		mi.FILE_PATH as filePath,
+		mi.FILE_NM as fileNm
+		from (	
+			select
+			tb1.movieId, 
+			tb1.reviewSeq,
+			tb1.releaseDt,
+			tb1.movieKorTitle,
+			tb1.imageSeq,
+			tb1.stdPrice+IfNull(tb2.totalPrice,0) as reviewPrice
+			from (	
+			select mm.MOVIE_ID as movieId
+			, mr.REVIEW_SEQ as reviewSeq
+			, mm.RELEASE_DT as releaseDt
+			, mm.MOVIE_KOR_TITLE as movieKorTitle
+			, mi.IMAGE_SEQ as imageSeq
+			, cd.CODE_D_NM as stdPrice
+			from MOVIE_REVIEW mr, 
+				MOVIE_MASTER mm, 
+				MOVIE_IMAGE mi,
+				CMM_CODE_D cd
+			where mr.MOVIE_ID = mm.MOVIE_ID
+			and mr.WRITER_DIV = 'U'
+			and mr.MOVIE_ID = mi.MOVIE_ID
+			and mi.DELEGATE_YN = 'Y'
+			and cd.CODE_M_SEQ = 1
+			and mm.STD_PRICE_DIV = cd.CODE_D_SEQ
+			and mm.RELEASE_DT <![CDATA[<]]> DATE_ADD(NOW(), INTERVAL -2 MONTH)
+			) tb1 left outer join (
+				select mp.REVIEW_SEQ , sum(mp.price) as totalPrice
+				from (
+					select mpp.REVIEW_SEQ , mpp.PRICE as price
+					from MOVIE_PRICE mpp
+					where mpp.WRITER_DIV = 'U'
+					and mpp.PRICE_DIV = 'P'
+					union all
+					select mpn.REVIEW_SEQ , mpn.PRICE*-1 as price
+					from MOVIE_PRICE mpn
+					where mpn.WRITER_DIV = 'U'
+					and mpn.PRICE_DIV = 'N'
+				) mp
+				group by mp.REVIEW_SEQ
+			) tb2 on tb1.reviewSeq = tb2.REVIEW_SEQ
+		) tb3 , MOVIE_IMAGE mi
+		where tb3.imageSeq = mi.IMAGE_SEQ
+		group by tb3.movieId, tb3.releaseDt, tb3.movieKortitle, tb3.imageSeq
+		;
+	</select>
+	
 	
 	<select id="selectMovieReview" parameterType="hashmap" resultMap="MovieReview">
 		select
@@ -60,5 +257,231 @@
 		and mr.REVIEW_SEQ = #{reviewSeq}
 	</select>
 	
+	<select id="selectMoviePriceList" parameterType="hashmap" resultType="hashmap">
+		select
+		B.MOVIE_ID as movieId
+		, B.MOVIE_KOR_TITLE as movieKorTitle
+		, B.MOVIE_ENG_TITLE as movieEngTitle
+		, ifnull(CAST(C.CODE_D_NM as UNSIGNED)+sum(B.PRICE) , 0) as price
+		, B.CRE_DT as creDt
+		, B.REVIEW_SEQ as reviewSeq
+		, B.CRE_ID
+		, B.DISPLAY_YN
+		, (select count(*) from MOVIE_MASTER) as totalCount
+		from (		
+			select
+				A.MOVIE_ID
+				, A.MOVIE_KOR_TITLE
+				, A.MOVIE_ENG_TITLE
+				, A.STD_PRICE_DIV
+				, A.CRE_DT
+				, A.REVIEW_SEQ
+				, A.DISPLAY_YN
+				, A.CRE_ID
+				, A.RELEASE_DT
+				, case mp.PRICE_DIV when 'N' then mp.PRICE*-1 else mp.PRICE end PRICE
+				, mp.PRICE_DIV
+			from (	
+				select
+				mm.MOVIE_ID
+				, mm.MOVIE_KOR_TITLE
+				, mm.MOVIE_ENG_TITLE
+				, mm.STD_PRICE_DIV
+				, mm.CRE_DT
+				, mr.REVIEW_SEQ
+				, mr.CRE_ID
+				, mm.DISPLAY_YN
+				, mm.RELEASE_DT
+				from MOVIE_MASTER mm left outer join MOVIE_REVIEW mr
+				on mm.MOVIE_ID = mr.MOVIE_ID
+				and mr.WRITER_DIV = 'E') A left outer join MOVIE_PRICE mp
+					on A.REVIEW_SEQ = mp.REVIEW_SEQ
+					) B , CMM_CODE_D C
+		where B.STD_PRICE_DIV = C.CODE_D_SEQ
+		group by B.MOVIE_ID, B.MOVIE_KOR_TITLE
+		order by B.RELEASE_DT desc
+		LIMIT #{pagingHelper.startRow}, #{pagingHelper.linePerPage};
+	</select>
 	
+	<insert id="insertMoviePrice" parameterType="com.mymovieprice.mmp.review.model.MoviePrice">
+		insert into MOVIE_PRICE(
+			REVIEW_SEQ, 
+			PRICE_DIV,
+			PRICE_COMMENT,
+			PRICE,
+			WRITER_DIV,
+			USE_YN,
+			COMMENT_YN,
+			SORT_NO,
+			CRE_ID,
+			CRE_DT, 
+			UPD_ID
+			) VALUES (
+			#{reviewSeq},
+			#{priceDiv},
+			#{priceComment},
+			#{price},
+			#{writerDiv},
+			'Y',
+			#{commentYn},
+			(Select MAXFIELD From (Select IFNULL(Max(SORT_NO),0) As MAXFIELD From MOVIE_PRICE where REVIEW_SEQ = #{reviewSeq} and PRICE_DIV = #{priceDiv} and USE_YN = 'Y') As SUB_TABLE) + 1,
+			#{creId},
+			NOW(),
+			#{updId}
+			);
+	</insert>
+	
+	<update id="updateMoviePrice" parameterType="com.mymovieprice.mmp.review.model.MoviePriceCondition">
+		update MOVIE_PRICE
+			set PRICE_COMMENT = #{priceComment},
+			PRICE = #{price},
+			PRICE_DIV = #{priceDiv},
+			COMMENT_YN = #{commentYn},
+			UPD_ID = #{updId}
+			where MOVIE_PRICE_SEQ = #{moviePriceSeq} 
+			;
+	</update>
+	
+	<insert id="insertMovieReview" parameterType="com.mymovieprice.mmp.review.model.MovieReview">
+		insert into MOVIE_REVIEW(
+			MOVIE_ID, 
+			USER_NO,
+			REVIEW_TEXT,
+			WRITER_DIV,
+			IMAGE_SEQ , 
+			CRE_ID,
+			CRE_DT, 
+			UPD_ID
+			) VALUES (
+			#{movieId},
+			#{userNo},
+			#{reviewText},
+			#{writerDiv},
+			(select IMAGE_SEQ from MOVIE_IMAGE mi where mi.MOVIE_ID = #{movieId} and mi.DELEGATE_YN = 'Y'),
+			#{creId},
+			NOW(),
+			#{updId}
+			);
+			
+			<selectKey keyProperty="reviewSeq" resultType="string">
+				SELECT LAST_INSERT_ID();
+			</selectKey>
+	</insert>
+	
+	<update id="updatePriceDiv" parameterType="com.mymovieprice.mmp.review.model.MoviePriceCondition">
+		update MOVIE_PRICE
+			set PRICE_DIV = #{priceDiv},
+			UPD_ID = #{updId}
+			where MOVIE_PRICE_SEQ = #{moviePriceSeq} 
+			;
+	</update>
+	
+	<update id="updatePriceCommentUseYn" parameterType="com.mymovieprice.mmp.review.model.MoviePriceCondition">
+		update MOVIE_PRICE
+			set USE_YN = 'N',
+			UPD_ID = #{updId}
+			where MOVIE_PRICE_SEQ = #{moviePriceSeq} 
+			;
+	</update>
+	
+	<update id="updateReview" parameterType="com.mymovieprice.mmp.review.model.MovieReviewCondition">
+		update MOVIE_REVIEW
+			set REVIEW_TEXT = #{reviewText},
+			UPD_ID = #{updId}
+			where REVIEW_SEQ = #{reviewSeq} 
+			;
+	</update>
+	
+	<select id="selectOneMoviePrice" parameterType="com.mymovieprice.mmp.review.model.MoviePriceCondition" resultMap="MoviePriceList">
+			select 
+			MOVIE_PRICE_SEQ as moviePriceSeq,
+			PRICE_COMMENT as priceComment,
+			PRICE as price,
+			COMMENT_YN as commentYn
+			from MOVIE_PRICE
+			where REVIEW_SEQ = #{reviewSeq}
+			and PRICE_DIV = #{priceDiv}
+			and USE_YN = 'Y'
+			order by SORT_NO
+			;
+	</select>
+	
+	<insert id="insertReviewRecommend" parameterType="com.mymovieprice.mmp.review.model.ReviewRecomm">
+		insert into MOVIE_RECOMM(
+			REVIEW_SEQ,
+			MOVIE_ID, 
+			USER_NO,
+			RECOMM_DIV,
+			RECOMM_USER_NO,
+			CRE_ID,
+			CRE_DT
+			) VALUES (
+			#{reviewSeq},
+			#{movieId},
+			#{userNo},
+			#{recommDiv},
+			#{recommUserNo},
+			#{userNo},
+			NOW()
+			);
+	</insert>
+	
+	<select id="selectReviewSeqByUserNo" parameterType="hashmap" resultType="string">
+		select
+		IFNULL(REVIEW_SEQ , 0) as reviewSeq
+		from MOVIE_REVIEW
+		where MOVIE_ID = #{movieId}
+		and USER_NO = #{userNo};
+	</select>
+	
+	<select id="selectMoviePriceCount" parameterType="hashmap" resultType="int">
+		select
+		count(*) as cnt
+		from MOVIE_PRICE
+		where REVIEW_SEQ = #{reviewSeq}
+		and CRE_ID = #{userNo};
+	</select>
+	
+	<select id="selectReviewListByOneUser" parameterType="hashmap" resultType="hashmap">
+		select tb1.MOVIE_KOR_TITLE as movieKorTitle
+			, tb1.FILE_PATH as filePath
+			, tb1.FILE_NM as fileNm
+			, tb1.REVIEW_TEXT as reviewText
+			, tb1.CRE_DT as creDt
+			, tb1.MOVIE_ID as movieId
+			, tb1.REVIEW_SEQ as reviewSeq 
+			, format((tb1.CODE_D_NM+IFNULL(tb2.totalPrice,0)), 0) as totalPrice
+		from ( 
+			select mm.MOVIE_KOR_TITLE
+			, mi.FILE_PATH
+			, mi.FILE_NM
+			, mr.REVIEW_TEXT
+			, mr.CRE_DT
+			, mm.MOVIE_ID
+			, mr.REVIEW_SEQ
+			, cd.CODE_D_NM
+			from MOVIE_REVIEW mr
+				, MOVIE_MASTER mm
+				, MOVIE_IMAGE mi
+				, CMM_CODE_D cd
+			where mr.CRE_ID = #{userId}
+			and mr.MOVIE_ID = mm.MOVIE_ID
+			and mr.IMAGE_SEQ = mi.IMAGE_SEQ
+			and mm.STD_PRICE_DIV = cd.CODE_D_SEQ
+		) tb1 left outer join (select mp.REVIEW_SEQ , sum(mp.price) as totalPrice
+				from (
+					select mpp.REVIEW_SEQ , sum(mpp.PRICE) as price
+					from MOVIE_PRICE mpp
+					where mpp.CRE_ID = #{userId}
+					and mpp.PRICE_DIV = 'P'
+					union all
+					select mpn.REVIEW_SEQ , sum(mpn.PRICE)*-1 as price
+					from MOVIE_PRICE mpn
+					where mpn.CRE_ID = #{userId}
+					and mpn.PRICE_DIV = 'N'
+				) mp
+				group by mp.REVIEW_SEQ) tb2 on tb1.REVIEW_SEQ = tb2.REVIEW_SEQ
+				order by tb1.CRE_DT DESC
+		;
+	</select>
 </mapper>
