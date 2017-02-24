@@ -136,6 +136,8 @@ private static final Logger logger = LoggerFactory.getLogger(ReviewController.cl
 		
 		condition.put("reviewSeq", reviewSeq);
 		
+		condition.put("admin", "false");
+		
 		try {
 			
 			reviewInfo = reviewService.getReviewDetail(condition);
@@ -149,7 +151,7 @@ private static final Logger logger = LoggerFactory.getLogger(ReviewController.cl
 			//logger.info("MovieInfo Title : "+movieInfo.getMovieKorTitle());
 			
 			list = movieService.getOneMovieImageList(condition);
-			//logger.info("ImageList Size : "+list.size());
+			logger.info("ImageList Size : "+list.size());
 			
 			mav.addObject("list", list);
 			mav.addObject("pList", pList);
@@ -439,6 +441,7 @@ private static final Logger logger = LoggerFactory.getLogger(ReviewController.cl
 		try {
 			movieInfo = movieService.getMovieInfo(condition);
 			reviewInfo = reviewService.getReviewDetail(condition);
+			condition.put("admin", "true");
 			iList = movieService.getOneMovieImageList(condition);
 			
 			logger.info("pList : "+pList.size());

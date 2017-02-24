@@ -56,6 +56,7 @@ public class MovieRepository extends AbstractDao {
 	public List<Map<String, Object>> selectOneMovieImageList(
 			Map<String, Object> condition) {
 		logger.info("parameter : "+condition.get("movieId"));
+		logger.info("parameter : "+condition.get("admin"));
 		
 		return (List<Map<String, Object>>)selectList("movie.selectOneMovieImageList", condition);
 		//return null;

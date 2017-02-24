@@ -80,6 +80,7 @@
 			um.UPD_DT as updDt,
 			um.UPD_ID as UpdId
 		from USER_MASTER um
+		where 1=1
 		order by um.CRE_DT;
 	</select>
 	

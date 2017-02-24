@@ -53,7 +53,8 @@ public class MainController {
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
-			throw new MMPExceptionHandler("영화 목록 조회중에 에러가 발생하였습니다.","100", "/admin/movie/movieList");
+			//throw new MMPExceptionHandler("영화 목록 조회중에 에러가 발생하였습니다.","100", "/admin/movie/movieList");
+			throw new MMPExceptionHandler("영화 목록 조회중에 에러가 발생하였습니다.","100", "/");
 			
 		}
 		

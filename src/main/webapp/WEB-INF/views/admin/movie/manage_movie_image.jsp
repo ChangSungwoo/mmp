@@ -111,7 +111,7 @@
 						<tbody>
 							<c:choose>
 								<c:when test="${fn:length(list) > 0}">
-									<c:forEach items="${list}" var="row">
+									<c:forEach items="${list}" var="row" varStatus = "status">
 										<tr>
 											<td rowspan="2">
 												<img src="${row.filePath}/${row.fileNm}" width="200">
@@ -124,9 +124,9 @@
 											</td>
 											<td>
 												<div class="inline-group">
-													<label class="radio"><input type="radio" id="dtlImageDiv" name="dtlImageDiv" value="0" <c:if test="${row.imageDiv eq '0' }"> checked </c:if>><i class="rounded-x"></i>포스터</label>
-													<label class="radio"><input type="radio" id="dtlImageDiv" name="dtlImageDiv" value="1" <c:if test="${row.imageDiv eq '1' }"> checked </c:if>><i class="rounded-x"></i>스크린샷</label>
-													<label class="radio"><input type="radio" id="dtlImageDiv" name="dtlImageDiv" value="2" <c:if test="${row.imageDiv eq '2' }"> checked </c:if>><i class="rounded-x"></i>기타 영화이미지</label>
+													<label class="radio"><input type="radio" id="dtlImageDiv" name="dtlImageDiv${status.count}" value="0" ${row.imageDiv == '0'?'checked':''}><i class="rounded-x"></i>포스터</label>
+													<label class="radio"><input type="radio" id="dtlImageDiv" name="dtlImageDiv${status.count}" value="1" ${row.imageDiv == '1'?'checked':''}><i class="rounded-x"></i>스크린샷</label>
+													<label class="radio"><input type="radio" id="dtlImageDiv" name="dtlImageDiv${status.count}" value="2" ${row.imageDiv == '2'?'checked':''}><i class="rounded-x"></i>기타 영화이미지</label>
 												</div>	
 											</td>
 											<td>

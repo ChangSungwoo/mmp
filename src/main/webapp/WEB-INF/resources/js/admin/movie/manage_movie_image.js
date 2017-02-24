@@ -30,20 +30,19 @@ function setEvent(){
 		
 		var delegateImgChk = "N";
 		var delegateCnt = 0;
+		var nam2e= "";
 		
 		if($("[id=delegateYnChk]").eq(idx).prop("checked"))	
 			delegateImgChk = "Y";
 		
 		delegateCnt = $("input[name=delegateYnChk]:checkbox:checked").length;
 		
-		console.log("imageDiv : "+$(":input:radio[name='dtlImageDiv']:checked").eq(idx).val());
-		
 		if(delegateCnt > 1) {
 			alert("영화의 대표이미지는 하나만 설정 가능합니다\n대표이미지는 목록 표시에 사용되는 이미지 입니다.");
 		} else {
 			$("#imageSeq").val($("[id=imgSeq]").eq(idx).val());
 			$("#editDelegateYn").val(delegateImgChk);
-			$("#editImageDiv").val($(":input:radio[name='dtlImageDiv']:checked").eq(idx).val());		
+			$("#editImageDiv").val($(":input:radio[name=dtlImageDiv"+parseInt(parseInt(idx)+1)+"]:checked").val());
 			$("#editImageDesc").val($("[id=imageDescription]").eq(idx).val());
 			
 			modifyMovieImageInfo();

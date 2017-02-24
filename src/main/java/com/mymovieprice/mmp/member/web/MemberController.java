@@ -256,6 +256,8 @@ public class MemberController {
 		
 		List<Map<String, Object>> list;
 		
+		condition.put("admin" , "false");
+		
 		try {
 			list = memberService.getMemberList(condition);
 			mav.addObject("list", list);
@@ -279,6 +281,18 @@ public class MemberController {
 	public ModelAndView adminMemberAdminList(Map<String,Object> condition) {
 		
 		ModelAndView mav = new ModelAndView("admin/member/member_admin_list");
+		
+		List<Map<String, Object>> list;
+		
+		condition.put("admin" , "true");
+		
+		try {
+			list = memberService.getMemberList(condition);
+			mav.addObject("list", list);
+		} catch (Exception e) {
+			e.printStackTrace();
+			
+		}
 
 		return mav;
 	}
