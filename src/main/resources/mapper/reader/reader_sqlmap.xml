@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="reader">
+
+<resultMap type="com.mymovieprice.mmp.reader.model.ReaderMaster" id="ReaderMaster">
+		<result column="READER_SEQ"	property="readerSeq"/>
+		<result column="READER_DIV"	property="readerDiv"/>
+		<result column="MOVIE_URL"	property="movieUrl"/>
+		<result column="READER_TITLE"	property="readerTitle"/>
+		<result column="READER_CONTENT"	property="readerContent"/>
+		<result column="VIEW_CNT"	property="viewCnt"/>
+		<result column="DELEGATE_IMG_SEQ"	property="delegateImgSeq"/>
+		<result column="USE_YN"	property="useYn"/>
+		<result column="CRE_DT"	property="creDt"/>
+		<result column="CRE_ID"	property="creId"/>
+		<result column="UPD_DT"	property="updDt"/>
+		<result column="UPD_ID"	property="updId"/>
+		<result column="USER_NICK_NM"	property="userNickNm"/>
+		<result column="FILE_PATH"	property="filePath"/>
+		<result column="FILE_NM"	property="fileNm"/>
+	</resultMap>
+	
+	<select id="selectReaderMaster" parameterType="hashmap" resultMap="ReaderMaster">
+		select 
+		rm.READER_SEQ as readerSeq,
+		rm.READER_DIV as readerDiv,
+		rm.MOVIE_URL as movieUrl,
+		rm.READER_TITLE as readerTitle,
+		rm.READER_CONTENT as readerContent,
+		rm.VIEW_CNT as viewCnt,
+		rm.DELEGATE_IMG_SEQ as delegateImgSeq, 
+		rm.USE_YN as useYn, 
+		rm.CRE_DT as creDt,
+		rm.CRE_ID as creId,
+		rm.UPD_DT as updDt,
+		rm.UPD_ID as updId,
+		um.USER_NICK_NM as userNickNm,
+		mi.FILE_PATH as filePath,
+		mi.FILE_NM as fileNm
+		from READER_MASTER rm left outer join MOVIE_IMAGE mi on rm.DELEGATE_IMG_SEQ = mi.IMAGE_SEQ
+			left join USER_MASTER um on rm.CRE_ID = um.USER_NO
+			where rm.READER_SEQ = ${readerSeq} ;
+	</select>
+	
+	<select id="selectFrontReaderList" parameterType="hashmap" resultType="hashmap">
+		select rm.READER_SEQ as readerSeq
+		, rm.READER_TITLE as readerTitle
+		, rm.READER_CONTENT as readerContent
+		, um.USER_NICK_NM as userNickNm
+		, rm.CRE_DT as creDt
+		, rm.READER_DIV as readerDiv
+		, rm.MOVIE_URL as movieUrl
+		, mi.FILE_PATH as filePath
+		, mi.FILE_NM as fileNm 
+		, rm.USE_YN
+		from READER_MASTER rm left outer join MOVIE_IMAGE mi on rm.DELEGATE_IMG_SEQ = mi.IMAGE_SEQ
+			left join USER_MASTER um on rm.CRE_ID = um.USER_NO 
+		where rm.USE_YN = 'Y';
+	</select>
+	
+	<select id="selectReaderMasterList" parameterType="hashmap" resultMap="ReaderMaster">
+		select 
+		READER_SEQ as readerSeq,
+		READER_DIV as readerDiv,
+		MOVIE_URL as movieUrl,
+		READER_TITLE as readerTitle,
+		READER_CONTENT as readerContent,
+		VIEW_CNT as viewCnt,
+		DELEGATE_IMG_SEQ as delegateImgSeq,
+		USE_YN as useYn,  
+		CRE_DT as creDt,
+		CRE_ID as creId,
+		UPD_DT as updDt,
+		UPD_ID as updId
+		from READER_MASTER
+		order by CRE_DT
+	</select>
+	
+	<insert id="insertReaderMaster" parameterType="com.mymovieprice.mmp.reader.model.ReaderMaster">
+		insert into READER_MASTER(
+			READER_DIV, 
+			MOVIE_URL,
+			READER_TITLE,
+			READER_CONTENT,
+			VIEW_CNT,
+			DELEGATE_IMG_SEQ,
+			USE_YN,
+			CRE_ID,
+			CRE_DT, 
+			UPD_ID
+			) VALUES (
+			#{readerDiv},
+			#{movieUrl},
+			#{readerTitle},
+			#{readerContent},
+			0,
+			#{delegateImgSeq},
+			#{useYn},
+			#{creId},
+			NOW(),
+			#{updId}
+			);
+	</insert>
+	
+</mapper>

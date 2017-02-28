@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!--  
+주요기능 : 게시물, 첨부파일, 코멘트 CRUD
+생성자 : hschoi
+생성일 : 2015. 4. 16.
+-->
+<mapper namespace="base">
+
+	<!--
+	기능요약 : 페이징처리를 위한 상단 SQL ROWNUM 미사용
+	파라미터 : 없음
+	생성자 : hschoi
+	생성일 : 2015. 4. 16.
+	-->
+	<sql id="pagination-top">
+		SELECT
+		*
+		FROM
+		(
+	</sql>
+
+	<!--
+	기능요약 : 페이징처리를 위한 하단 SQL ROWNUM 미사용
+	파라미터 : PaginationUtils 또는 하위 클래스
+	생성자 : hschoi
+	생성일 : 2015. 4. 16.
+	-->
+	<sql id="pagination-bottom">
+		) pageUnit
+		WHERE pageUnit.num BETWEEN (#{page} - 1) * #{itemPerPage} + 1 AND #{page} * #{itemPerPage}
+	</sql>
+
+	<!--  
+	기능요약 : 페이징처리를 위한 상단 SQL ROWNUM 사용
+	파라미터 : 없음
+	생성자 : hschoi
+	생성일 : 2015. 4. 16.
+	-->
+	<sql id="pagination-rownum-top">
+		SELECT
+		*
+		FROM
+		(
+			SELECT
+				base.*,
+	         	ROWNUM AS num
+			FROM (
+	</sql>
+
+	<!--
+	기능요약 : 페이징처리를 위한 하단 SQL ROWNUM 사용
+	파라미터 : PaginationUtils 또는 하위 클래스
+	생성자 : hschoi
+	생성일 : 2015. 4. 16.
+	-->
+	<sql id="pagination-rownum-bottom">
+				) base
+			) pageUnit
+			WHERE
+			pageUnit.num BETWEEN (#{page} - 1) * #{itemPerPage} + 1 AND #{page} * #{itemPerPage}
+	</sql>
+</mapper>
